@@ -77,7 +77,27 @@ rbf:
     - image: /img/compatibility/bitcoin-core/transaction-details-replacement.png
       caption: >
         Receiving Replacement RBF Transaction - Transaction Details screen for replacement transaction. No RBF note.
-bech32:
+segwit:
+  tested:
+    date: "2019-03-28"
+    platforms:
+      - macos
+    version: "0.17.1"
   features:
-    receive: "true"
-    send: "true"
+    receive:
+      p2sh_wrapped: "true"
+      bech32: "true"
+      default: "p2sh_wrapped"
+    send:
+      bech32: "true" 
+      change_bech32: "true"
+  examples:
+    - image: /img/compatibility/bitcoin-core/segwit/receive-screen.png
+      caption: >
+        Receive - Generate a new address with tooltip. Bech32 option defaults to unchecked. If checked, the checkbox will still be unchecked once Bitcoin-Qt is restarted.
+    - image: /img/compatibility/bitcoin-core/segwit/address-screen.png
+      caption: >
+        Address Details - Showing Bech32 address as well as equivalent uri and QR code.
+    - image: /img/compatibility/bitcoin-core/segwit/send-screen.png
+      caption: >
+        Send - By default, the change address takes the same type as the address being paid to. Can be overridden with change control's 'Custom change address'.

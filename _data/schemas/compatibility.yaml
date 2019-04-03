@@ -127,23 +127,45 @@ properties:
               description: Caption to give the image
               type: string
 
-  bech32:
-    description: Container for information about native segwit address support (BIP173)
+  segwit:
+    description: Container for information about segwit address support (BIP173)
     type: object
     additionalProperties: false
     properties:
       tested: *tested
       examples: *examples
       features:
-        description: Bech32 features
+        description: Segwit Address features
         type: object
-        additionalProperties: false
         properties:
           receive:
-            description: FIXME
-            type: string
-            enum: *feat
+            description: Features related to generating segwit receive addresses
+            type: object
+            properties:
+              p2sh_wrapped: 
+                description: Does the wallet allow receiving to P2SH-wrapped segwit addresses?
+                type: string
+                enum: *feat
+              bech32: 
+                description: Does the wallet allow receiving to Bech32 native segwit addresses?
+                type: string
+                enum: *feat
+              default: 
+                description: What is the default address receive type?
+                type: string
+                enum: *feat
+            additionalProperties: false
+
           send:
-            description: FIXME
-            type: string
-            enum: *feat
+            description: Features related to sending to segwit addresses
+            type: object
+            properties:
+              bech32:
+                description: Does the wallet allow sending to Bech32 native segwit addresses?
+                type: string
+                enum: *feat
+              change_bech32:
+                description: Does the wallet return change to itself in a Bech32 native segwit address?
+                type: string
+                enum: *feat
+            additionalProperties: false
