@@ -189,7 +189,18 @@ FIXME:bitschmidty
   binaries are no longer being distributed by the project due to a
   lack of use and hands-on developer testing.
 
-- [C-Lightning #3488][] Bitcoin backend generalization FIXME:adamjonas
+- [C-Lightning #3488][] standardizes C-Lightning’s requests for Bitcoin data
+  making it possible to run C-Lightning on something other than Bitcoin Core
+  as the backend. This pull-request is part of a larger project to allow more
+  freedom for how C-Lightning interacts with the Bitcoin backend as proposed
+  in [C-Lightning #3354][]. Keeping the backend interactions general and
+  unassuming allows for plugins to either make standard RPC calls, combine
+  RPCs into more abstract methods, or even create notifications. While
+  bitcoind interaction through bitcoin-cli remains the default, this project
+  works towards opening up possibilities for mobile integration (see
+  [C-Lightning #3484][]) or allowing users to share a full-node like an
+  [esplora][esplora] instance for those that might only go
+  [online infrequently for channel management and monitoring][remyers twitter].
 
 - [C-Lightning #3500][] implements a simple solution to a problem that
   could cause channels to become stuck with neither party able to send
@@ -229,7 +240,7 @@ FIXME:bitschmidty
   maintains their own [fork][acinq libsecp] of the library.
 
 {% include references.md %}
-{% include linkers/issues.md issues="18104,3488,3500,3489,3477,682,728,3501" %}
+{% include linkers/issues.md issues="18104,3488,3354,3484,3500,3489,3477,682,728,3501" %}
 [bitcoin core 0.19.1]: https://bitcoincore.org/bin/bitcoin-core-0.19.1/
 [cl 0.8.1]: https://github.com/ElementsProject/lightning/releases/tag/v0.8.1rc3
 [news83 interactive]: /en/newsletters/2020/02/05/#interactive-construction-of-ln-funding-transactions
@@ -256,3 +267,5 @@ FIXME:bitschmidty
 [bolt7 node announce]: https://github.com/lightningnetwork/lightning-rfc/blob/master/07-routing-gossip.md#the-node_announcement-message
 [bolt11 featurebits]: https://github.com/lightningnetwork/lightning-rfc/blob/master/11-payment-encoding.md#feature-bits
 [nums]: https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
+[esplora]: https://github.com/blockstream/esplora
+[remyers twitter]: https://twitter.com/remyers_/status/1226838752267468800
