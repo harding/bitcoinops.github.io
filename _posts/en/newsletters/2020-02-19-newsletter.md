@@ -59,7 +59,7 @@ FIXME:check for latest RCs / releases shortly before publication
        single signature.  If MAST and schnorr were to be done separately,
        single-sig users would need to pay more to spend a UTXO than they
        do now, and so it's unlikely many of them would join the
-       anonymity set that covers users of fallback script.
+       anonymity set that covers users of fallback scripts.
 
     2. {:#tap2} Anon asks, "Is Taproot actually cheaper than bare MAST and
        schnorr separately?"  Earlier in the email, Anon claimed that
@@ -88,7 +88,7 @@ FIXME:check for latest RCs / releases shortly before publication
        [3][taplearn3]).
 
     4. {:#tap4} Anon asks, "couldn't we forego the [Nothing Up My
-       Sleeve] NUMS point requirement and be able to check if it's a
+       Sleeve] [NUMS][] point requirement and be able to check if it's a
        hash root directly?"  This is a requirement that wallets create
        and later publish a taproot internal key even if it's just a
        random curve point because they never intended to use a key-path
@@ -255,3 +255,4 @@ FIXME:bitschmidty
 [bolt1 init]: https://github.com/lightningnetwork/lightning-rfc/blob/master/01-messaging.md#the-init-message
 [bolt7 node announce]: https://github.com/lightningnetwork/lightning-rfc/blob/master/07-routing-gossip.md#the-node_announcement-message
 [bolt11 featurebits]: https://github.com/lightningnetwork/lightning-rfc/blob/master/11-payment-encoding.md#feature-bits
+[nums]: https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
