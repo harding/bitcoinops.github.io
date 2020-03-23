@@ -40,7 +40,12 @@ FIXME:bitschmidty
 [libsecp256k1][libsecp256k1 repo], [Bitcoin Improvement Proposals
 (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
 
-- [Eclair #1339][] Harden requirements on htlc-minimum-msat FIXME:ajonas
+- [Eclair #1339][] prevents users from setting their htlc-minimum
+  amount to 0 milli-satoshis. The new minimum is 1 milli-satoshi. This may be
+  influenced by [LND #3697][], which lowered its previous default from 1,000
+  msat to 0 msats to allow sub-satoshi payments as covered in
+  [Newsletter #77][newsletter lnd 3697]. With this change, Eclair will no
+  longer forward 0 msat HTLCs if a sender crafted such a payment.
 
 - [LND #4051][] tracks up to ten errors per peer, storing them across
   reconnections if necessary.  The latest error message is returned as
@@ -50,4 +55,5 @@ FIXME:bitschmidty
 - [BOLTs #751][] Allow More than one Address of a given type FIXME:dongcarl
 
 {% include references.md %}
-{% include linkers/issues.md issues="1339,4051,751" %}
+{% include linkers/issues.md issues="1339,3697,4051,751" %}
+[newsletter lnd 3697]: /en/newsletters/2019/12/18/#lnd-3697
