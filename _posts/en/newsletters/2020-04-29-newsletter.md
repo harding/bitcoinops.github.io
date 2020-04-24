@@ -23,6 +23,10 @@ FIXME:harding
 - Vaults bitcoin-dev
 - Maybe PTLC post lightning-dev
 
+## Field report: running a Lightning node in an enterprise environment
+
+{% include articles/suredbits-enterprise-ln.md %}
+
 ## Selected Q&A from Bitcoin StackExchange
 
 *[Bitcoin StackExchange][bitcoin.se] is one of the first places Optech
