@@ -120,7 +120,28 @@ This week's newsletter FIXME
 Bitcoin presentations and discussions. In this monthly feature, we
 highlight a selection of the transcripts from the previous month.*
 
-FIXME:michaelfolkson
+**nix-bitcoin**
+
+nixbitcoindev appeared on the Stephan Livera Podcast to discuss nix-bitcoin. nix-bitcoin is an experimental but promising project that aims to improve the security of installing Bitcoin and Lightning nodes. It uses the functional Linux distribution NixOS where upgrading is equivalent to installing from scratch due to atomicity. Through minimalism, reproducibility, compartmentalization and defense in depth nix-bitcoin aims to reduce the attack surface of a Bitcoin and Lightning software stack with programs unaware of other running processes unless they need to be.  ([transcript](https://diyhpl.us/wiki/transcripts/stephan-livera-podcast/2020-07-26-nix-bitcoin/), [audio](https://stephanlivera.com/episode/195/))
+
+**Taproot activation**
+
+Eric Lombrozo, Luke Dashjr and Aaron van Wirdum discussed the alternative [Taproot][topic taproot] activation proposals (see [Newsletter #107][https://bitcoinops.org/en/newsletters/2020/07/22/#taproot-activation-discussions]) and gave their opinions in a personal capacity on what lessons, if any, could be derived from activating the SegWit soft fork. Lombrozo and Dashjr both believe that the Taproot activation process should not be drawn out and that all opposition, criticism or review of the proposed code changes should be flushed out prior to starting any possible activation process. As a result they support a single phase BIP 8 activation method with parameters still to be determined. Community feedback on activation proposals continues to be collected.  ([transcript](https://diyhpl.us/wiki/transcripts/bitcoin-magazine/2020-08-03-eric-lombrozo-luke-dashjr-taproot-activation/), [video](https://www.youtube.com/watch?v=yQZb0RDyFCQ))
+
+**Signet**
+
+Kalle Alm and AJ Towns participated in a discussion on [Signet][topic signet]. The design decisions of Signet were explored as well as the mechanics of how testnet and regtest work. For more details see the Default signet discussion (linked elsewhere in the newsletter).  ([transcript](https://diyhpl.us/wiki/transcripts/london-bitcoin-devs/2020-08-19-socratic-seminar-signet/), [video](https://www.youtube.com/watch?v=b0AiucAuX3E))
+
+
+**Bitcoin Core GUI meeting**
+
+Anonymized participants including designers and developers met to discuss the Bitcoin Core graphical user interface, its current state, how it could be improved or revamped and the constraints that any possible revamp would be subject to. For example, one change that has been discussed in the past is moving from Qt Widgets to the Qt QML framework which is more flexible and easily customized.  ([transcript](https://diyhpl.us/wiki/transcripts/bitcoin-design/2020-08-20-bitcoin-core-gui/))
+
+
+**Sydney meetup discussion**
+
+Ruben Somsen and Rusty Russell participated in a discussion on statechains, upgrading Lightning channels and lnprototest. Somsen outlined how statechains (see [Newsletter #100][https://bitcoinops.org/en/newsletters/2020/04/01/#implementing-statechains-without-schnorr-or-eltoo]) could potentially be used to swap out your Lightning channel counterparty or in the case of DLCs (see [Newsletter #81][https://bitcoinops.org/en/newsletters/2020/01/22/#protocol-specification-for-discreet-log-contracts-dlcs]) swap out a portion of your position without closing the channel. With various possible Lightning channel upgrades on the horizon it was speculated which could use dynamic commitments (see [Newsletter #108][https://bitcoinops.org/en/newsletters/2020/07/29/#upgrading-channel-commitment-formats] and which would require [splicing][topic splicing]. Finally, Russell explained how the Lightning protocol test suite lnprototest could be used to find bugs in existing implementations and assist with ensuring interoperability across implementations when building out new features.  ([transcript](https://diyhpl.us/wiki/transcripts/sydney-bitcoin-meetup/2020-08-25-socratic-seminar/))
+
 
 ## Releases and release candidates
 
