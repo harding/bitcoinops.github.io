@@ -2,7 +2,7 @@
 
 This post describes how
 high-frequency spenders can use the scaling technique of *payment
-batching* to reduce transaction sizes and fees by about 75% in
+batching* to reduce transaction fees and block space use by about 75% in
 practical situations.
 As of September 2020, payment batching is used by multiple popular
 Bitcoin services (mainly exchanges), is available as a built-in feature
@@ -37,7 +37,7 @@ output.  This makes the maximum savings possible a bit over 75%.
 Realistically, the more a transaction spends, the more likely it is to
 need additional inputs.  This doesn't prevent payment batching from
 being useful, although it does reduce its effectiveness.  For example,
-we expect a typical service to
+some services may
 receive payments of about the same value as the payments they make, so
 for every output they add, they need to add one input on average.
 Savings in this typical case peak at about 30%.
@@ -66,8 +66,8 @@ scenario.
 
 In addition to payment batching directly providing a fee savings,
 batching also uses limited block space more efficiently by reducing the
-number of vbytes per payment.  This increases the available supply of
-block space and so, given constant demand, can make it more affordable.
+number of vbytes per payment.  This increases the number of payments
+users can make and so, given constant demand, can make it more affordable to send Bitcoin payments.
 In that way, increased use of payment batching may lower the feerate for
 all Bitcoin users.
 
@@ -156,7 +156,7 @@ you'll be able to fee bump your transaction using either
 [Child-Pays-for-Parent (CPFP)][topic cpfp] fee bumping or [Replace-by-Fee
 (RBF)][topic rbf] fee
 bumping.  In addition, the more unconfirmed children a transaction has,
-the more RBF fee bumping will cost as you'll have to pay for both the
+the more RBF fee bumping costs because you'll have to pay for both the
 increased feerate of your transaction as well as for all the potential
 fees lost to miners when they remove any child transactions in order
 to accept your replacement.
@@ -171,9 +171,8 @@ impossible, all the other receivers of that transaction are also affected.
 As of Bitcoin Core 0.20 (June 2020), the limits are[^package-limits] that a
 group of related unconfirmed transactions may not exceed 101,000 vbytes
 in size, have more than 25 unconfirmed ancestors, or have more than 25
-descendants.  This size limit restricts batches to a maximum size of
-about 3,000 outputs and the descendant limit is easily reached if just a
-tiny percentage of those receiving a large batch respend their confirmed
+descendants.  In particular, the descendant limit can be easily reached if
+those receiving payments from a large batch respend their unconfirmed
 outputs.  It's also easy for any of the receivers to deliberately create
 transactions that reach one of these limits and prevent fee bumping if
 they know that you're relying on that capability.
