@@ -152,7 +152,11 @@ FIXME
 
 - [Bitcoin Core #19954][] Complete the BIP155 implementation and upgrade to TORv3  FIXME:adamjonas
 
-- [Eclair #1537][] Send payment through specific channels FIXME:dongcarl
+- [Eclair #1537][] extends the `sendtoroute` API call to allow for specifying a
+  list of channel IDs for the payment with the `--shortChannelIds` flag. This
+  finer-grain control over the payment is especially useful when there are
+  duplicate channels between nodes and listing the node IDs is not specific
+  enough (e.g. when consolidating and rebalancing channels).
 
 FIXME:harding update topics after all PR summaries written
 {% include references.md %}
