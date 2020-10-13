@@ -32,7 +32,7 @@ changes to popular Bitcoin infrastructure software.
 - **LN upfront payments:** in the current LN protocol, the attempt to
   route a payment can lock part of a routing node's funds for hours or
   days.  Since routing fees are only paid if a payment succeeds, an
-  attacker can use payments designed to fail in order to prevent a nodes
+  attacker can use payments designed to fail in order to prevent routing nodes
   from earning income on the capital they store in their channels.  One
   previously discussed option that may better align incentives is to
   charge a non-refundable fee upfront when a routing request is received
@@ -49,7 +49,7 @@ changes to popular Bitcoin infrastructure software.
       fees couldn't be stolen by an earlier hop that deliberately failed
       a route.  A downside to this approach is that it would require a
       significant number of network round trips, which could make even
-      successful payments take a long time.  A spy node who kept track
+      successful payments take a long time.  A spy node that kept track
       of routed message timing and HTLC duration could also build rough
       estimates about how many hops away the spender or receiver are
       from it, reducing the amount of privacy users would receive from
@@ -71,11 +71,11 @@ changes to popular Bitcoin infrastructure software.
   upgrades.  Russell proposed using a backwards-incompatible format
   based on a [revised bech32 encoding scheme][wuille new bech32]
   previously described by Pieter Wuille.  This would eliminate the bug
-  but also require wallets upgrade in order to be able to pay taproot
+  but also require wallets to upgrade in order to be able to pay taproot
   users.
 
-    A [previously-proposed alternative][news107 bech32] would be a
-    backwards compatible restriction on bech32 address lengths.  This
+    A [previously proposed alternative][news107 bech32] would be a
+    backwards-compatible restriction on bech32 address lengths.  This
     only directly provides safety to taproot users receiving payments
     from spenders who upgraded their wallets to enforce the new length
     restrictions.  In the discussion, it was proposed that broader
@@ -94,7 +94,7 @@ changes to popular Bitcoin infrastructure software.
   about witness asymmetric payment channels (see [Newsletter
   #113][news113 witasym]).  The idea behind this proposal is to change
   how LN users get the evidence they need to prove their channel
-  counterparty cheated.  Currently the evidence is placed in a separate
+  counterparty cheated.  Currently the evidence is placed in separate
   transaction for each channel participant; Fournier proposes placing
   the evidence in a separate signatures ("witnesses") for each
   participant by using [signature adaptors][topic adaptor signatures].
@@ -102,7 +102,7 @@ changes to popular Bitcoin infrastructure software.
   should be easier to integrate with hoped-for improvements to Bitcoin
   (e.g. [schnorr signatures][topic schnorr signatures] with and without
   [MuSig][topic musig] aggregation) and hoped-for improvements to LN
-  (e.g. a switch from [HTLCs][topic htlc] to [PTLCs][topic ptlc]).  It
+  (e.g. a switch from [HTLCs][topic htlc] to [PTLCs][topic ptlc]).  The approach
   may also be conceptually simpler, which could help attract more
   security review of LN's basic operations.
 
