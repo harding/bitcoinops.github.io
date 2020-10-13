@@ -54,6 +54,9 @@ optech_mentions:
   - title: "BIPs #907 updates BIP155 messages to allow addresses up to 512 bytes"
     url: /en/newsletters/2020/09/30/#bips-907
 
+  - title: "Bitcoin Core #19954 completes the BIP155 implementation and upgrades to TORv3 "
+    url: /en/newsletters/2020/10/14/#bitcoin-core-19954
+
 ## Optional.  Same format as "primary_sources" above
 see_also:
   - title: P2P protocol `addr` message
