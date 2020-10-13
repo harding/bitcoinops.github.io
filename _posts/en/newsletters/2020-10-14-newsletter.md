@@ -50,8 +50,8 @@ changes to popular Bitcoin infrastructure software.
       a route.  A downside to this approach is that it would require a
       significant number of network round trips, which could make even
       successful payments take a long time.  A spy node that kept track
-      of routed message timing and HTLC duration could also build rough
-      estimates about how many hops away the spender or receiver are
+      of routed message timing and HTLC duration could also
+      estimate how many hops away the spender or receiver are
       from it, reducing the amount of privacy users would receive from
       LN.
 
@@ -96,7 +96,7 @@ changes to popular Bitcoin infrastructure software.
   how LN users get the evidence they need to prove their channel
   counterparty cheated.  Currently the evidence is placed in separate
   transaction for each channel participant; Fournier proposes placing
-  the evidence in a separate signatures ("witnesses") for each
+  the evidence in separate signatures ("witnesses") for each
   participant by using [signature adaptors][topic adaptor signatures].
   Advantages of this approach are that it provides a protocol that
   should be easier to integrate with hoped-for improvements to Bitcoin
