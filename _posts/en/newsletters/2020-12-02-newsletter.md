@@ -114,7 +114,12 @@ release candidates.*
 [Hardware Wallet Interface (HWI)][hwi repo], [Bitcoin Improvement Proposals
 (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
 
-- [LND #4752][] invoices: force MPP payload inclusion for non-keysend payments FIXME:adamjonas
+- [LND #4752][] addresses [improper preimage revelation][CVE-2020-26896] for
+passthrough payments described in [Newsletter #121][news121 preimage] and
+[#122][news122 preimage].  This change prevents the problem by forbidding the
+node to release the preimage without a [payment secret][payment secret],
+contained in a field that is not available for passthrough payments.  The patch
+also requires the payment secret feature bit in the invoices that LND produces.
 
 <!-- FIXME: harding to update topics -->
 {% include references.md %}
@@ -135,3 +140,7 @@ release candidates.*
 [news119 upfront]: /en/newsletters/2020/10/14/#ln-upfront-payments
 [news120 upfront]: /en/newsletters/2020/10/21/#more-ln-upfront-fees-discussion
 [news122 upfront]: /en/newsletters/2020/11/04/#bi-directional-upfront-fees-for-ln
+[CVE-2020-26896]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26896
+[news121 preimage]: /en/newsletters/2020/10/28/#cve-2020-26896-improper-preimage-revelation
+[news122 preimage]: /en/newsletters/2020/11/04/#c-lightning-4162
+[payment secret]: https://github.com/lightningnetwork/lightning-rfc/commit/5776d2a7
