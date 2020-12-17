@@ -113,7 +113,7 @@ payments until they've spent some of their funds---a position that
 creates barriers to merchants joining LN.  One proposal to eliminate
 this problem is dual-funded channels where both the channel opener and
 their counterparty both commit some amount of funds to the channel.
-Lisa Neigut has developed a [protocol][bolts #524] for dual funding but
+Lisa Neigut has developed a [protocol][bolts #524] for dual funding, but
 (as expected) it's complex.  In February, she started a
 [discussion][news83 interactive funding] about an incremental
 improvement over the existing single-funder standard that would allow
@@ -130,7 +130,7 @@ rendez-vous routing for LN, which was labeled a priority during the
 equivalent privacy was [described][news85 blinded paths] by Bastien
 Teinturier in February based on a previous privacy enhancement he had
 proposed.  This new method, called *blinded paths*, was later
-implemented in as an experimental feature in [C-Lightning][news92
+implemented as an experimental feature in [C-Lightning][news92
 cl3600].
 
 ## March
@@ -152,7 +152,7 @@ support for [schnorr signatures][topic schnorr signatures] ([BIP340][])
 and [tapscript][topic tapscript] ([BIP342][]).  Together these
 improvements will allow users of single-signature scripts,
 multisignature scripts, and complex contracts to all use
-identical-appearing commitments that enhance the their privacy and the
+identical-appearing commitments that enhance their privacy and the
 fungibility of all bitcoins.  Spenders will enjoy lower fees and the
 ability to resolve many multisig scripts and complex contracts with the
 same efficiency, low fees, and large anonymity set as single-sig users.
@@ -205,11 +205,11 @@ interesting to cryptographers, but the history of Bitcoin has many
 examples of people losing money because a wallet developer didn't fully
 understand the cryptographic protocol they implemented.  Hopefully, the
 recommendations from experienced cryptographers in BIP340 will help
-avoid some of those type of problems in the future.
+avoid some of those types of problems in the future.
 
 In May, there was [renewed discussion][news97 additional commitment] about a known problem that makes it
 dangerous to automatically sign transactions with a hardware wallet.
-Ideally hardware wallets could provide a mode where they'd automatically
+Ideally, hardware wallets could provide a mode where they'd automatically
 sign transactions guaranteed to increase the wallet's balance, such as
 maker coinjoins and LN [splices][topic splicing].  Unfortunately, it's
 only safe to sign a transaction if you know for sure which inputs are
@@ -229,7 +229,7 @@ data to identify all of its inputs.  The proposal was later
 
 ![Illustration of using a fake coinjoin to trick a hardware wallet into losing funds](/img/posts/2020-05-fake-coinjoin-trick-hardware-wallet.dot.png)
 
-In July, another discussion resumed about previously known problem---the
+In July, another discussion resumed about a previously known problem---the
 [bech32 address format][topic bech32] being much less effective than
 expected at preventing users from sending money to unspendable
 addresses.  This doesn't practically affect current bech32 address
@@ -275,8 +275,8 @@ proposal][news8 p2ep] received a major boost in April when a version of
 it was [added][news94 btcpay payjoin] to the BTCPay self-hosted payment
 processing system.  Payjoin provides a convenient way for users to
 increase their privacy and the privacy of other users on the network by
-creating transactions that undermine the assumption that all inputs to a
-transaction are owned by the same person.  The BTCPay version of payjoin
+creating transactions that undermine the assumption that the same person
+owns all of the inputs in a transaction.  The BTCPay version of payjoin
 would soon be [specified][news104 bips923] as [BIP78][] and support for
 it was added to [other programs][news116 payjoin joinmarket].
 
@@ -363,8 +363,8 @@ payment could have instead been a coinswap.
 
 - **Succinct Atomic Swaps (SAS):** Ruben Somsen wrote a post and created
   a video describing a [procedure][news98 sas] for a trustless exchange
-  of coins using only two transactions.  Advantages of the protocol are
-  that it requires less block space than existing coinswap protocols, it
+  of coins using only two transactions.  The protocol has several
+  advantages over earlier coinswap designs: it requires less block space, it
   saves on transaction fees, it only requires consensus-enforced
   timelocks on one of the chains in a cross-chain swap, and it doesn't
   depend on any new security assumptions or Bitcoin consensus changes.
@@ -462,8 +462,8 @@ disclosed later.  The notable vulnerabilities included:
   allowing an attacker to trick a dedicated signing device (such as a
   hardware wallet) into spending more money than expected.  Segwit tried
   to eliminate this issue by having each signature commit to the amount
-  of the input it spent, but as Rashid discovered (and as Gregory
-  Sanders previously discovered and reported in 2017), a specially
+  of the input it spent.  However, Rashid re-discovered a problem
+  previously discovered and reported by Gregory Sanders in 2017 where a specially
   constructed transaction with at least two inputs can get around this
   limitation if the user can be tricked into signing two or more
   seemingly-identical variations of the same transaction.  Several
@@ -555,7 +555,7 @@ June also had some good news, with a team of researchers working on the
 Wasabi coinjoin implementation [announcing][news102 wasabi] a protocol
 named Wabisabi that should allow
 trustless server-coordinated coinjoins with arbitrary output values.
-This makes it easier to use coordinated coinjoins for sending payments
+This makes it easier to use coordinated coinjoins to send payments,
 either between participants in the coinjoin or to non-participants.
 Wasabi developers worked on implementing the protocol during the
 remainder of the year.
@@ -638,7 +638,7 @@ signatures. Finney wrote a proof-of-concept implementation, which he
 claimed sped up signature verification by around 25%.  Unfortunately,
 the algorithm was encumbered by [U.S.  Patent 7,110,538][] and so
 neither Finney's implementation nor a later implementation by Pieter
-Wuille were distributed to users.  On September 25th, [that patent
+Wuille was distributed to users.  On September 25th, [that patent
 expired][news117 patent].  Within a month, the code was [merged][news120
 glv] into Bitcoin Core.  For users with the default settings, the speed
 improvement will be most apparent during the final part of syncing a new
@@ -711,7 +711,7 @@ generically as well: there's no widely supported way to handle messages
 for P2SH, P2WSH, and P2SH-P2WSH addresses either---nor a forward
 compatible way that will work for taproot addresses.  The [BIP322][]
 proposal for a [generic signmessage][topic generic signmessage] function
-has been trying to fix all of these issues but it's failed to gain much
+has been trying to fix all of these issues, but it's failed to gain much
 traction.  This year saw an additional [request for feedback][news88
 signmessage rfh] from its champion, a [simplification][news91
 signmessage simplification], and (in October) a nearly [complete
@@ -721,7 +721,7 @@ signing potentially compatible with a large amount of existing software
 and hardware wallets, as well as the [PSBT][topic psbt] data format, by
 allowing the signing of *virtual transactions* that look like real
 transaction but which can be safely signed because they aren't valid
-according to Bitcoin's consensus rules.  Hopefully this improvement will
+according to Bitcoin's consensus rules.  Hopefully, this improvement will
 allow generic signmessage to start to receive adoption.
 
 {:#musig2}
@@ -753,7 +753,7 @@ other anonymity networks that require larger addresses.
 {:#lightning-pool}
 As mentioned in the February section, one challenge faced in the current
 LN network is that users and merchants need channels with incoming
-capacity in order to quickly receive funds over LN.  A fully
+capacity in order to receive funds over LN.  A fully
 decentralized solution to that problem could be the dual-funded channels
 described earlier.  However, in November, Lightning Labs took a
 different track and [announced][news123 lightning pool] a new Lightning
