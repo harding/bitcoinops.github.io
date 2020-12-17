@@ -24,27 +24,58 @@ to Bitcoin in 2020, please accept our deepest thanks.
 
 ## Contents
 
-FIXME:harding fill in and linkify ToC
-
 * January
+  * [DLC specification, implementations, and usage](#dlc)
 * February
+  * [LN large channels](#large-channels)
+  * [LN dual funding and interactive funding](#dual-interactive-funding)
+  * [LN blinded paths](#blinded-paths)
 * March
+  * [Exfiltration resistant signing](#exfiltration-resistance)
 * April
+  * [Payjoin](#payjoin)
+  * [LN PTLCs and other cryptography-based improvements](#ptlcs)
+  * [BIP85 keychains](#bip85)
 * May
+  * [Vaults](#vaults)
+  * [Transaction origin privacy](#transaction-origin-privacy)
+  * [Succinct atomic swaps](#succinct-atomic-swaps-sas)
+  * [Coinswap implementation](#coinswap-implementation)
+  * [Compact block filters](#compact-block-filters)
 * June
+  * [Overpayment attack on multi-input segwit transactions](#overpayment-attack-on-multi-input-segwit-transactions)
+  * [LN payment atomicity attack](#ln-payment-atomicity-attack)
+  * [Fast LN eclipse attacks](#fast-ln-eclipse-attacks)
+  * [LN fee ransom](#ln-fee-ransom)
+  * [HTLC mining incentives](#concern-about-htlc-mining-incentives)
+  * [Inventory out-of-memory denial-of-service attack](#inventory-out-of-memory-denial-of-service-attack-invdos)
+  * [Wabisabi coordinated coinjoins with arbitrary output amounts](#wabisabi)
 * July
+  * [WTXID transaction announcements](#wtxid-announcements)
 * August
+  * [Signet](#signet)
+  * [LN anchor outputs](#anchor-outputs)
 * September
+  * [Faster signature verification](#glv-endomorphism)
+  * [Patent alliance](#patent-alliance)
 * October
+  * [LN jamming attacks](#jamming)
+  * [LND security disclosures](#lnd-disclosures)
+  * [Generic signmessage](#generic-signmessage)
+  * [MuSig2](#musig2)
+  * [Version 2 addr messages](#addrv2)
 * November
+  * [Lightning Pool incoming channel marketplace](#lightning-pool)
 * December
+  * [LN offers](#ln-offers)
 * Featured summaries
-    * Taproot, tapscript, and schnorr signatures
-    * Major releases of popular infrastructure projects
+    * [Taproot, tapscript, and schnorr signatures](#taproot)
+    * [Major releases of popular infrastructure projects](#releases)
     * [Bitcoin Optech](#optech)
 
 ## January
 
+{:#dlc}
 Several developers began [working][news81 dlc] on a [specification][dlc
 spec] for using [Discrete Log Contracts][] (DLCs) between different
 software.  DLCs are a contract protocol where two or more parties agree
@@ -66,6 +97,7 @@ election bet] that they'd used DLCs in transactions on mainnet.
 
 ## February
 
+{:#large-channels}
 Five years after the [first public presentation about LN][dryja poon sf
 devs], several early protocol decisions meant to be temporary were
 revisited.   The most immediate change was the February [update][news86
@@ -73,6 +105,7 @@ bolts596] to the LN specification that allowed users to opt-out of the
 [maximum channel and payment value][topic large channels] limits enacted
 in 2016.
 
+{:#dual-interactive-funding}
 Another early decision that saw reconsideration was keeping the protocol
 simple by opening all channels with a single funder.  This minimizes
 protocol complexity but prevents channel funders from receiving any
@@ -90,6 +123,7 @@ either accepts it or rejects it, the nodes belonging to the two parties
 could exchange information about their preferences and negotiate opening
 a channel that they would both find desirable.
 
+{:#blinded-paths}
 New progress was also made on the often-discussed plans to allow
 rendez-vous routing for LN, which was labeled a priority during the
 [2018 LN specification meeting][rv routing].  A new method for achieving
@@ -101,6 +135,7 @@ cl3600].
 
 ## March
 
+{:#exfiltration-resistance}
 One way hardware wallets could conceivably steal from their users is by
 leaking information about the wallet's private keys via the transaction
 signatures it creates.  In March, [Stepan Snigirev][news87 exfiltration],
@@ -194,9 +229,6 @@ data to identify all of its inputs.  The proposal was later
 
 ![Illustration of using a fake coinjoin to trick a hardware wallet into losing funds](/img/posts/2020-05-fake-coinjoin-trick-hardware-wallet.dot.png)
 
-<!-- FIXME:update image to add a label, "Blinded ownership attack" (use a
-separate PR since that changes existing content, rebase on top) -->
-
 In July, another discussion resumed about previously known problem---the
 [bech32 address format][topic bech32] being much less effective than
 expected at preventing users from sending money to unspendable
@@ -237,6 +269,7 @@ signal is received.
 
 ## April
 
+{:#payjoin}
 The [payjoin][topic payjoin] protocol based on the 2018 [Pay-to-EndPoint
 proposal][news8 p2ep] received a major boost in April when a version of
 it was [added][news94 btcpay payjoin] to the BTCPay self-hosted payment
@@ -247,6 +280,7 @@ transaction are owned by the same person.  The BTCPay version of payjoin
 would soon be [specified][news104 bips923] as [BIP78][] and support for
 it was added to [other programs][news116 payjoin joinmarket].
 
+{:#ptlcs}
 One widely desired improvement to LN is switching the payment security
 mechanism from Hash Time Locked Contracts ([HTLCs][topic htlc]) to Point
 Time Locked Contracts ([PTLCs][topic ptlc]) that improve the privacy of
@@ -269,6 +303,7 @@ propose [two new ways][news128 fancy static] to improve the robustness
 of LN backups, again offering practical solutions to user problems
 through the clever use of cryptography.
 
+{:#bip85}
 April also saw Ethan Kosakovsky [post][news93 super keychain] a proposal
 to the Bitcoin-Dev mailing list for using one [BIP32][] Hierarchical
 Deterministic (HD) keychain to create seeds for child HD keychains that
@@ -281,6 +316,7 @@ of them using just the super-keychain's seed.  This proposal would
 [later][news102 bip85] become [BIP85][] and would be implemented in
 recent versions of the ColdCard hardware wallet.
 
+{:#vaults}
 Two announcements about [vaults][topic vaults] were made April.  Vaults
 are a type of contract known as a [covenant][topic covenants] that warn
 their users that someone is trying to spend their funds and which give
@@ -297,6 +333,7 @@ manage vaults.
 
 ## May
 
+{:#transaction-origin-privacy}
 The Bitcoin Core project merged several PRs in May and the following
 months that improved [transaction origin privacy][tx origin wiki], both
 for users of the Bitcoin Core wallet and for users of other systems.
@@ -324,7 +361,7 @@ their coins with each other. This improves the privacy of not just the
 coinswap users but all Bitcoin users, as anything that looks like a
 payment could have instead been a coinswap.
 
-- **Succint Atomic Swaps (SAS):** Ruben Somsen wrote a post and created
+- **Succinct Atomic Swaps (SAS):** Ruben Somsen wrote a post and created
   a video describing a [procedure][news98 sas] for a trustless exchange
   of coins using only two transactions.  Advantages of the protocol are
   that it requires less block space than existing coinswap protocols, it
@@ -351,6 +388,7 @@ payment could have instead been a coinswap.
   prototype software was [creating coinswaps][belcher dec8 tweet] on
   testnet that demonstrated their strong lack of linkability.
 
+{:#compact-block-filters}
 Since Bitcoin's early days, one of the challenges of developing
 lightweight clients with SPV security has been finding a way for the
 client to download transactions affecting its wallet without giving the
@@ -512,8 +550,10 @@ disclosed later.  The notable vulnerabilities included:
   the problem and users were given time to upgrade, the vulnerability
   was publicly disclosed.
 
+{:#wabisabi}
 June also had some good news, with a team of researchers working on the
-Wasabi coinjoin implementation [announcing][news102 wasabi] a protocol that should allow
+Wasabi coinjoin implementation [announcing][news102 wasabi] a protocol
+named Wabisabi that should allow
 trustless server-coordinated coinjoins with arbitrary output values.
 This makes it easier to use coordinated coinjoins for sending payments
 either between participants in the coinjoin or to non-participants.
@@ -522,6 +562,7 @@ remainder of the year.
 
 ## July
 
+{:#wtxid-announcements}
 July saw the [merge][bips933] of the [BIP339][] specification for wtxid
 transaction announcements.  Nodes have historically announced the
 availability of new unconfirmed transactions for relay using the
@@ -542,6 +583,7 @@ hoped-for upgrades, such as [package relay][topic package relay] and the
 
 ## August
 
+{:#signet}
 After [over][bips900] a [year][bips983] of [development][default signet
 discussion], including multiple feedback-driven changes, the [last
 major revision][bips947] to the [BIP325][] specification of
@@ -555,6 +597,7 @@ work) even though testnet coins have no value.  The ability to
 optionally enable signet was finally [added][bcc18267] to Bitcoin Core
 in September.
 
+{:#anchor-outputs}
 Almost two years after Matt Corallo [first proposed][news24 cpfp carve
 out] the [CPFP carve-out mechanism][topic cpfp carve out], the LN
 specification was [updated][news112 bolts688] to allow the creation of
@@ -587,6 +630,7 @@ to providing workshops and other in-person training.
 
 ## September
 
+{:#glv-endomorphism}
 In a [2011 forum post][finney glv], early Bitcoin contributor Hal Finney
 described a method by Gallant, Lambert, and Vanstone (GLV) to reduce the
 number of expensive computations needed to verify Bitcoin transaction
@@ -602,6 +646,7 @@ node or when verifying blocks after a node has been offline for a while.
 Finney died in 2014, but we remain grateful for his two decades of work
 on making cryptographic technology widely accessible.
 
+{:#patent-alliance}
 Square [announced][copa announced] the formation of an organization to
 coordinate the pooling of patents related to cryptocurrency technology.
 Members allow anyone to use their patents freely and, in exchange,
@@ -615,6 +660,7 @@ VerifyChain.
 
 ## October
 
+{:#jamming}
 October saw a significant increase in discussion among LN developers
 about solving a problem [first described in 2015][russell loop], as well
 as related problems.  An LN node can route a payment to itself across a
@@ -646,6 +692,7 @@ problem remains unsolved.
            483 483 483     483 483         [483*2 Mallory HTLC, 483*20 victim BTC]
            HTLCHTLCHTLC   HTLC.HTLC
 
+{:#lnd-disclosures}
 Two money-stealing attacks against LND that were discovered and reported
 by Antoine Riard in April were [fully disclosed][news121 riard
 disclosures] in October.  In one case, LND could be tricked into
@@ -655,6 +702,7 @@ the LND team's response, we are unaware of any users who lost funds.
 The LN specification was [updated][news123 high-s] for [both][news124
 htlc release] problems to help new implementations avoid them.
 
+{:#generic-signmessage}
 Over five years after the introduction of the initial segwit proposal,
 and three years after its activation, there remains no universal way to
 create and verify plain text messages signed using the keys that
@@ -676,6 +724,7 @@ transaction but which can be safely signed because they aren't valid
 according to Bitcoin's consensus rules.  Hopefully this improvement will
 allow generic signmessage to start to receive adoption.
 
+{:#musig2}
 Jonas Nick, Tim Ruffing, and Yannick Seurin [published][news120 musig2]
 the MuSig2 paper in October describing a new variant of the
 [MuSig][topic musig] signature scheme with a two round signing protocol
@@ -684,6 +733,7 @@ and no need for a zero-knowledge proof. What's more, the first round
 signing variant that could be particularly useful for cold storage and
 offchain contract protocols such as LN.
 
+{:#addrv2}
 Also in October, Bitcoin Core became the first project to
 [merge][bcc19954] an implementation of the [version 2 `addr`
 message][topic addr v2].  The `addr` message advertises the network
@@ -700,6 +750,7 @@ other anonymity networks that require larger addresses.
 
 ## November
 
+{:#lightning-pool}
 As mentioned in the February section, one challenge faced in the current
 LN network is that users and merchants need channels with incoming
 capacity in order to quickly receive funds over LN.  A fully
@@ -715,6 +766,7 @@ dual funded channels when they become available.
 
 ## December
 
+{:#ln-offers}
 Last year, Rusty Russell published a first draft of a [proposed
 specification][bolt12 draft] for LN *offers*, the ability for a spending
 node to request an invoice from a receiving node over the onion-routed
