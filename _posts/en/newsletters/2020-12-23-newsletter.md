@@ -77,7 +77,7 @@ to Bitcoin in 2020, please accept our deepest thanks.
 
 {:#dlc}
 Several developers began [working][news81 dlc] on a [specification][dlc
-spec] for using [Discrete Log Contracts][] (DLCs) between different
+spec] for using [Discreet Log Contracts][] (DLCs) between different
 software.  DLCs are a contract protocol where two or more parties agree
 to exchange money dependent on the outcome of a certain event as
 determined by an oracle (or several oracles). After the event happens,
@@ -112,7 +112,7 @@ protocol complexity but prevents channel funders from receiving any
 payments until they've spent some of their funds---a position that
 creates barriers to merchants joining LN.  One proposal to eliminate
 this problem is dual-funded channels where both the channel opener and
-their counterparty both commit some amount of funds to the channel.
+their counterparty commit some amount of funds to the channel.
 Lisa Neigut has developed a [protocol][bolts #524] for dual funding, but
 (as expected) it's complex.  In February, she started a
 [discussion][news83 interactive funding] about an incremental
@@ -192,13 +192,13 @@ parsing of `OP_IF` and related flow control opcodes.   Currently, the
 inefficiency can't be exploited to cause problems, but the extended
 capabilities proposed for tapscript would have made it possible for an
 attacker to use the inefficiency to create blocks that could take a
-large amount of CPU to verify.
+large amount of computation to verify.
 
 Although much of the public attention on taproot focuses on its change
 to Bitcoin's consensus rules, it won't be a positive contribution unless
 wallet developers can use it safely.  In April, and throughout the year,
-[several][news87 bip340 update] updates to BIP340 [changed][news87
-bip340 update2] the [recommendations][news91 bip340 powerdiff] for
+[several][news87 bip340 update1] updates to BIP340 [changed][news87
+bip340 update] the [recommendations][news91 bip340 powerdiff] for
 [how][news96 bip340 nonce update] developers should generate public keys
 and the signature nonce.  The changes are probably only directly
 interesting to cryptographers, but the history of Bitcoin has many
@@ -207,16 +207,19 @@ understand the cryptographic protocol they implemented.  Hopefully, the
 recommendations from experienced cryptographers in BIP340 will help
 avoid some of those types of problems in the future.
 
-In May, there was [renewed discussion][news97 additional commitment] about a known problem that makes it
+In May, there was [renewed discussion][news97 additional commitment] about
+the blinded ownership attack that makes it
 dangerous to automatically sign transactions with a hardware wallet.
 Ideally, hardware wallets could provide a mode where they'd automatically
 sign transactions guaranteed to increase the wallet's balance, such as
 maker coinjoins and LN [splices][topic splicing].  Unfortunately, it's
 only safe to sign a transaction if you know for sure which inputs are
-yours---otherwise an attacker can get you to sign some of your inputs
-one way (which makes sense by itself), the other inputs a different way
-(which also makes sense by itself), and then combine the two sets of
-inputs into a fully signed transaction that steals your money.   This
+yours---otherwise an attacker can get you to sign a transaction that
+looks like it only has one of your inputs, then get you to sign a
+different version of the same transaction that looks like it also only
+has one of your inputs (a different input than the first version), and
+finally combine the signatures for the two different inputs into the
+actual transaction that pays your money to the attacker.  This
 isn't normally a risk because most people today only use hardware
 wallets to sign transactions where they own 100% of the inputs, but for
 coinjoins, LN splices, and other protocols, it's expected other users
@@ -224,13 +227,13 @@ may partly or fully control some of the inputs.  It was proposed that
 taproot provide an additional way to commit to inputs that can be used
 in conjunction with data provided in a [PSBT][topic psbt] to ensure a
 hardware wallet will only generate a valid signature when it has enough
-data to identify all of its inputs.  The proposal was later
+data to identify all of its inputs.  This proposal was later
 [accepted][news101 additional commitment] into BIP341.
 
 ![Illustration of using a fake coinjoin to trick a hardware wallet into losing funds](/img/posts/2020-05-fake-coinjoin-trick-hardware-wallet.dot.png)
 
 In July, another discussion resumed about a previously known problem---the
-[bech32 address format][topic bech32] being much less effective than
+[bech32 address format][topic bech32] being less effective than
 expected at preventing users from sending money to unspendable
 addresses.  This doesn't practically affect current bech32 address
 users, but it could be an issue for planned taproot addresses where the
@@ -255,7 +258,7 @@ excluding comments and whitespace) and 2,100 lines of tests. Over 30
 people directly reviewed this PR and related changes, and many others
 participated in developing and reviewing the underlying research, the
 BIPs, the related code in libsecp256k1, and other parts of the system.
-The new soft fork rules are currently only used in Bitcoin Core's
+The new soft fork rules are currently only used in [signet][topic signet] and Bitcoin Core's
 private test mode ("regtest"); they need to be activated before they can
 be used on Bitcoin's mainnet.
 
@@ -618,14 +621,11 @@ aspects of its security.
 In Optech's third year, 10 new member companies joined<!-- Veriphi,
 SwanBitcoin, YellowCardIO, Xbtogroup, Bitonic, Fidelity Center for
 Applied Technology, AndgoInc, BTSEcom, EdgeWallet, Bitbank_inc -->, we
+held a [taproot workshop][] in London,
 published 51 weekly newsletters<!-- 78 to 129 -->, added 20 new pages to
 our [topics index][], added several new wallets and services to our
 [compatibility index][], and published several contributed [blog
 posts][optech blog posts] about Bitcoin scaling technology.
-
-For 2021, we plan to continue all the efforts above and hope to get back
-to providing workshops and other in-person training.
-
 </div>
 
 ## September
@@ -647,7 +647,7 @@ Finney died in 2014, but we remain grateful for his two decades of work
 on making cryptographic technology widely accessible.
 
 {:#patent-alliance}
-Square [announced][copa announced] the formation of an organization to
+Square [announced][copa announced] the formation of the Cryptocurrency Open Patent Alliance (COPA) to
 coordinate the pooling of patents related to cryptocurrency technology.
 Members allow anyone to use their patents freely and, in exchange,
 receive the ability to use patents in the pool in defense against patent
@@ -673,8 +673,8 @@ payments through a series of channels, where 483 is the maximum number
 of pending payments a channel may contain.  In this case, an attacker
 with two channels, each with 483 slots, can jam over 10,000 honest
 connection slots---again without paying any fees.  A [variety][news120
-upfront] of possible solutions were discussed, including forward upfront
-fees paid from the spender to each node along the path, [backwards
+upfront] of possible solutions were discussed, including *forward upfront
+fees* paid from the spender to each node along the path, [backwards
 upfront fees][news86 backwards upfront] paid from each payment hop to
 the previous hop, a [combination][news122 bidir fees] of both forward
 and backwards fees, [nested incremental routing][news119 nested
@@ -720,7 +720,7 @@ The [new mechanism][news121 signmessage update bip] makes message
 signing potentially compatible with a large amount of existing software
 and hardware wallets, as well as the [PSBT][topic psbt] data format, by
 allowing the signing of *virtual transactions* that look like real
-transaction but which can be safely signed because they aren't valid
+transactions but which can be safely signed because they aren't valid
 according to Bitcoin's consensus rules.  Hopefully, this improvement will
 allow generic signmessage to start to receive adoption.
 
@@ -833,7 +833,7 @@ schedule on January 6th.*
 [copa membership]: /en/newsletters/2020/12/09/#cryptocurrency-open-patent-alliance-copa-gains-new-members
 [crypto garage p2p deriv]: /en/newsletters/2020/08/19/#crypto-garage-announces-p2p-derivatives-beta-application-on-bitcoin
 [default signet discussion]: /en/newsletters/2020/09/02/#default-signet-discussion
-[discrete log contracts]: https://adiabat.github.io/dlc.pdf
+[discreet log contracts]: https://adiabat.github.io/dlc.pdf
 [dlc election bet]: https://suredbits.com/settlement-of-election-dlc/
 [dlc spec]: https://github.com/discreetlogcontracts/dlcspecs/
 [dryja poon sf devs]: https://lightning.network/lightning-network.pdf
@@ -899,7 +899,6 @@ schedule on January 6th.*
 [news86 bolts596]: /en/newsletters/2020/02/26/#bolts-596
 [news86 large channels]: /en/newsletters/2020/02/26/#bolts-596
 [news87 bip340 update1]: /en/newsletters/2020/03/04/#bips-886
-[news87 bip340 update2]: /en/newsletters/2020/03/04/#updates-to-bip340-schnorr-keys-and-signatures
 [news87 bip340 update]: /en/newsletters/2020/03/04/#updates-to-bip340-schnorr-keys-and-signatures
 [news87 exfiltration]: /en/newsletters/2020/03/04/#proposal-to-standardize-an-exfiltration-resistant-nonce-protocol
 [news87 taproot generic group]: /en/newsletters/2020/03/04/#taproot-in-the-generic-group-model
@@ -930,6 +929,7 @@ schedule on January 6th.*
 [somsen sas post]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2020-May/017846.html
 [somsen sas video]: https://www.youtube.com/watch?v=TlCxpdNScCA
 [##taproot-activation]: /en/newsletters/2020/07/22/#taproot-activation-discussions
+[taproot workshop]: /workshops/#taproot-workshop
 [todd segwit review]: https://petertodd.org/2016/segwit-consensus-critical-code-review#peer-to-peer-networking
 [topics index]: /en/topics/
 [tx origin wiki]: https://en.bitcoin.it/wiki/Privacy#Traffic_analysis
