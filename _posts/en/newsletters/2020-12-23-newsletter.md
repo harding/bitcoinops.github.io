@@ -684,15 +684,8 @@ routing], and [fidelity bonds][news126 routing fibonds].  Unfortunately,
 none of the methods discussed received widespread acceptance and so the
 problem remains unsolved.
 
-
-    FIXME:illustration
-    mallory → a → b → [...] → z → mallory
-            1   1   1       1   1          [1 Mallory BTC, 20 victim BTC]
-           BTC.BTC.BTC     BTC. BTC
-
-    mallory → a → b → [...] → z → mallory'
-           483 483 483     483 483         [483*2 Mallory HTLC, 483*20 victim BTC]
-           HTLCHTLCHTLC   HTLC.HTLC
+{:.center}
+![Illustration of LN liquidity and HTLC jamming attacks](/img/posts/2020-12-ln-jamming-attacks.png)
 
 {:#lnd-disclosures}
 Two money-stealing attacks against LND that were discovered and reported
@@ -795,7 +788,6 @@ what they have in store for us in 2021.
 *The Optech newsletter will return to its regular Wednesday publication
 schedule on January 6th.*
 
-<!-- FIXME:harding add topic links (going to be a lot of them!) -->
 {% include references.md %}
 {% include linkers/issues.md issues="8312,524,18038,18861,19109,14582,19743,16152" %}
 [2018 summary]: /en/newsletters/2018/12/28/
