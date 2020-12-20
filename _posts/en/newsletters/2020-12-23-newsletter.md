@@ -36,8 +36,8 @@ to Bitcoin in 2020, please accept our deepest thanks.
   * [Payjoin](#payjoin)
   * [LN PTLCs and other cryptography-based improvements](#ptlcs)
   * [BIP85 keychains](#bip85)
-* May
   * [Vaults](#vaults)
+* May
   * [Transaction origin privacy](#transaction-origin-privacy)
   * [Succinct atomic swaps](#succinct-atomic-swaps-sas)
   * [Coinswap implementation](#coinswap-implementation)
@@ -49,7 +49,7 @@ to Bitcoin in 2020, please accept our deepest thanks.
   * [LN fee ransom](#ln-fee-ransom)
   * [HTLC mining incentives](#concern-about-htlc-mining-incentives)
   * [Inventory out-of-memory denial-of-service attack](#inventory-out-of-memory-denial-of-service-attack-invdos)
-  * [Wabisabi coordinated coinjoins with arbitrary output amounts](#wabisabi)
+  * [WabiSabi coordinated coinjoins with arbitrary output amounts](#wabisabi)
 * July
   * [WTXID transaction announcements](#wtxid-announcements)
 * August
@@ -136,12 +136,12 @@ cl3600].
 ## March
 
 {:#exfiltration-resistance}
-One way hardware wallets could conceivably steal from their users is by
+One method hardware wallets could use to steal bitcoins from their users is by
 leaking information about the wallet's private keys via the transaction
 signatures it creates.  In March, [Stepan Snigirev][news87 exfiltration],
 [Pieter Wuille][news88 exfiltration], and several others discussed
 possible solutions to this problem for both Bitcoin's current ECDSA
-signature system and the proposed schnorr signature system.
+signature system and the proposed [schnorr signature][topic schnorr signatures] system.
 
 <div markdown="1" class="callout" id="taproot">
 ### 2020 summary<br>Taproot, tapscript, and schnorr signatures
@@ -149,7 +149,7 @@ signature system and the proposed schnorr signature system.
 Nearly every month of 2020 saw some notable development related to the
 proposed [taproot][topic taproot] soft fork ([BIP341][]) which adds
 support for [schnorr signatures][topic schnorr signatures] ([BIP340][])
-and [tapscript][topic tapscript] ([BIP342][]).  Together these
+and [tapscript][topic tapscript] ([BIP342][]).  Together, these
 improvements will allow users of single-signature scripts,
 multisignature scripts, and complex contracts to all use
 identical-appearing commitments that enhance their privacy and the
@@ -157,7 +157,9 @@ fungibility of all bitcoins.  Spenders will enjoy lower fees and the
 ability to resolve many multisig scripts and complex contracts with the
 same efficiency, low fees, and large anonymity set as single-sig users.
 Taproot and schnorr also lay the groundwork for future potential
-upgrades that may improve efficiency, privacy, and fungibility further.
+upgrades that may improve efficiency, privacy, and fungibility further,
+such as signature aggregation, [SIGHASH_ANYPREVOUT][topic
+sighash_noinput], and [scripting language changes][topic simplicity].
 
 This special section concentrates the summaries about those developments
 into a single narrative that we hope will be easier to follow than
@@ -278,7 +280,7 @@ proposal][news8 p2ep] received a major boost in April when a version of
 it was [added][news94 btcpay payjoin] to the BTCPay self-hosted payment
 processing system.  Payjoin provides a convenient way for users to
 increase their privacy and the privacy of other users on the network by
-creating transactions that undermine the assumption that the same person
+creating transactions that undermine the [assumption][common ownership heuristic] that the same person
 owns all of the inputs in a transaction.  The BTCPay version of payjoin
 would soon be [specified][news104 bips923] as [BIP78][] and support for
 it was added to [other programs][news116 payjoin joinmarket].
@@ -488,7 +490,7 @@ disclosed later.  The notable vulnerabilities included:
   worked to implement the [anchor outputs][topic anchor outputs]
   protocol to eliminate risks related to rapid rises in transaction
   feerates, one of the key contributors to that protocol---Matt
-  Corallo---discovered it would enable a new vulnerability.  An evil
+  Corallo---discovered it would enable a new vulnerability.  A malicious
   counterparty could attempt to settle an LN payment ([HTLC][topic
   htlc]) using a low feerate and a [transaction pinning][topic
   transaction pinning] technique that prevents the transaction or a fee
@@ -515,7 +517,7 @@ disclosed later.  The notable vulnerabilities included:
 - [LN fee ransom:][attack ln fee ransom] René Pickhardt publicly
   disclosed a vulnerability to the Lightning-Dev mailing list that he
   had previously privately disclosed to LN implementation maintainers
-  almost a year earlier.  An evil channel counterparty can initiate
+  almost a year earlier.  A malicious channel counterparty can initiate
   up to 483 payments (HTLCs) in an LN channel and then close the
   channel, producing an onchain transaction whose size is about 2% of an
   entire block and which needs to have its transaction fee paid by the
@@ -556,7 +558,7 @@ disclosed later.  The notable vulnerabilities included:
 {:#wabisabi}
 June also had some good news, with a team of researchers working on the
 Wasabi coinjoin implementation [announcing][news102 wasabi] a protocol
-named Wabisabi that should allow
+named WabiSabi that should allow
 trustless server-coordinated coinjoins with arbitrary output values.
 This makes it easier to use coordinated coinjoins to send payments,
 either between participants in the coinjoin or to non-participants.
@@ -662,7 +664,7 @@ VerifyChain.
 
 {:#jamming}
 October saw a significant increase in discussion among LN developers
-about solving a problem [first described in 2015][russell loop], as well
+about solving the jamming problem [first described in 2015][russell loop], as well
 as related problems.  An LN node can route a payment to itself across a
 path of 20 or more hops.  This allows an attacker with 1 BTC to
 temporarily lock up 20 BTC or more belonging to other users.  After
@@ -745,7 +747,7 @@ After almost 15 years in production, the Tor project deprecated version
 2 onion services and will stop supporting them in July 2021.  Newer
 version 3 onion addresses are 256 bits, so they're not usable with the
 original `addr` messages.  The [BIP155][] upgrade of the `addr` message
-provides more space for Tor addresses and also makes it possible to use
+provides more capacity for Tor addresses and also makes it possible to use
 other anonymity networks that require larger addresses.
 
 ## November
@@ -828,6 +830,7 @@ schedule on January 6th.*
 [cl4068]: /en/newsletters/2020/09/30/#c-lightning-4068
 [c-lightning 0.9.0]: /en/newsletters/2020/08/05/#c-lightning-0-9-0
 [coinswap design]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2020-May/017898.html
+[common ownership heuristic]: https://en.bitcoin.it/wiki/Common-input-ownership_heuristic
 [compatibility index]: /en/compatibility/
 [copa announced]: /en/newsletters/2020/09/16/#crypto-open-patent-alliance
 [copa membership]: /en/newsletters/2020/12/09/#cryptocurrency-open-patent-alliance-copa-gains-new-members
@@ -840,7 +843,7 @@ schedule on January 6th.*
 [ecdsa]: https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm
 [eclair 0.4]: /en/newsletters/2020/05/13/#eclair-0-4
 [finney glv]: https://bitcointalk.org/index.php?topic=3238.msg45565#msg45565
-[fournier otves]: https://github.com/LLFourn/one-time-VES/blob/master/
+[fournier otves]: https://github.com/LLFourn/one-time-VES/blob/master/main.pdf
 [joinmarket]: https://github.com/JoinMarket-Org/joinmarket-clientserver
 [libsecp256k1]: https://github.com/bitcoin-core/secp256k1
 [libsecp256k1-zkp]: https://github.com/ElementsProject/secp256k1-zkp
