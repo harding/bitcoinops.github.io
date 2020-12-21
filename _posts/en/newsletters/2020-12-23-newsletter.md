@@ -88,8 +88,8 @@ their funds.  The oracle doesn't need to know the terms of the contract
 indistinguishable from many other Bitcoin transactions or it can be
 executed within an LN channel. This makes DLCs more private and
 efficient than other known oracle-based contract methods, and it's
-arguably more secure as an oracle who signs a commitment to a false
-result generates clear evidence of their fraud.  By the end of the year,
+arguably more secure as an oracle that signs a commitment to a false
+result generates clear evidence of fraud.  By the end of the year,
 there would be four compatible implementations of DLCs, an
 [application][crypto garage p2p deriv] for offering and accepting
 DLC-based peer-to-peer derivatives, and several users [reporting][dlc
@@ -101,7 +101,7 @@ election bet] that they'd used DLCs in transactions on mainnet.
 Five years after the [first public presentation about LN][dryja poon sf
 devs], several early protocol decisions meant to be temporary were
 revisited.   The most immediate change was the February [update][news86
-bolts596] to the LN specification that allowed users to opt-out of the
+bolts596] to the LN specification that allowed users to opt out of the
 [maximum channel and payment value][topic large channels] limits enacted
 in 2016.
 
@@ -172,7 +172,7 @@ stakeholders.  Other developers focused on the [BIP8][] proposal to be
 able to quickly bypass the type of procedural problem that delayed
 segwit activation in 2016 and 2017.  The discussion about what precise
 activation mechanism to use would continue all year, in a [dedicated IRC
-room][##taproot-activation] and elsewhere, with there being both a
+channel][##taproot-activation] and elsewhere, with there being both a
 [developer survey][news122 devsurvey] about mechanism design and a
 [survey of miners][news125 miner survey] about their support for
 taproot.
@@ -197,7 +197,7 @@ attacker to use the inefficiency to create blocks that could take a
 large amount of computation to verify.
 
 Although much of the public attention on taproot focuses on its change
-to Bitcoin's consensus rules, it won't be a positive contribution unless
+to Bitcoin's consensus rules, taproot won't be a positive contribution unless
 wallet developers can use it safely.  In April, and throughout the year,
 [several][news87 bip340 update1] updates to BIP340 [changed][news87
 bip340 update] the [recommendations][news91 bip340 powerdiff] for
@@ -322,9 +322,9 @@ of them using just the super-keychain's seed.  This proposal would
 recent versions of the ColdCard hardware wallet.
 
 {:#vaults}
-Two announcements about [vaults][topic vaults] were made April.  Vaults
+Two announcements about [vaults][topic vaults] were made in April.  Vaults
 are a type of contract known as a [covenant][topic covenants] that warn
-their users that someone is trying to spend their funds and which give
+their users that someone is trying to spend their funds and give
 the user time to block the spend.  Bryan Bishop announced a [prototype
 vault][news94 bishop vault] based on his [proposal][news59 bishop idea]
 from last year.  Kevin Loaec and Antoine Poinsot announced their own
@@ -418,7 +418,7 @@ bandwidth throttling options.  Although merged on the server side in
 time, 2020 saw the P2P part of the protocol merged [piecewise][news98
 bcc18877] into Bitcoin Core in [May][news100 bcc19010] through
 [August][news111 bcc19070], culminating with the ability for a node
-operator to opt-in to creating and serving compact block filters by
+operator to opt in to creating and serving compact block filters by
 enabling just two configuration options.
 
 <div markdown="1" class="callout" id="releases">
@@ -471,7 +471,7 @@ disclosed later.  The notable vulnerabilities included:
   previously discovered and reported by Gregory Sanders in 2017 where a specially
   constructed transaction with at least two inputs can get around this
   limitation if the user can be tricked into signing two or more
-  seemingly-identical variations of the same transaction.  Several
+  seemingly identical variations of the same transaction.  Several
   developers felt this was a minor issue---if you can get a user to sign
   twice, you can get them to pay the receiver twice, which also loses
   their money.  Despite that, several hardware wallet manufacturers
@@ -538,7 +538,7 @@ disclosed later.  The notable vulnerabilities included:
   not confirm the transaction containing it, allowing the timelock to
   expire so that the spender would get their money back but still learn
   the secret.  Developer ZmnSCPxj reminded the researchers of a
-  well-known mechanism that should prevent such problems, a mechanism he
+  well known mechanism that should prevent such problems, a mechanism he
   helped [implement][cl3870] in C-Lightning.  Although the mechanism
   works in theory, using it will cost users money, so research into
   better solutions is still encouraged.
