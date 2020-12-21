@@ -323,9 +323,9 @@ recent versions of the ColdCard hardware wallet.
 
 {:#vaults}
 Two announcements about [vaults][topic vaults] were made in April.  Vaults
-are a type of contract known as a [covenant][topic covenants] that warn
-their users that someone is trying to spend their funds and give
-the user time to block the spend.  Bryan Bishop announced a [prototype
+are a type of contract known as a [covenant][topic covenants] that produces a warning
+when someone is trying to spend the covenant's funds, giving
+the covenant's owner time to block a spend they didn't authorize.  Bryan Bishop announced a [prototype
 vault][news94 bishop vault] based on his [proposal][news59 bishop idea]
 from last year.  Kevin Loaec and Antoine Poinsot announced their own
 project, [Revault][news95 revault], that [focuses][news100 revault arch]
@@ -379,13 +379,13 @@ payment could have instead been a coinswap.
 - **Coinswap implementation:** Chris Belcher [posted][belcher coinswap1]
   a design for a full-featured coinswap implementation.  His [initial
   post][coinswap design] included the history of the coinswap idea,
-  suggests ways the multisig conditions needed for coinswap could be
-  disguised as more common transaction types, proposes using a market
-  for liquidity (like JoinMarket already does), describes splitting and
+  suggested ways the multisig conditions needed for coinswap could be
+  disguised as more common transaction types, proposed using a market
+  for liquidity (like JoinMarket already does), described splitting and
   routing techniques to reduce privacy losses from amount correlation or
-  spying participants, suggests combining coinswap with [payjoin][topic
-  payjoin], and discusses some of the backend requirements for the
-  system.  Additionally, he compares coinswap to other privacy
+  spying participants, suggested combining coinswap with [payjoin][topic
+  payjoin], and discussed some of the backend requirements for the
+  system.  Additionally, he compared coinswap to other privacy
   techniques such as using LN, [coinjoin][topic coinjoin], payjoin, and
   payswap.  The proposal received a [significant amount][belcher
   coinswap2] of [expert discussion][belcher coinswap3] and a number of
