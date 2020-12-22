@@ -508,15 +508,16 @@ disclosed later.  The notable vulnerabilities included:
   unspendable bitcoins, a category of problems sometimes called [eclipse
   attacks][topic eclipse attacks], Gleb Naumenko and Antoine Riard
   published a paper in June showing that eclipse attacks could steal
-  from some LN nodes in as little as two hours---although LN nodes that
-  were connected to their own full verification nodes would last longer.
+  from LN nodes in as little as two hours---although it would take
+  longer to steal from LN nodes that were connected to their own full
+  verification nodes.
   The authors suggest the implementation of more methods for avoiding
   eclipse attacks, which did see several positive developments in the
   Bitcoin Core project this year.
 
 - [LN fee ransom:][attack ln fee ransom] René Pickhardt publicly
   disclosed a vulnerability to the Lightning-Dev mailing list that he
-  had previously privately disclosed to LN implementation maintainers
+  had previously privately reported to LN implementation maintainers
   almost a year earlier.  A malicious channel counterparty can initiate
   up to 483 payments (HTLCs) in an LN channel and then close the
   channel, producing an onchain transaction whose size is about 2% of an
@@ -539,13 +540,13 @@ disclosed later.  The notable vulnerabilities included:
   expire so that the spender would get their money back but still learn
   the secret.  Developer ZmnSCPxj reminded the researchers of a
   well known mechanism that should prevent such problems, a mechanism he
-  helped [implement][cl3870] in C-Lightning.  Although the mechanism
+  helped [implement][cl3870] in C-Lightning.  Although the idea
   works in theory, using it will cost users money, so research into
   better solutions is still encouraged.
 
 - [Inventory out-of-memory Denial-of-Service attack (InvDoS):][attack invdos]
   an attack originally discovered in 2018 that affected the Bcoin and
-  Bitcoin Core full verification nodes, which was responsibly disclosed
+  Bitcoin Core full nodes, which was responsibly disclosed
   and fixed at that time, was reevaluated in June 2020 and found to also
   apply to the Btcd full node.  An attacker could flood a victim's node
   with an excessive number of new transaction announcements (`inv`
@@ -574,17 +575,16 @@ availability of new unconfirmed transactions for relay using the
 transaction's hash-based identifier (txid), but when the proposed segwit
 code was being reviewed in 2016, Peter Todd [discovered][todd segwit
 review] that a malicious node could get other nodes on the network to
-ignore an innocent user's transaction by invalidating that transaction's
-witness data, which is data that's not part of its txid.  A [quick
+ignore an innocent user's transaction by invalidating witness data in the transaction
+that is not part of its txid.  A [quick
 fix][Bitcoin Core #8312] was implemented at the time, but it had some
 minor downsides and developers knew that the best solution---despite its
 [complexities][bcc19569]---was to announce new transactions using their
 witness txid (wtxid).  Within a month of BIP339 being added to the BIPs
 repository, wtxid announcements were [merged][bcc18044] into Bitcoin
 Core.  Although seemingly a minor concern without any obvious effect on
-users, wtxid announcements simplify the development or review of several
-hoped-for upgrades, such as [package relay][topic package relay] and the
-[relay of taproot transactions][bcc19620].
+users, wtxid announcements simplify the development or review of
+hoped-for upgrades, such as [package relay][topic package relay].
 
 ## August
 
@@ -653,7 +653,7 @@ Square [announced][copa announced] the formation of the Cryptocurrency Open Pate
 coordinate the pooling of patents related to cryptocurrency technology.
 Members allow anyone to use their patents freely and, in exchange,
 receive the ability to use patents in the pool in defense against patent
-aggressors.  By the end of the year, the alliance had [15 members][copa
+aggressors.  As of this writing, the alliance had [18 members][copa
 membership]: ARK.io, Bithyve, Blockchain Commons, Blockstack,
 Blockstream, Carnes Validadas, Cloudeya Ltd., Coinbase, Foundation
 Devices, Horizontal Systems, Kraken, Mercury Cash, Protocol Labs,
@@ -706,7 +706,7 @@ generically as well: there's no widely supported way to handle messages
 for P2SH, P2WSH, and P2SH-P2WSH addresses either---nor a forward
 compatible way that will work for taproot addresses.  The [BIP322][]
 proposal for a [generic signmessage][topic generic signmessage] function
-has been trying to fix all of these issues, but it's failed to gain much
+is an attempt to fix all of these issues, but it's failed to gain much
 traction.  This year saw an additional [request for feedback][news88
 signmessage rfh] from its champion, a [simplification][news91
 signmessage simplification], and (in October) a nearly [complete
@@ -803,7 +803,6 @@ schedule on January 6th.*
 [bcc18044]: /en/newsletters/2020/07/29/#bitcoin-core-18044
 [bcc18267]: /en/newsletters/2020/09/30/#bitcoin-core-18267
 [bcc19569]: /en/newsletters/2020/08/05/#bitcoin-core-19569
-[bcc19620]: /en/newsletters/2020/08/12/#bitcoin-core-19620
 [bcc19954]: /en/newsletters/2020/10/14/#bitcoin-core-19954
 [belcher coinswap1]: /en/newsletters/2020/06/03/#design-for-a-coinswap-implementation
 [belcher coinswap2]: /en/newsletters/2020/08/26/#discussion-about-routed-coinswaps
