@@ -81,14 +81,14 @@ spec] for using [Discreet Log Contracts][] (DLCs) between different
 software.  DLCs are a contract protocol where two or more parties agree
 to exchange money dependent on the outcome of a certain event as
 determined by an oracle (or several oracles). After the event happens,
-the oracle publishes a commitment to the outcome of the event in the
-form of a digital signature, which the winning party can use to claim
+the oracle publishes a commitment to the outcome of the event
+that the winning party can use to claim
 their funds.  The oracle doesn't need to know the terms of the contract
 (or even that there is a contract). The contract can be made
 indistinguishable from many other Bitcoin transactions or it can be
 executed within an LN channel. This makes DLCs more private and
 efficient than other known oracle-based contract methods, and it's
-arguably more secure as an oracle that signs a commitment to a false
+arguably more secure as an oracle that commits to a false
 result generates clear evidence of fraud.  By the end of the year,
 there would be four compatible implementations of DLCs, an
 [application][crypto garage p2p deriv] for offering and accepting
@@ -147,7 +147,7 @@ signature system and the proposed [schnorr signature][topic schnorr signatures] 
 ### 2020 summary<br>Taproot, tapscript, and schnorr signatures
 
 Nearly every month of 2020 saw some notable development related to the
-proposed [taproot][topic taproot] soft fork ([BIP341][]) which adds
+proposed [taproot][topic taproot] soft fork ([BIP341][]) which also adds
 support for [schnorr signatures][topic schnorr signatures] ([BIP340][])
 and [tapscript][topic tapscript] ([BIP342][]).  Together, these
 improvements will allow users of single-signature scripts,
@@ -218,13 +218,13 @@ maker coinjoins and LN [splices][topic splicing].  Unfortunately, it's
 only safe to sign a transaction if you know for sure which inputs are
 yours---otherwise an attacker can get you to sign a transaction that
 looks like it only has one of your inputs, then get you to sign a
-different version of the same transaction that looks like it also only
+different version of the same transaction that also looks like it only
 has one of your inputs (a different input than the first version), and
 finally combine the signatures for the two different inputs into the
 actual transaction that pays your money to the attacker.  This
 isn't normally a risk because most people today only use hardware
 wallets to sign transactions where they own 100% of the inputs, but for
-coinjoins, LN splices, and other protocols, it's expected other users
+coinjoins, LN splices, and other protocols, it's expected that other users
 may partly or fully control some of the inputs.  It was proposed that
 taproot provide an additional way to commit to inputs that can be used
 in conjunction with data provided in a [PSBT][topic psbt] to ensure a
@@ -252,7 +252,7 @@ deficiency and provide some other nice properties.
 
 In September, the code implementing schnorr signature verification and
 single-party signing functions from [BIP340][] was [merged][news115
-bip340 merge] into libsecp256k1 and subsequently became part of Bitcoin
+bip340 merge] into libsecp256k1 and soon became part of Bitcoin
 Core.  This allowed the subsequent October [merge][news120 taproot
 merge] of the verification code for taproot, schnorr, and tapscript.
 The code consists of about 700 lines of consensus-related changes (500
@@ -583,7 +583,7 @@ minor downsides and developers knew that the best solution---despite its
 witness txid (wtxid).  Within a month of BIP339 being added to the BIPs
 repository, wtxid announcements were [merged][bcc18044] into Bitcoin
 Core.  Although seemingly a minor concern without any obvious effect on
-users, wtxid announcements simplify the development or review of
+users, wtxid announcements simplify the development of
 hoped-for upgrades, such as [package relay][topic package relay].
 
 ## August
