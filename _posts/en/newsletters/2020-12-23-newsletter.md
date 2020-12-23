@@ -355,7 +355,7 @@ reducing the ability of third parties to determine which node first
 broadcast a transaction.  PRs [#14582][Bitcoin Core #14582] and
 [#19743][Bitcoin Core #19743] allow the wallet to [automatically
 try][news112 bcc14582] to eliminate [address reuse][topic output
-linking] links when it wouldn't cost the user any extra fees (or,
+linking] links when it wouldn't cost the user any extra fees (or, alternatively,
 allowing the user to specify the maximum extra they're willing to spend
 in order to eliminate such links).
 
@@ -407,7 +407,7 @@ posted to the Bitcoin-Dev mailing list in May 2016 suggesting an
 alternative construction of a [single bloom filter per block][bfd post]
 that all wallets could use.  The idea was quickly [refined][maxwell
 gcs], [implemented][neutrino], and [specified][bip157 spec discussion],
-becoming the [BIP157][] and [BIP158][] specification of [compact block
+becoming the [BIP157][] and [BIP158][] specifications of [compact block
 filters][topic compact block filters].  This can significantly improve
 the privacy of lightweight clients, although it does increase their
 bandwidth, CPU, and memory requirements compared to current popular
