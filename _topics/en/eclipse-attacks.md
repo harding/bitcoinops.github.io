@@ -61,6 +61,9 @@ optech_mentions:
   - title: Differentiating peers based on ASN instead of address prefix
     url: /en/newsletters/2019/06/26/#differentiating-peers-based-on-asn-instead-of-address-prefix
 
+  - title: Preventing eclipse attacks using block-relay-only connections
+    url: /en/newsletters/2019/09/11/#bitcoin-core-15759
+
   - title: Discussion of eclipse attacks on LN nodes
     url: /en/newsletters/2019/12/18/#discussion-of-eclipse-attacks-on-ln-nodes
 
