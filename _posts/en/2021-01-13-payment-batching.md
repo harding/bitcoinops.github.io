@@ -2,8 +2,8 @@
 title: 'Scaling Bitcoin using Payment Batching'
 permalink: /en/payment-batching/
 # FIXME:bitschmidty to update dates
-name: 2020-09-21-payment-batching
-slug: 2020-09-21-payment-batching
+name: 2021-01-13-payment-batching
+slug: 2021-01-13-payment-batching
 type: posts
 layout: post
 lang: en

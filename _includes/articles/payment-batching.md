@@ -4,7 +4,7 @@ This post describes how
 high-frequency spenders can use the scaling technique of *payment
 batching* to reduce transaction fees and block space use by about 75% in
 practical situations.
-As of September 2020, payment batching is used by multiple popular
+As of January 2021, payment batching is used by multiple popular
 Bitcoin services (mainly exchanges), is available as a built-in feature
 of many wallets (including Bitcoin Core), and should be easy to
 implement in custom wallets and payment-sending solutions.  On the
@@ -137,7 +137,7 @@ on the technique used, this would not necessarily reduce the efficiency
 of batching and could provide significantly enhanced privacy.  However,
 naive implementations of coinjoin previously provided by Bitcoin
 services have had [flaws][coinjoin sudoku] that prevented them from
-providing significant privacy advantages.  As of February 2019, no
+providing significant privacy advantages.  As of January 2021, no
 currently-available coinjoin implementation is fully compatible with the
 needs of payment batching.
 
