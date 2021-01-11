@@ -30,9 +30,9 @@ software.
   increasing bandwidth or reducing privacy (see [Newsletter #63][news63
   bcc15759]).  However, the BIP37 mechanism being used to suppress
   transaction relay allows the initiating node to request full
-  transaction relay at any time.  Transaction relay can consume hundreds
-  of megabytes of data per day per peer, so nodes need to set their anti
-  Denial of Service (DoS) limits with the assumption that each
+  transaction relay at any time.  Transaction relay consumes node
+  resources such as memory and bandwidth, so nodes need to set their
+  connection limits with the assumption that each
   BIP37-based low-bandwidth blocks-relay-only connection could suddenly
   become a full transaction relay connection.
 
@@ -44,8 +44,8 @@ software.
     transactions from the node.  It also won't send some other gossip
     messages such as `addr` messages used for IP address announcements.
     The `disabletx` negotiation persists for the lifetime of the
-    connection, allowing peers to exclude disabled relay connections
-    from their transaction relay anti-DoS rules.
+    connection, allowing peers to use different limits for disabled
+    relay connections.
 
 - **Bech32m** Pieter Wuille [posted][wuille bech32m post] to the
   Bitcoin-Dev mailing list a [draft BIP][bech32m bip] for a modified
@@ -68,7 +68,8 @@ software.
   UTXOs, and then refuse to sign the funding transaction---harming those
   users' privacy at no cost to the abuser.
 
-    This week, Lloyd Fournier evaluated two previous proposals to deal
+    This week, Lloyd Fournier [posted][fournier podle] to the Lightning-Dev
+    mailing list an evaluation of two previous proposals to deal
     with this problem, [one][zmn podle] using Proofs of Discrete Log
     Equivalency (PoDLEs, see [Newsletter #83][news83 podle]) and the
     [other][darosior sighash] using dual funding transactions
@@ -157,3 +158,4 @@ FIXME:harding topic links
 [news83 podle]: /en/newsletters/2020/02/05/#podle
 [zmn podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002476.html
 [darosior sighash]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002475.html
+[fournier podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2021-January/002929.html
