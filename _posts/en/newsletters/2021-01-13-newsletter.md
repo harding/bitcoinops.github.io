@@ -180,7 +180,7 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
   forwarding protocol, [NAT-PMP][rfc 6886] (Network Address Translation Port
   Mapping Protocol).  A listening Bitcoin client started with the `-natpmp`
   option will automatically open the listening port on NAT-PMP-enabled routers.
-  NAT-PMP support is added in parallel to UPnP (Universal Plug and Play) support
+  NAT-PMP support is added in parallel to the existing UPnP (Universal Plug and Play) support
   which had been disabled by default in Bitcoin Core 0.11.1 after multiple
   security issues. In contrast to UPnP, NAT-PMP uses fixed-size UDP packets
   instead of XML parsing and is therefore considered [less risky][laanwj
