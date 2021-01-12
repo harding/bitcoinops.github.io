@@ -54,7 +54,10 @@ software.
   these *bech32m* addresses will be detected.  If no problems are found
   with the proposal, it is expected that bech32m addresses will be used
   for [taproot][topic taproot] addresses and possibly future new script
-  upgrades.
+  upgrades.  This will allow wallets and services that adopt bech32m to
+  automatically be able to pay future wallets and services that upgrade
+  to taproot and many other proposed improvements (see [Newsletter
+  #45][news45 bech32 upgrade] for details).
 
 - **LN dual funding anti UTXO probing:** a long-term goal for LN has
   been dual funding, the ability to open a new channel with funds from
@@ -141,11 +144,11 @@ logic.
 projects.  Please consider upgrading to new releases or helping to test
 release candidates.*
 
-FIXME:harding to update Tuesday
-
-- [Bitcoin Core 0.21.0rc5][Bitcoin Core 0.21.0] is a release candidate
+- [Bitcoin Core 0.21.0rc5][Bitcoin Core 0.21.0] is a Release Candidate (RC)
   for the next major version of this full node implementation and its
-  associated wallet and other software.
+  associated wallet and other software.  Jarol Rodriguez has written an
+  [RC testing guide][] that describes the major changes in the release
+  and suggests how you can help test them.
 
 - [LND 0.12.0-beta.rc5][LND 0.12.0-beta] is the latest release candidate
   for the next major version of this LN node.  It makes [anchor
@@ -198,7 +201,7 @@ FIXME:harding topic links
 {% include references.md %}
 {% include linkers/issues.md issues="18077,19055,4320,4303,6993,20477" %}
 [bitcoin core 0.21.0]: https://bitcoincore.org/bin/bitcoin-core-0.21.0/
-[lnd 0.12.0-beta]: https://github.com/lightningnetwork/lnd/releases/tag/v0.12.0-beta.rc3
+[lnd 0.12.0-beta]: https://github.com/lightningnetwork/lnd/releases/tag/v0.12.0-beta.rc5
 [news63 bcc15759]: /en/newsletters/2019/09/11/#bitcoin-core-15759
 [daftuar disabletx]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2021-January/018340.html
 [rfc 6886]: https://tools.ietf.org/html/rfc6886
@@ -211,3 +214,5 @@ FIXME:harding topic links
 [darosior sighash]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002475.html
 [fournier podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2021-January/002929.html
 [practicalswift]: https://github.com/practicalswift
+[news45 bech32 upgrade]: /en/bech32-sending-support/#automatic-bech32-support-for-future-soft-forks
+[rc testing guide]: https://github.com/bitcoin-core/bitcoin-devwiki/wiki/0.21-Release-Candidate-Testing-Guide

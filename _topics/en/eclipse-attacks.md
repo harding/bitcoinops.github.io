@@ -103,6 +103,9 @@ optech_mentions:
   - title: "2020 year in review: fast eclipse attacks against LN nodes"
     url: /en/newsletters/2020/12/23/#fast-ln-eclipse-attacks
 
+  - title: Proposed `disabletx` message to help allow more block-relay-only peers
+    url: /en/newsletters/2021/01/13/#proposed-disabletx-message
+
 ## Optional.  Same format as "primary_sources" above
 # see_also:
 #   - title:

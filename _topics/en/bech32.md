@@ -1,6 +1,7 @@
 ---
 title: Bech32
 aliases:
+  - Bech32m
   - BIP173
   - Native segwit address
 
@@ -21,12 +22,24 @@ extended_summary: |
   some cases).  Addresses encode a segwit version, making them forward
   compatible with a large range of conceivable upgrades.
 
+  After a [problem][bech32 weakness] was discovered with bech32 error
+  detection for future upgrades under some rare circumstances, a new
+  bech32 modified (**bech32m**) format was proposed.  The new format is
+  not backwards compatible with the original bech32 format, although it
+  uses almost exactly the same algorithm and so interoperability is
+  easily added.  It is expected that bech32m will be used for
+  [taproot][topic taproot] and future segwit-based script upgrades.
+
+  [bech32 weakness]: /en/newsletters/2019/11/13/#taproot-review-discussion-and-related-information
+
 ## Optional.  Produces a Markdown link with either "[title][]" or
 ## "[title](link)"
 primary_sources:
     - title: BIP173
     - title: Bech32 reference code
       link: https://github.com/sipa/bech32
+    - title: Bech32m draft BIP
+      link: https://github.com/sipa/bips/blob/bip-bech32m/bip-bech32m.mediawiki
 
 ## Optional.  Each entry requires "title", "url", and "date".  May also use "feature:
 ## true" to bold entry
@@ -74,6 +87,9 @@ optech_mentions:
 
   - title: "2020 year in review: taproot's need for a modified bech32 address format"
     url: /en/newsletters/2020/12/23/#taproot
+
+  - title: "Draft BIP for bech32m"
+    url: /en/newsletters/2021/01/13/#bech32m
 
 ## Optional.  Same format as "primary_sources" above
 see_also:
