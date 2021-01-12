@@ -95,7 +95,7 @@ question below to see a summary of the answer from the meeting.*
 
 [Add unit testing of node eviction logic][review club
 #20477] is a PR ([#20477][Bitcoin Core #20477]) by
-[practicalswift][practicalswift] to improve test coverage of Bitcoin Core's peer
+pseudonymous contributor practicalswift to improve test coverage of Bitcoin Core's peer
 eviction logic when a node's inbound connection slots are full. Extreme care
 must be taken to avoid exposing the node to attacker-triggered network
 partitioning with this logic, so this code is critical.
@@ -213,6 +213,5 @@ FIXME:harding topic links
 [zmn podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002476.html
 [darosior sighash]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002475.html
 [fournier podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2021-January/002929.html
-[practicalswift]: https://github.com/practicalswift
 [news45 bech32 upgrade]: /en/bech32-sending-support/#automatic-bech32-support-for-future-soft-forks
 [rc testing guide]: https://github.com/bitcoin-core/bitcoin-devwiki/wiki/0.21-Release-Candidate-Testing-Guide
