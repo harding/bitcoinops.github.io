@@ -90,12 +90,49 @@ software.
 meeting, highlighting some of the important questions and answers.  Click on a
 question below to see a summary of the answer from the meeting.*
 
-FIXME:jonatack
+[Add unit testing of node eviction logic][review club
+#20477] is a PR ([#20477][Bitcoin Core #20477]) by
+[practicalswift][practicalswift] to improve test coverage of Bitcoin Core's peer
+eviction logic when a node's inbound connection slots are full. Extreme care
+must be taken to avoid exposing the node to attacker-triggered network
+partitioning with this logic, so this code is critical.
+
+Most of the discussion focused on understanding Bitcoin Core's peer eviction
+logic.
 
 {% include functions/details-list.md
-  q0="FIXME"
-  a0="FIXME"
-  a0link="http://FIXME"
+  q0="Inbound or outbound peer selection: which one is our primary defense
+      against eclipse attacks?"
+  a0="Outbound peer selection, as outbound peers are far less under attacker
+      control than inbound connections. Inbound peer eviction is a second-order
+      protection---and not all nodes permit incoming connections."
+  a0link="https://bitcoincore.reviews/20477#l-77"
+
+  q1="Why does Bitcoin Core evict inbound connections?"
+  a1="To make inbound slots available for honest peers in the network so that
+      new nodes can establish good outbound connections to them. Otherwise,
+      dishonest nodes could more easily attack new nodes by being available for
+      their outbound connections and by statically occupying inbound slots."
+  a1link="https://bitcoincore.reviews/20477#l-66"
+
+  q2="When it needs to free up a slot, how does Bitcoin Core decide which
+      inbound peer to evict?"
+  a2="Up to 28 peers are protected from eviction based on criteria that are
+      difficult to forge, such as low latency, network group, providing novel
+      valid transactions and blocks, and a few others. The longest-connected
+      remaining half are protected, including some onion peers. Of those that
+      remain, the youngest member of the network group with the most
+      connections is selected for disconnection. An attacker would have to be
+      simultaneously better than honest peers at all of these characteristics
+      to partition a node."
+  a2link="https://bitcoincore.reviews/20477#l-83"
+
+  q3="Starting from what number of inbound peers does eviction begin to occur?"
+  a3="Starting from 21 inbound peers, as at least 20 are protected by the
+      current logic: 4 by network group, 4 that sent us novel blocks passing
+      initial validity checks, 4 that sent us novel transactions accepted into
+      our mempool, and 8 having the lowest minimum ping time (best latency)."
+  a3link="https://bitcoincore.reviews/20477#l-218"
 %}
 
 ## Releases and release candidates
@@ -159,7 +196,7 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
 
 FIXME:harding topic links
 {% include references.md %}
-{% include linkers/issues.md issues="18077,19055,4320,4303,6993" %}
+{% include linkers/issues.md issues="18077,19055,4320,4303,6993,20477" %}
 [bitcoin core 0.21.0]: https://bitcoincore.org/bin/bitcoin-core-0.21.0/
 [lnd 0.12.0-beta]: https://github.com/lightningnetwork/lnd/releases/tag/v0.12.0-beta.rc3
 [news63 bcc15759]: /en/newsletters/2019/09/11/#bitcoin-core-15759
@@ -173,3 +210,4 @@ FIXME:harding topic links
 [zmn podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002476.html
 [darosior sighash]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-January/002475.html
 [fournier podle]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2021-January/002929.html
+[practicalswift]: https://github.com/practicalswift
