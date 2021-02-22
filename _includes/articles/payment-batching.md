@@ -61,7 +61,7 @@ the simple best-case scenario of already having a large input available).
 
 For the typical case,
 consolidation loses efficiency when only making a single payment,
-but when actually batching, it performs almost as well as the best case
+but when batching multiple payments, it performs almost as well as the best case
 scenario.
 
 In addition to payment batching directly providing a fee savings,
@@ -88,17 +88,16 @@ savings rate will be higher.
 ## Concerns
 
 The fee-reduction benefits of payment batching do create tradeoffs and
-concerns that will need to be addressed by any service using the
+concerns that you will need to address when using the
 technique.
 
 ### Delays
 
 This is the primary concern with payment batching.  Although some
 situations naturally lend themselves to payment batching (e.g. a mining
-pool paying hashrate providers in a block the pool mined), many
-services primarily send money to users when those users make a
-withdrawal request.  In order to batch payments, the service must get
-the user to accept that their payment will not be sent immediately---it
+pool paying hashrate providers in a block the pool mined),
+you will probably need to get
+the user to accept that their payment will not be broadcast immediately---it
 will be held for some period of time and then combined with other
 withdrawal requests.
 
@@ -109,7 +108,7 @@ sending of their payment, you also delay when it's confirmed (all other
 things being equal, such as feerates).
 
 To mitigate the problem of delays, you may allow the
-user to choose between an immediate payment and a delayed payment with
+user to choose between an immediate broadcast and a delayed broadcast with
 a different fee provided for each option.  For example:
 
     [X] Free withdrawal (payment sent within 6 hours)
@@ -151,6 +150,13 @@ reaching these limits, but the receivers of the payments you send can
 respend their outputs in child transactions that become part of the
 transaction group containing your transaction.
 
+As of Bitcoin Core 0.20 (June 2020), the limits are[^package-limits] that a
+group of related unconfirmed transactions may not exceed 101,000 vbytes
+in size, have more than 25 unconfirmed ancestors, or have more than 25
+descendants.  In particular, the descendant limit can be easily reached if
+those receiving payments from a large batch respend their unconfirmed
+outputs.
+
 The closer to a limit a transaction group becomes, the less likely
 you'll be able to fee bump your transaction using either
 [Child-Pays-for-Parent (CPFP)][topic cpfp] fee bumping or [Replace-by-Fee
@@ -161,21 +167,16 @@ increased feerate of your transaction as well as for all the potential
 fees lost to miners when they remove any child transactions in order
 to accept your replacement.
 
-Note that these problems are not unique to batched payments---independent
+These problems are not unique to batched payments---independent
 payments can have the same problem.  However, if an independent payment
 can't be fee bumped because the independent receiver spent their output,
 only that user is affected.  But if a single receiver of a batched
 payment spends their output to the point where fee bumping becomes
 impossible, all the other receivers of that transaction are also affected.
-
-As of Bitcoin Core 0.20 (June 2020), the limits are[^package-limits] that a
-group of related unconfirmed transactions may not exceed 101,000 vbytes
-in size, have more than 25 unconfirmed ancestors, or have more than 25
-descendants.  In particular, the descendant limit can be easily reached if
-those receiving payments from a large batch respend their unconfirmed
-outputs.  It's also easy for any of the receivers to deliberately create
-transactions that reach one of these limits and prevent fee bumping if
-they know that you're relying on that capability.
+It's also easy for any of the receivers to deliberately create
+transactions that reach one of the limits and prevent fee bumping if
+they know that you're relying on that capability, an attack known as
+[transaction pinning][topic transaction pinning].
 
 ## Implementation
 
@@ -204,7 +205,7 @@ batched payments larger than this.
 ## Recommendations summary
 
 1. Try to create systems where your users and customers don't expect
-   their payments immediately but are willing to wait for some time
+   their payments to be broadcast immediately but are willing to wait for some time
    (the longer the better).
 
 2. Use low-feerate consolidations to keep some large inputs available
