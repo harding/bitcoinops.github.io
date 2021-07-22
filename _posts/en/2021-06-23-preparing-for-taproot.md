@@ -56,5 +56,17 @@ h2:not(:first-of-type) { margin-top: 3em; }
 
 {% include specials/taproot/en/04-why-wait.md %}
 
+## Multisignatures
+
+{% include specials/taproot/en/xx-multisignatures.md %}
+
+## Signature adaptors
+
+{% include specials/taproot/en/xx-signature-adaptors.md %}
+
+## PTLCs
+
+{% include specials/taproot/en/xx-ptlcs.md %}
+
 ## Footnotes
 {:.no_toc}
