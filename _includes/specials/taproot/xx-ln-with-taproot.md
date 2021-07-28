@@ -6,11 +6,10 @@ Taproot enables the following Lightning features:
 * Taproot-addressed Channels.
 
 Both features improve privacy for
-Lightning users.
+Lightning users.  Let's look at each and then consider how hard it'll be
+to upgrade Lightning to use them.
 
-### The Features
-
-#### PTLCs Over Lightning
+### PTLCs Over Lightning
 
 PTLCs enable a whole menagerie of further features, many of which
 Nadav Kohen explained in the [SuredBits blog][suredbits payment points].
@@ -64,7 +63,7 @@ However, what we *do* get are:
   require two signatures and a preimage, PTLC claims are going
   to require just a single signature).
 
-#### Taproot-addressed Channels
+### Taproot-addressed Channels
 
 Privacy is multifaceted, and one facet has always been the
 correlation between the base layer and the Lightning layer.
@@ -188,7 +187,7 @@ In conclusion:
     explorers can guess that the destination Taproot address
     is really yet another Lightning channel.
 
-#### Transitioning To Taproot-requiring Features
+### Transitioning To Taproot-requiring Features
 
 It is important to note that I indicated *two* Taproot-requiring
 features rather than just one.
@@ -297,7 +296,7 @@ Now let us consider the Taproot-requiring features:
 * Taproot-addressed channels require just link-level
   compatibility.
 
-#### PTLCs Over Lightning: Link-level and Remote
+### PTLCs Over Lightning: Link-level and Remote
 
 The reason PTLCs over Lightning require link-level compatibility
 is that PTLCs are, at the low level, sent from one node to another
@@ -335,7 +334,7 @@ Thus:
   Worse, it requires that *every* forwarding node between them
   *also* understand this new thing.
 
-#### Taproot-addressed Channels: Link-level
+### Taproot-addressed Channels: Link-level
 
 On the other hand, the actual funding transaction outpoint is
 really a concern of the two nodes that use the channel.
