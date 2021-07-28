@@ -11,28 +11,13 @@ to upgrade Lightning to use them.
 
 ### PTLCs Over Lightning
 
-PTLCs enable a whole menagerie of further features, many of which
-Nadav Kohen explained in the [SuredBits blog][suredbits payment points].
-
-As [described last week][p4tr ptlcs], one major feature that
-PTLCs over Lightning enables is *payment decorrelation* without the
-problems associated with route randomization.[^route randomization]
-
-While the previous description is couched in conditional language, any
-surveillor worth its salt
-will extract as much data as it possibly can, and estimate the
-probabilities to the utmost of its ability.
-
-Now, with PTLCs, we no longer need the *same* hash in a single
+PTLCs enable [many features][suredbits payment points], with a major
+feature for Lighting being [payment decorrelation][p4tr ptlcs] without
+any need randomize routes.[^route randomization] Every node along a
+single-path or multipath route can be given a scalar that is used to
+tweak each forwarded PTLC, enabling *payment decorrelation* where
+individual forwards no longer leak the unique identifier for each
 Lightning payment.
-Instead, as mentioned in previous articles about PTLCs, every
-node along a path can be given a scalar that is used to tweak
-each forwarded PTLC.
-Similarly, every path in a multipath payment can be given a
-different set of tweaks.
-The upshot here is that PTLCs enable *payment decorrelation*,
-in that individual forwards no longer leak the unique identifier
-for each Lightning payment.
 
 It should be noted that this is ***not a privacy panacea***.
 If a surveillor node sees a forward with a particular timelock,
