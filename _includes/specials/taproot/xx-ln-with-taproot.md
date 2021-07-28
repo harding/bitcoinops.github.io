@@ -165,7 +165,7 @@ the close of some Lightning channel, because it is a 2-of-2 and
 Lightning is the most popular user of 2-of-2 signing".
 
 (Still, when considering unpublished channels, remember that
-that it takes two to tango, and if an unpublished channel is
+it takes two to tango, and if an unpublished channel is
 closed, then one participant (say, a Lightning service provider)
 uses the remaining funds for a *published* channel, a blockchain
 explorer can guess that the source of the funds has some
