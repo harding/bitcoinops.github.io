@@ -62,5 +62,9 @@ h2:not(:first-of-type) { margin-top: 3em; }
 
 {% include specials/taproot/en/05-taproot-notebooks.md %}
 
+## Using Taproot in Lightning
+
+{% include specials/taproot/xx-ln-with-taproot.md %}
+
 ## Footnotes
 {:.no_toc}

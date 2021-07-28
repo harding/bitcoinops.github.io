@@ -1,5 +1,4 @@
-Using Taproot In Lightning
-==========================
+*By [ZmnSCPxj][]*
 
 Introduction
 ------------
@@ -593,3 +592,5 @@ Conclusion
   the cost to users is higher) they might end up being
   deferred, at which point they may be subsumed by
   Decker-Russell-Osuntokun.
+
+[zmnscpxj]: https://zmnscpxj.github.io/about.html
