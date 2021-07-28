@@ -19,7 +19,7 @@ Lightning users.
 PTLCs enable a whole menagerie of further features, many of which
 Nadav Kohen explained in the [SuredBits blog][suredbits payment points].
 
-As [described last week][FIXME], one major feature that
+As [described last week][p4tr ptlcs], one major feature that
 PTLCs over Lightning enables is *payment decorrelation*.
 While the previous description is couched in conditional language, any
 surveillor worth its salt
@@ -560,3 +560,4 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
 [neigut first dual funded]: https://medium.com/blockstream/c-lightning-opens-first-dual-funded-mainnet-lightning-channel-ada6b32a527c
 [first dual funded tx]: https://blockstream.info/tx/91538cbc4aca767cb77aa0690c2a6e710e095c8eb6d8f73d53a3a29682cb7581
 [russell deployable ln]: https://github.com/ElementsProject/lightning/blob/master/doc/deployable-lightning.pdf
+[p4tr ptlcs]: / {% comment %}FIXME{% endcomment %}
