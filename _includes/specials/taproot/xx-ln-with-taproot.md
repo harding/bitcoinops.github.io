@@ -93,36 +93,22 @@ Thus:
 
 ### Taproot-addressed Channels
 
-Privacy is multifaceted, and one facet has always been the
-correlation between the base layer and the Lightning layer.
-
-Now, one solution that has been passed around for improving the
+One solution for improving the
 decorrelation between the base layer and the Lightning layer
-has been unpublished channels.
-Published channels point to a particular funding outpoint on
-the blockchain, and are widely gossiped on Lightning.
-Thus, published channels tell everyone that a particular
-node owns funds in a particular onchain outpoint, which can
-then be used to assist onchain ownership analysis.
-
-By *not* publishing a channel, the thought goes, this
-information is not shared and your channel is now "private".
+has been unpublished channels---channels whose existence isn't
+gossiped on Lightning.
 
 Unfortunately, every Lightning channel is a 2-of-2, and in the
-current pre-Taproot Bitcoin, every 2-of-2 is *openly* coded,
-for every blockchain explorer to see, in Bitcoin SCRIPT, as a
-2-of-2 multisignature, once the output is spent onchain.
-
-And Lightning is the most popular user of 2-of-2 multisignature.
-Thus, any blockchain explorer can see an openly-coded 2-of-2
-being spent, and then that explorer can guess, with fairly
-good probability, that this is a Lightning channel being closed.
+current pre-Taproot Bitcoin, every 2-of-2 is *openly* coded.
+Lightning is the most popular user of 2-of-2 multisignature,
+so any blockchain explorer can see a 2-of-2
+being spent and guess with fairly
+good probability that this is a Lightning channel being closed.
 The funds can then be traced from there, and if it goes to
 another P2WSH then that is likely to be *another* "private"
 Lightning channel.
 Thus, even unpublished channels are identifiable onchain once
-they are closed, with some level of false positives, and further
-correlations are still possible.
+they are closed, with some level of false positives.
 
 Taproot, by using Schnorr signatures, allows for n-of-n to look
 exactly the same as 1-of-1.
