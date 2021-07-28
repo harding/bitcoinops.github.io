@@ -20,24 +20,13 @@ PTLCs enable a whole menagerie of further features, many of which
 Nadav Kohen explained in the [SuredBits blog][suredbits payment points].
 
 As [described last week][p4tr ptlcs], one major feature that
-PTLCs over Lightning enables is *payment decorrelation*.
+PTLCs over Lightning enables is *payment decorrelation* without the
+problems associated with route randomization.[^route randomization]
+
 While the previous description is couched in conditional language, any
 surveillor worth its salt
 will extract as much data as it possibly can, and estimate the
 probabilities to the utmost of its ability.
-
-Now of course a payer can choose a very twisty path to make the
-above analysis wrong (i.e. route randomization), but that has its
-drawbacks:
-
-* Twisty paths are costlier *and* less reliable (more nodes
-  have to be paid, and more nodes need to *successfully* forward
-  in order for the payment to reach the destination).
-* Twisty paths are longer, meaning the payer is telling *more*
-  nodes about the payment, making it *more* likely they will hit
-  *some* surveillor node.
-  Thus, twisty paths are not necessarily a perfect improvement
-  in privacy.
 
 Now, with PTLCs, we no longer need the *same* hash in a single
 Lightning payment.
@@ -528,6 +517,19 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
   the cost to users is higher) they might end up being
   deferred, at which point they may be subsumed by
   Decker-Russell-Osuntokun.
+
+[^route-randomization]:
+    A payer can choose a very twisty path (i.e. route randomization) to
+    make HTLC correlation analysis wrong, but that has its drawbacks:
+
+    * Twisty paths are costlier *and* less reliable (more nodes
+      have to be paid, and more nodes need to *successfully* forward
+      in order for the payment to reach the destination).
+    * Twisty paths are longer, meaning the payer is telling *more*
+      nodes about the payment, making it *more* likely they will hit
+      *some* surveillor node.
+      Thus, twisty paths are not necessarily a perfect improvement
+      in privacy.
 
 [^planning-details]:
     Yes, details matter, but they also do not: from a high enough
