@@ -444,29 +444,7 @@ features on Lightning?".
 I think the best way to create time frames for features on a
 distributed FOSS project is to look at *previous* features and
 how long they took, and use those as the basis for how long
-features will take to actually deploy.
-
-Yes, details matter, but they also do not: from a high enough
-vantage point, the unexpected hardships of some aspect of
-development and the unexpected non-hardships of other aspects
-of development cancel out, and we are left with every major
-feature being roughly around some average time frame, with
-any unexpectedly high bonus or malus being "just noise".
-
-Yes, there are more developers now, that also means we need
-to get greater agreement on various details and more
-implementation-specific concerns ("mythical man-month").
-Yes, we now know more today about how Lightning works, but
-what we know is how Lightning works pre-Taproot, and we
-might actually have to unlearn some of those lessons in a
-post-Taproot world.
-If we want to make **accurate** estimates as opposed to
-**feel-good** estimates, we should use methods that avoid
-the [planning fallacy][WIKIPEDIAPLANNINGFALLACY].
-
-Thus, we should just look for a similar previous completed
-feature, and *deliberately ignore* its details, only looking
-at how long the feature took to implement.
+features will take to actually deploy.[^planning-details]
 
 The most recent new major feature that I believe is most
 similar to PTLCs over Lightning is dual-funding.
@@ -550,6 +528,29 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
   the cost to users is higher) they might end up being
   deferred, at which point they may be subsumed by
   Decker-Russell-Osuntokun.
+
+[^planning-details]:
+    Yes, details matter, but they also do not: from a high enough
+    vantage point, the unexpected hardships of some aspect of
+    development and the unexpected non-hardships of other aspects
+    of development cancel out, and we are left with every major
+    feature being roughly around some average time frame, with
+    any unexpectedly high bonus or malus being "just noise".
+
+    Yes, there are more developers now, that also means we need
+    to get greater agreement on various details and more
+    implementation-specific concerns ("mythical man-month").
+    Yes, we now know more today about how Lightning works, but
+    what we know is how Lightning works pre-Taproot, and we
+    might actually have to unlearn some of those lessons in a
+    post-Taproot world.
+    If we want to make **accurate** estimates as opposed to
+    **feel-good** estimates, we should use methods that avoid
+    the [planning fallacy][WIKIPEDIAPLANNINGFALLACY].
+
+    Thus, we should just look for a similar previous completed
+    feature, and *deliberately ignore* its details, only looking
+    at how long the feature took to implement.
 
 {% include references.md %}
 {% include linkers/issues.md issues="254" %}
