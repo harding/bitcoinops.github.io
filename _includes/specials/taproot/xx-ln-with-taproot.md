@@ -1,7 +1,5 @@
 *By [ZmnSCPxj][]*
 
-### Introduction
-
 The Taproot upgrade is locked in!
 So, what do we do now in Lightning to utilize the new base layer
 feature when it finally activates?
@@ -21,33 +19,10 @@ Lightning users.
 PTLCs enable a whole menagerie of further features, many of which
 Nadav Kohen explained in the [SuredBits blog][suredbits payment points].
 
-Among the features mentioned in the above, one major feature that
+As [described last week][FIXME], one major feature that
 PTLCs over Lightning enables is *payment decorrelation*.
-
-In an HTLC-based Lightning payment, the same hash has to be used at
-all hops along a multi-hop payment.
-Suppose there is a surveillor, someone monitoring payments on
-Lightning.
-This surveillor can maintain multiple forwarding Lightning nodes.
-
-Suppose one of the surveillor nodes sees a forwarding request with
-a particular hash.
-Then several milliseconds later, another surveillor node sees a
-forwarding request with *the same* hash.
-Then with very high probability both forwards are part of the same
-overall Lightning payment.
-This gives the surveillor a lot of information:
-
-* The ultimate sender of the payment, with fairly high probability,
-  is nearer to the first surveillor node than the second surveillor
-  node.
-* The ultimate receiver is likely nearer to the second surveillor
-  node than to the first.
-* Nodes that are "between" the surveillor nodes are unlikely to
-  be the sender or the receiver.
-
-While the above is couched in conditional language ("fairly high
-probability", "likely", "unlikely") any surveillor worth its salt
+While the previous description is couched in conditional language, any
+surveillor worth its salt
 will extract as much data as it possibly can, and estimate the
 probabilities to the utmost of its ability.
 
