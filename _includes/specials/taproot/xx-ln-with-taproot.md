@@ -19,7 +19,7 @@ tweak each forwarded PTLC, enabling *payment decorrelation* where
 individual forwards no longer leak the unique identifier for each
 Lightning payment.
 
-It should be noted that this is ***not a privacy panacea***.
+PTLCs are ***not a privacy panacea***.
 If a surveillor node sees a forward with a particular timelock,
 sending a particular value, happening at a particular wall clock
 time, and a second surveillor node sees a forward with a *lower*
@@ -30,23 +30,18 @@ the same payment path, even if the surveillor nodes can no longer
 
 However, what we *do* get are:
 
-* There is now increased uncertainty in the analysis.
-  Proper surveillors will always extract as much data as possible
-  and will extract probabilities still, but those probabilities
-  they can work with are now lower and thus their information is
+* PTLCs increase the uncertainty in the analysis.
+  The probabilities surveilors
+  can work with are now lower and thus their information is
   that much less valuable.
 * Multipath payments get a *lot* more decorrelation between paths.
   Separate paths within a payment will not have strong timelock
   and value correlation with each other, and if Lightning succeeds,
   there should be enough payments that timing correlation is not
   reliable either.
-  This is in contrast with today where all paths in a multipath
-  payment are trivially correlated by the same identifying hash.
 * There is no increase in cost compared to an HTLC (and possibly
-  even a slight cost reduction if a PTLC is dropped onchain
-  compared to an HTLC dropped onchain --- Lightning HTLC claims
-  require two signatures and a preimage, PTLC claims are going
-  to require just a single signature).
+  even a slight cost reduction due to [multisignature efficiency][p4tr
+  multisignatures]).
 
 ---
 
