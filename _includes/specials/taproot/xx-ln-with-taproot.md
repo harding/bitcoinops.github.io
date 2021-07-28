@@ -292,39 +292,7 @@ onion and processes the information.
 Link-level compatibility is required for features that need to be
 coordinated by channel counterparties in the direct TCP link.
 Remote compatibility is required for features that need to be
-coordinated over the onion-transmitting payment.
-
-Let me provide examples:
-
-* Turbo channels (i.e. channels that support sending before the
-  channel funding transaction is confirmed, a.k.a. 0-conf channels)
-  require link-level compatibility but not remote compatibility.
-* Keysend (i.e. sending to a published node public key without an
-  invoice) requires remote compatibility but not link-level
-  compatibility.
-
-Turbo channels require link-level compatibility because two nodes
-that want to establish a turbo channel between them need to agree
-that a particular channel **is** a "turbo" channel.
-When a sender wants to send before the channel is confirmed, the
-other side needs to agree to allow the send and not respond with
-an error message.
-
-At the same time, turbo channels do not need remote compatibility
---- as long as the first forwarding node is willing to forward
-the outgoing payment from the sender, nobody else cares if that
-forwarding node got paid via a turbo channel or not.
-
-On the other hand, keysend does not require link-level
-compatibility.
-Keysend is about how the receiver of the payment will be able to
-somehow get the preimage needed to claim the funds.
-None of the intervening forwarding nodes need to know about the
-keysend feature, only the ultimate sender needs to somehow hand
-over the preimage to the ultimate receiver of the payment.
-
-Thus, keysend requires remote compatibility but does not require
-link-level compatibility.
+coordinated over the onion-transmitting payment (examples[^link-vs-remote-examples]).
 
 Now let us consider the Taproot-requiring features:
 
@@ -530,6 +498,39 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
       *some* surveillor node.
       Thus, twisty paths are not necessarily a perfect improvement
       in privacy.
+
+[^link-vs-remote-examples]:
+    Examples of link-level compatibility versus remote compatibility:
+
+    * Turbo channels (i.e. channels that support sending before the
+      channel funding transaction is confirmed, a.k.a. 0-conf channels)
+      require link-level compatibility but not remote compatibility.
+    * Keysend (i.e. sending to a published node public key without an
+      invoice) requires remote compatibility but not link-level
+      compatibility.
+
+    Turbo channels require link-level compatibility because two nodes
+    that want to establish a turbo channel between them need to agree
+    that a particular channel **is** a "turbo" channel.
+    When a sender wants to send before the channel is confirmed, the
+    other side needs to agree to allow the send and not respond with
+    an error message.
+
+    At the same time, turbo channels do not need remote compatibility
+    --- as long as the first forwarding node is willing to forward
+    the outgoing payment from the sender, nobody else cares if that
+    forwarding node got paid via a turbo channel or not.
+
+    On the other hand, keysend does not require link-level
+    compatibility.
+    Keysend is about how the receiver of the payment will be able to
+    somehow get the preimage needed to claim the funds.
+    None of the intervening forwarding nodes need to know about the
+    keysend feature, only the ultimate sender needs to somehow hand
+    over the preimage to the ultimate receiver of the payment.
+
+    Thus, keysend requires remote compatibility but does not require
+    link-level compatibility.
 
 [^planning-details]:
     Yes, details matter, but they also do not: from a high enough
