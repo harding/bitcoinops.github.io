@@ -60,22 +60,17 @@ software.
 
 ---
 
-The reason PTLCs over Lightning require link-level compatibility
-is that PTLCs are, at the low level, sent from one node to another
+PTLCs over Lightning require link-level compatibility
+because they're sent from one node to another
 over a channel.
 Thus, both nodes participating in a channel need to talk the
 same protocol to establish a new PTLC on a channel.
 
-Now, a major complication is that, if you want to send a
+A major complication is that sending a
 PTLC from a sender to a remote receiver, where the sender is
 not directly channeled with the receiver (i.e. "remote"),
 *every* forwarding node along the way has to support PTLCs,
 as well.
-It is fairly useless if you and every node you are channeled
-with have some kind of PTLC support, if the rest of the network
-has no support for PTLCs, you cannot send out PTLCs (and reap
-their benefits) to anyone else other than your direct peers,
-which makes it a fairly weak "network".
 
 Not all forwarding nodes need to support *the same* link-level
 protocol for PTLCs, there could be multiple link-level
