@@ -19,9 +19,7 @@ Lightning users.
 #### PTLCs Over Lightning
 
 PTLCs enable a whole menagerie of further features, many of which
-Nadav Kohen explained in the [SuredBits blog][1].
-
-[1]: https://suredbits.com/payment-points-monotone-access-structures/
+Nadav Kohen explained in the [SuredBits blog][suredbits payment points].
 
 Among the features mentioned in the above, one major feature that
 PTLCs over Lightning enables is *payment decorrelation*.
@@ -491,8 +489,6 @@ If we want to make **accurate** estimates as opposed to
 **feel-good** estimates, we should use methods that avoid
 the [planning fallacy][WIKIPEDIAPLANNINGFALLACY].
 
-[WIKIPEDIAPLANNINGFALLACY]: https://en.wikipedia.org/wiki/Planning_fallacy
-
 Thus, we should just look for a similar previous completed
 feature, and *deliberately ignore* its details, only looking
 at how long the feature took to implement.
@@ -501,21 +497,15 @@ The most recent new major feature that I believe is most
 similar to PTLCs over Lightning is dual-funding.
 
 Lisa Neigut created an initial proposal for a dual-funding
-protocol in [lightning-rfc PR#524][BOLT254].
-
-[BOLT254]: https://github.com/lightningnetwork/lightning-rfc/pull/524
+protocol in [lightning-rfc PR#524][bolts #254].
 
 Looking at the date, this PR was opened on 2018-12-05.
 
 Recently, Lisa wrote an article announcing the [first dual-funded
-channel on mainnet][FIRSTPOST].
+channel on mainnet][neigut first dual funded].
 
-[FIRSTPOST]: https://medium.com/blockstream/c-lightning-opens-first-dual-funded-mainnet-lightning-channel-ada6b32a527c
-
-That article points to a particular [transaction][FIRSTTX]
+That article points to a particular [transaction][first dual funded tx]
 as the first mainnet dual-funded channel.
-
-[FIRSTTX]: https://blockstream.info/tx/91538cbc4aca767cb77aa0690c2a6e710e095c8eb6d8f73d53a3a29682cb7581
 
 Looking at the confirmation time of that transaction, this
 channel was fully opened at 2021-05-04, almost exactly 2
@@ -537,11 +527,9 @@ It is difficult for me to figure out how to estimate
 the time from base layer feature activation to initial
 Lightning layer concrete proposal, since the previous
 base layer feature SegWit enabled the entire Lightning
-network, and the [concrete proposal for Lightning][RR]
+network, and the [concrete proposal for Lightning][russell deployable ln]
 happened *before* SegWit activation (the proposal was
 written in 2015, SegWit got activated 2017).
-
-[RR]: https://github.com/ElementsProject/lightning/blob/master/doc/deployable-lightning.pdf
 
 Thus, for now, I cannot estimate how long it would take
 from the time of this writing to someone proposing an
@@ -588,4 +576,11 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
   deferred, at which point they may be subsumed by
   Decker-Russell-Osuntokun.
 
+{% include references.md %}
+{% include linkers/issues.md issues="254" %}
 [zmnscpxj]: https://zmnscpxj.github.io/about.html
+[suredbits payment points]: https://suredbits.com/payment-points-monotone-access-structures/
+[WIKIPEDIAPLANNINGFALLACY]: https://en.wikipedia.org/wiki/Planning_fallacy
+[neigut first dual funded]: https://medium.com/blockstream/c-lightning-opens-first-dual-funded-mainnet-lightning-channel-ada6b32a527c
+[first dual funded tx]: https://blockstream.info/tx/91538cbc4aca767cb77aa0690c2a6e710e095c8eb6d8f73d53a3a29682cb7581
+[russell deployable ln]: https://github.com/ElementsProject/lightning/blob/master/doc/deployable-lightning.pdf
