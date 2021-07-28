@@ -45,32 +45,18 @@ However, what we *do* get are:
 
 ---
 
-The important thing to note is that a pre-Taproot channel *can*,
-in principle, be upgraded to support PTLCs, *without* expensive
-closing and reopening of the channel to a Taproot-addressed
-channel.
-
-PLTCs require Taproot of some kind, but any address can pay to
-any other address, including paying from a non-Taproot address
-to a Taproot address (otherwise Taproot would be fairly useless
-since nobody can move their funds to it!).
-
-Existing channels use a non-Taproot address to back their
-funds, but non-Taproot can pay to a Taproot address, and thus,
-existing channels *can* host PTLCs, by simply using an offchain
+A pre-Taproot channel *can*,
+in principle be upgraded to support PTLCs *without* expensive
+closing and reopening of the channel.
+Existing channels can host PTLCs by simply using an offchain
 transaction that spends the existing non-Taproot funding output
-and creating a Taproot address representing a PTLC.
+to a Taproot output containing a PTLC.
 That "only" requires that both peers of the channel agree on
 some protocol to set up PTLCs.
 
-Thus, getting support for the first feature, PTLCs over
-Lightning, does not require any cost to users, other than
-the developer-hours needed to design and implement the
-feature.
-Indeed, long-lived nodes need not close their existing channels
-and open new ones, they can just keep on using the existing
-channels and just wait for the software they and their peers
-use to be upgraded to support a common PTLC protocol.
+Thus getting support for PTLCs over
+Lightning does not require any cost to users beyond upgrading their
+software.
 
 ---
 
@@ -541,3 +527,4 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
 [first dual funded tx]: https://blockstream.info/tx/91538cbc4aca767cb77aa0690c2a6e710e095c8eb6d8f73d53a3a29682cb7581
 [russell deployable ln]: https://github.com/ElementsProject/lightning/blob/master/doc/deployable-lightning.pdf
 [p4tr ptlcs]: / {% comment %}FIXME{% endcomment %}
+[p4tr multisignatures]: / {% comment %}FIXME{% endcomment %}
