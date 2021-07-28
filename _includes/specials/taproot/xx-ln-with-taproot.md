@@ -1,15 +1,11 @@
 *By [ZmnSCPxj][]*
 
-The Taproot upgrade is locked in!
-So, what do we do now in Lightning to utilize the new base layer
-feature when it finally activates?
-
 Taproot enables the following Lightning features:
 
 * PTLCs over Lightning.
 * Taproot-addressed Channels.
 
-Both features are desirable, as they both improve privacy for
+Both features improve privacy for
 Lightning users.
 
 ### The Features
