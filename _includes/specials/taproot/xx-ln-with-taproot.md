@@ -63,6 +63,44 @@ However, what we *do* get are:
   require two signatures and a preimage, PTLC claims are going
   to require just a single signature).
 
+---
+
+The reason PTLCs over Lightning require link-level compatibility
+is that PTLCs are, at the low level, sent from one node to another
+over a channel.
+Thus, both nodes participating in a channel need to talk the
+same protocol to establish a new PTLC on a channel.
+
+Now, a major complication is that, if you want to send a
+PTLC from a sender to a remote receiver, where the sender is
+not directly channeled with the receiver (i.e. "remote"),
+*every* forwarding node along the way has to support PTLCs,
+as well.
+It is fairly useless if you and every node you are channeled
+with have some kind of PTLC support, if the rest of the network
+has no support for PTLCs, you cannot send out PTLCs (and reap
+their benefits) to anyone else other than your direct peers,
+which makes it a fairly weak "network".
+
+Not all forwarding nodes need to support *the same* link-level
+protocol for PTLCs, there could be multiple link-level
+PTLC protocols.
+However, having to support multiple link-level protocols is
+added maintenance burden and I *hope* we do not have too many
+such PTLC link-level protocols (ideally just one).
+
+Thus:
+
+* PTLCs over Lightning require that two nodes on the same
+  channel agree to establish a PTLC between them, thus requires
+  link-level compatibility.
+* PTLCs over Lightning require that the ultimate sender and the
+  ultimate receiver understand this new thing, with payment
+  points instead of payment hashes and payment scalars instead
+  of payment preimages, thus requires remote compatibility.
+  Worse, it requires that *every* forwarding node between them
+  *also* understand this new thing.
+
 ### Taproot-addressed Channels
 
 Privacy is multifaceted, and one facet has always been the
@@ -187,6 +225,58 @@ In conclusion:
     explorers can guess that the destination Taproot address
     is really yet another Lightning channel.
 
+---
+
+On the other hand, the actual funding transaction outpoint is
+really a concern of the two nodes that use the channel.
+
+Other nodes on the network will not care about what secures
+the channel between any two nodes.
+Just as other nodes on the network do not care whether you
+secure your channel using a 0-conf turbo channel scheme or
+not, other nodes will also not care whether you secure your
+channel using a Taproot scheme or not.
+
+Thus:
+
+* Taproot-addressed channels require that the two nodes
+  establishing a channel agree on what the Taproot scheme looks
+  like, thus requires link-level compatibility.
+* Other nodes on the network do not care about how the two
+  nodes on the Taproot channel secure their funds, thus
+  does not require remote compatibility.
+
+On the **other** hand, there *is* a detail I have elided, and
+that is channel gossip.
+
+Published channels are shared over the Lightning gossip network.
+And published channels point to a funding outpoint on the
+blockchain layer.
+
+When a node receives a gossiped published channel, it consults
+its own trusted blockchain fullnode, checking if the funding
+outpoint exists, and more importantly **has the correct address**.
+
+Checking the address helps ensure that it is difficult to spam
+the channel gossip mechanism; you need actual funds on the
+blockchain in order to send channel gossip.
+
+Now, if the Lightning node is completely unaware of the new
+Taproot addresses for channels, then it cannot validate the
+address of the gossiped channel, and will think it does not
+really exist and ignore the gossiped channel.
+Then the channel will not be used by that node when sending.
+
+Thus, in practice, even Taproot-addressed channels require some
+amount of remote compatibility; otherwise, senders will ignore
+these channels for routing, as they cannot validate that those
+channels *exist*.
+
+However, if such channels are mostly only on the "edges" of the
+network (i.e. as unpublished channels between Lightning service
+providers and non-forwarding users), then there is no need for
+remote compatibility with these channels.
+
 ### Transitioning To Taproot-requiring Features
 
 It is important to note that I indicated *two* Taproot-requiring
@@ -295,96 +385,6 @@ Now let us consider the Taproot-requiring features:
   remote compatibility.
 * Taproot-addressed channels require just link-level
   compatibility.
-
-### PTLCs Over Lightning: Link-level and Remote
-
-The reason PTLCs over Lightning require link-level compatibility
-is that PTLCs are, at the low level, sent from one node to another
-over a channel.
-Thus, both nodes participating in a channel need to talk the
-same protocol to establish a new PTLC on a channel.
-
-Now, a major complication is that, if you want to send a
-PTLC from a sender to a remote receiver, where the sender is
-not directly channeled with the receiver (i.e. "remote"),
-*every* forwarding node along the way has to support PTLCs,
-as well.
-It is fairly useless if you and every node you are channeled
-with have some kind of PTLC support, if the rest of the network
-has no support for PTLCs, you cannot send out PTLCs (and reap
-their benefits) to anyone else other than your direct peers,
-which makes it a fairly weak "network".
-
-Not all forwarding nodes need to support *the same* link-level
-protocol for PTLCs, there could be multiple link-level
-PTLC protocols.
-However, having to support multiple link-level protocols is
-added maintenance burden and I *hope* we do not have too many
-such PTLC link-level protocols (ideally just one).
-
-Thus:
-
-* PTLCs over Lightning require that two nodes on the same
-  channel agree to establish a PTLC between them, thus requires
-  link-level compatibility.
-* PTLCs over Lightning require that the ultimate sender and the
-  ultimate receiver understand this new thing, with payment
-  points instead of payment hashes and payment scalars instead
-  of payment preimages, thus requires remote compatibility.
-  Worse, it requires that *every* forwarding node between them
-  *also* understand this new thing.
-
-### Taproot-addressed Channels: Link-level
-
-On the other hand, the actual funding transaction outpoint is
-really a concern of the two nodes that use the channel.
-
-Other nodes on the network will not care about what secures
-the channel between any two nodes.
-Just as other nodes on the network do not care whether you
-secure your channel using a 0-conf turbo channel scheme or
-not, other nodes will also not care whether you secure your
-channel using a Taproot scheme or not.
-
-Thus:
-
-* Taproot-addressed channels require that the two nodes
-  establishing a channel agree on what the Taproot scheme looks
-  like, thus requires link-level compatibility.
-* Other nodes on the network do not care about how the two
-  nodes on the Taproot channel secure their funds, thus
-  does not require remote compatibility.
-
-On the **other** hand, there *is* a detail I have elided, and
-that is channel gossip.
-
-Published channels are shared over the Lightning gossip network.
-And published channels point to a funding outpoint on the
-blockchain layer.
-
-When a node receives a gossiped published channel, it consults
-its own trusted blockchain fullnode, checking if the funding
-outpoint exists, and more importantly **has the correct address**.
-
-Checking the address helps ensure that it is difficult to spam
-the channel gossip mechanism; you need actual funds on the
-blockchain in order to send channel gossip.
-
-Now, if the Lightning node is completely unaware of the new
-Taproot addresses for channels, then it cannot validate the
-address of the gossiped channel, and will think it does not
-really exist and ignore the gossiped channel.
-Then the channel will not be used by that node when sending.
-
-Thus, in practice, even Taproot-addressed channels require some
-amount of remote compatibility; otherwise, senders will ignore
-these channels for routing, as they cannot validate that those
-channels *exist*.
-
-However, if such channels are mostly only on the "edges" of the
-network (i.e. as unpublished channels between Lightning service
-providers and non-forwarding users), then there is no need for
-remote compatibility with these channels.
 
 ### Time Frames
 
