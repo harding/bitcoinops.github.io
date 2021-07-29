@@ -16,74 +16,62 @@ tweak each forwarded PTLC, enabling *payment decorrelation* where
 individual forwards no longer leak the unique identifier for each
 Lightning payment.
 
-PTLCs are ***not a privacy panacea***.
-If a surveillor node sees a forward with a particular timelock and value,
-and a second surveillor node shortly after sees a forward with a *lower*
-timelock and *slightly lower* value,
-then *very likely* those forwards belong to
-the same payment path, even if the surveillor nodes can no longer
-correlate them via a unique identifying hash.  However, we *do* get:
+PTLCs are ***not a privacy panacea***.  If a surveillor node sees a
+forward with a particular timelock and value, and a second surveillor
+node shortly after sees a forward with a *lower* timelock and *slightly
+lower* value, then *very likely* those forwards belong to the same
+payment path, even if the surveillor nodes can no longer correlate them
+via a unique identifying hash.  However, we *do* get:
 
-* Increased uncertainty in the analysis.
-  The probabilities surveilors
-  can work with are now lower and thus their information is
-  that much less valuable.
-* A *lot* more decorrelation in multipath payments.
-  Separate paths will not have strong timelock
-  and value correlation with each other, and if Lightning succeeds,
-  there should be enough payments that timing correlation is not
-  reliable either.
-* No increase in cost compared to an HTLC (and possibly
-  even a slight cost reduction due to [multisignature efficiency][p4tr
+* Increased uncertainty in the analysis.  The probabilities surveilors
+  can work with are now lower and thus their information is that much
+  less valuable.
+* A *lot* more decorrelation in multipath payments.  Separate paths will
+  not have strong timelock and value correlation with each other, and if
+  Lightning succeeds, there should be enough payments that timing
+  correlation is not reliable either.
+* No increase in cost compared to an HTLC (and possibly even a slight
+  cost reduction due to [multisignature efficiency][p4tr
   multisignatures]).
 
 In principle, a pre-Taproot channel be upgraded to support PTLCs without
-closing and reopening the channel.
-Existing channels can host PTLCs by creating an offchain
-transaction that spends the existing non-Taproot funding output
-to a Taproot output containing a PTLC.
-Thus getting support for PTLCs over
-Lightning does not require any cost to users beyond each node and its
-channel peers upgrading their software.
+closing and reopening the channel.  Existing channels can host PTLCs by
+creating an offchain transaction that spends the existing non-Taproot
+funding output to a Taproot output containing a PTLC.  Thus getting
+support for PTLCs over Lightning does not require any cost to users
+beyond each node and its channel peers upgrading their software.
 
-However, to actually use PTLCs,
-*every* forwarding node from the spender to the receiver must support PTLCs.
-This means PTLC support may remain largely unused until a sufficient
-number of nodes have upgraded.
-They don't all
-necessary need to use the same protocol (there could be multiple 
-PTLC protocols), but they all must support some PTLC protocol.
-Having to support multiple PTLC protocols would be an
-added maintenance burden and I *hope* we do not have too many
-such protocols (ideally just one).
+However, to actually use PTLCs, *every* forwarding node from the spender
+to the receiver must support PTLCs.  This means PTLC support may remain
+largely unused until a sufficient number of nodes have upgraded.  They
+don't all necessary need to use the same protocol (there could be
+multiple PTLC protocols), but they all must support some PTLC protocol.
+Having to support multiple PTLC protocols would be an added maintenance
+burden and I *hope* we do not have too many such protocols (ideally just
+one).
 
 ### Taproot-addressed Channels
 
-One solution for improving the
-decorrelation between the base layer and the Lightning layer
-has been unpublished channels---channels whose existence isn't
-gossiped on Lightning.
+One solution for improving the decorrelation between the base layer and
+the Lightning layer has been unpublished channels---channels whose
+existence isn't gossiped on Lightning.
 
-Unfortunately, every Lightning channel is a 2-of-2, and in the
-current pre-Taproot Bitcoin, every 2-of-2 is *openly* coded.
-Lightning is the most popular user of 2-of-2 multisignature,
-so any blockchain explorer can see a 2-of-2
-being spent and guess with fairly
-good probability that this is a Lightning channel being closed.
-The funds can then be traced from there, and if it goes to
-another P2WSH output, then that is likely to be *another* unpublished
-channel.
-Thus, even unpublished channels are identifiable onchain once
-they are closed, with some level of false positives.
+Unfortunately, every Lightning channel is a 2-of-2, and in the current
+pre-Taproot Bitcoin, every 2-of-2 is *openly* coded.  Lightning is the
+most popular user of 2-of-2 multisignature, so any blockchain explorer
+can see a 2-of-2 being spent and guess with fairly good probability that
+this is a Lightning channel being closed.  The funds can then be traced
+from there, and if it goes to another P2WSH output, then that is likely
+to be *another* unpublished channel.  Thus, even unpublished channels
+are identifiable onchain once they are closed, with some level of false
+positives.
 
-Taproot, by using Schnorr signatures, allows for n-of-n to look
-exactly the same as 1-of-1.
-With some work, even k-of-n will also look the same as 1-of-1
-(and n-of-n).
-We can then propose a feature where a Lightning channel is
-backed by a UTXO guarded by a Taproot address, i.e. a
-Taproot-addressed channel, which increases the *onchain* privacy of unpublished
-channels.[^two-to-tango]
+Taproot, by using Schnorr signatures, allows for n-of-n to look exactly
+the same as 1-of-1.  With some work, even k-of-n will also look the same
+as 1-of-1 (and n-of-n).  We can then propose a feature where a Lightning
+channel is backed by a UTXO guarded by a Taproot address, i.e. a
+Taproot-addressed channel, which increases the *onchain* privacy of
+unpublished channels.[^two-to-tango]
 
 <!-- P2WSH 2-of-2: OP_0 <sig> <sig> <2 <key> <key> 2 OP_CMS>
              219 =   1 + 1+72 +1+72 +1+1+1+33+1+33+1+1
@@ -97,68 +85,57 @@ channels.[^two-to-tango]
       ~70% = 1 - 16/54.75
 -->
 
-This (rather small) privacy boost also helps published channels
-as well.
-Published channels are only gossiped until they are closed, so
-somebody trying to look for published channels will not
-be able to learn about
-*historical* channels.
-If a surveillor wants to see every published channel, it has
-to store all that data itself and cannot rely on any kind of
-"archival" node.
+This (rather small) privacy boost also helps published channels as well.
+Published channels are only gossiped until they are closed, so somebody
+trying to look for published channels will not be able to learn about
+*historical* channels.  If a surveillor wants to see every published
+channel, it has to store all that data itself and cannot rely on any
+kind of "archival" node.
 
 In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
-Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade an
-existing pre-Taproot channel to a Taproot-addressed channel**.
-The existing channel uses the existing P2WSH 2-of-2 scheme and
-has to be closed in order to switch to a Taproot-addressed channel.
+Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade
+an existing pre-Taproot channel to a Taproot-addressed channel**.  The
+existing channel uses the existing P2WSH 2-of-2 scheme and has to be
+closed in order to switch to a Taproot-addressed channel.
 
-In theory, the actual funding transaction outpoint is
-really a concern of the two nodes that use the channel.
-Other nodes on the network will not care about what secures
-the channel between any two nodes.
-However, published channels are shared over the Lightning gossip network.
-When a node receives a gossiped published channel, it consults
-its own trusted blockchain fullnode, checking if the funding
-outpoint exists, and more importantly **has the correct address**.
-Checking the address helps ensure that it is difficult to spam
-the channel gossip mechanism; you need actual funds on the
-blockchain in order to send channel gossip.
-Thus, in practice, even Taproot-addressed channels require some
-amount of remote compatibility; otherwise, senders will ignore
-these channels for routing, as they cannot validate that those
-channels *exist*.
+In theory, the actual funding transaction outpoint is really a concern
+of the two nodes that use the channel.  Other nodes on the network will
+not care about what secures the channel between any two nodes.  However,
+published channels are shared over the Lightning gossip network.  When a
+node receives a gossiped published channel, it consults its own trusted
+blockchain fullnode, checking if the funding outpoint exists, and more
+importantly **has the correct address**.  Checking the address helps
+ensure that it is difficult to spam the channel gossip mechanism; you
+need actual funds on the blockchain in order to send channel gossip.
+Thus, in practice, even Taproot-addressed channels require some amount
+of remote compatibility; otherwise, senders will ignore these channels
+for routing, as they cannot validate that those channels *exist*.
 
 ### Time Frames
 
-I think the best way to create time frames for features on a
-distributed FOSS project is to look at *previous* features and
-how long they took, and use those as the basis for how long
-features will take to actually deploy.[^planning-details]
+I think the best way to create time frames for features on a distributed
+FOSS project is to look at *previous* features and how long they took,
+and use those as the basis for how long features will take to actually
+deploy.[^planning-details]
 
 The most recent new major feature that I believe is similar in scope to
 PTLCs over Lightning is dual-funding.  Lisa Neigut created an initial
-proposal for a dual-funding protocol in [BOLTs #524][], with the
-[first dual-funded channel on
-mainnet][neigut first dual funded] being [opened][first dual funded tx]
-almost 2 years and 6 months later.
-Dual-funding only
-requires compatibility with your direct peers.
-PTLCs over Lightning require compatibilty with all routing nodes on your
-selected paths, including the receiver, so
-I feel justified in giving
-this feature a +50% time modifier due to the added
-complication, for an estimate of 3 years and 9 months starting from
-when a specific PTLC protocol is proposed.
+proposal for a dual-funding protocol in [BOLTs #524][], with the [first
+dual-funded channel on mainnet][neigut first dual funded] being
+[opened][first dual funded tx] almost 2 years and 6 months later.
+Dual-funding only requires compatibility with your direct peers.  PTLCs
+over Lightning require compatibilty with all routing nodes on your
+selected paths, including the receiver, so I feel justified in giving
+this feature a +50% time modifier due to the added complication, for an
+estimate of 3 years and 9 months starting from when a specific PTLC
+protocol is proposed.
 
-For Taproot-addressed channels, we should note that while
-this is "only" between two direct peers, it also has lower
-benefits.
-Thus, I expect it will be lower priority.
-Assuming most developers prioritize PTLC-over-Lightning,
-then I expect Taproot-addressed channels will start getting
-worked on by the time the underlying `SIGHASH_NOINPUT` or
-other ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
+For Taproot-addressed channels, we should note that while this is "only"
+between two direct peers, it also has lower benefits.  Thus, I expect it
+will be lower priority.  Assuming most developers prioritize
+PTLC-over-Lightning, then I expect Taproot-addressed channels will start
+getting worked on by the time the underlying `SIGHASH_NOINPUT` or other
+ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
 
 [^route-randomization]:
     A payer can choose a very twisty path (i.e. route randomization) to
