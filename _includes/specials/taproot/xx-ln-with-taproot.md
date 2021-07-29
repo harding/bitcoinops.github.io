@@ -79,18 +79,6 @@ However, having to support multiple link-level protocols is
 added maintenance burden and I *hope* we do not have too many
 such PTLC link-level protocols (ideally just one).
 
-Thus:
-
-* PTLCs over Lightning require that two nodes on the same
-  channel agree to establish a PTLC between them, thus requires
-  link-level compatibility.
-* PTLCs over Lightning require that the ultimate sender and the
-  ultimate receiver understand this new thing, with payment
-  points instead of payment hashes and payment scalars instead
-  of payment preimages, thus requires remote compatibility.
-  Worse, it requires that *every* forwarding node between them
-  *also* understand this new thing.
-
 ### Taproot-addressed Channels
 
 One solution for improving the
@@ -147,25 +135,6 @@ If a surveillor wants to see every published channel, it has
 to store all that data itself, and cannot rely on any kind of
 "archival" node.
 
-In conclusion:
-
-* The primary benefit of this is really the slightly lower
-  onchain fees involved in a cooperative / mutual close.
-  Depending on exact design, it may also slightly lower the
-  onchain fees involved in a unilateral close.
-* This provides a very small privacy bonus to unpublished
-  channels, and an even smaller (possibly too tiny to be worth
-  bothering with) privacy bonus to published channels.
-* Closing an existing pre-Taproot channel in order to reopen a
-  Taproot "Lightning-onchain decorrelated" channel will require
-  more fees than what you save above.
-  * If you do not pass the funds through a privacy-enhancing
-    technology between closing the pre-Taproot channel and
-    opening the Lightning-onchain decorrelated channel, then
-    the privacy bonus is also pretty much lost --- blockchain
-    explorers can guess that the destination Taproot address
-    is really yet another Lightning channel.
-
 ---
 
 The actual funding transaction outpoint is
@@ -217,30 +186,6 @@ Assuming most developers prioritize PTLC-over-Lightning,
 then I expect Taproot-addressed channels will start getting
 worked on by the time the underlying `SIGHASH_NOINPUT` or
 other ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
-
-### Conclusion
-
-* There are two primary Lightning features enabled by
-  Taproot:
-  * PTLCs over Lightning, which enables payment
-    decorrelation for a small boost to Lightning payment
-    privacy, as well as a bunch of more advanced protocols
-    on top of Lightning.
-  * Taproot-addressed Channels, which provide a small
-    privacy benefit to channels, reducing the correlation
-    between channels and the blockchain.
-* PTLCS over Lightning are practically "free" for users
-  (no payment required to upgrade channels/nodes to support
-  them, just need implementor-days to implement).
-* Taproot-addressed channels are cheaper for *new* users,
-  but existing users need to pay in order to upgrade.
-* Implementing PTLCs over Lightning will take approximately
-  2.5 to 4 years, by my estimation.
-* Implementing Taproot-addressed channels might take a
-  shorter time but as the benefit of those is lower (and
-  the cost to users is higher) they might end up being
-  deferred, at which point they may be subsumed by
-  Decker-Russell-Osuntokun.
 
 [^route-randomization]:
     A payer can choose a very twisty path (i.e. route randomization) to
