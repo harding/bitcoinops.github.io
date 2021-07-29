@@ -168,55 +168,23 @@ In conclusion:
 
 ---
 
-On the other hand, the actual funding transaction outpoint is
+The actual funding transaction outpoint is
 really a concern of the two nodes that use the channel.
-
 Other nodes on the network will not care about what secures
 the channel between any two nodes.
-Just as other nodes on the network do not care whether you
-secure your channel using a 0-conf turbo channel scheme or
-not, other nodes will also not care whether you secure your
-channel using a Taproot scheme or not.
 
-Thus:
-
-* Taproot-addressed channels require that the two nodes
-  establishing a channel agree on what the Taproot scheme looks
-  like, thus requires link-level compatibility.
-* Other nodes on the network do not care about how the two
-  nodes on the Taproot channel secure their funds, thus
-  does not require remote compatibility.
-
-On the **other** hand, there *is* a detail I have elided, and
-that is channel gossip.
-
-Published channels are shared over the Lightning gossip network.
-And published channels point to a funding outpoint on the
-blockchain layer.
-
+However, published channels are shared over the Lightning gossip network.
 When a node receives a gossiped published channel, it consults
 its own trusted blockchain fullnode, checking if the funding
 outpoint exists, and more importantly **has the correct address**.
-
 Checking the address helps ensure that it is difficult to spam
 the channel gossip mechanism; you need actual funds on the
 blockchain in order to send channel gossip.
-
-Now, if the Lightning node is completely unaware of the new
-Taproot addresses for channels, then it cannot validate the
-address of the gossiped channel, and will think it does not
-really exist and ignore the gossiped channel.
-Then the channel will not be used by that node when sending.
 
 Thus, in practice, even Taproot-addressed channels require some
 amount of remote compatibility; otherwise, senders will ignore
 these channels for routing, as they cannot validate that those
 channels *exist*.
-
-However, if such channels are mostly only on the "edges" of the
-network (i.e. as unpublished channels between Lightning service
-providers and non-forwarding users), then there is no need for
-remote compatibility with these channels.
 
 ### Transitioning To Taproot-requiring Features
 
