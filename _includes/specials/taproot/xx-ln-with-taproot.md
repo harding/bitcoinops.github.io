@@ -114,73 +114,38 @@ Taproot, by using Schnorr signatures, allows for n-of-n to look
 exactly the same as 1-of-1.
 With some work, even k-of-n will also look the same as 1-of-1
 (and n-of-n).
-This increases the anonymity set, as 2-of-2 spends are
-indistinguishable from Taproot 1-of-1, Taproot 2-of-3, and so
-on.
-
-In particular, aside from plain 1-of-1 and (mostly) Lightning
-2-of-2, many large whales will be using 2-of-3, and all those
-addresses will now be indistinguishable from each other.
-
 We can then propose a feature where a Lightning channel is
 backed by a UTXO guarded by a Taproot address, i.e. a
-Taproot-addressed channel.
+Taproot-addressed channel, which increases the *onchain* privacy of unpublished
+channels.[^two-to-tango]
 
-This of course increases the *onchain* privacy of unpublished
-channels, since there are no identifiable 2-of-2 multisignatures
-that can be used to probabilistically say "this spend is probably
-the close of some Lightning channel, because it is a 2-of-2 and
-Lightning is the most popular user of 2-of-2 signing".
+<!-- P2WSH 2-of-2: OP_0 <sig> <sig> <2 <key> <key> 2 OP_CMS>
+             219 =   1 + 1+72 +1+72 +1+1+1+33+1+33+1+1
+             54.75 = 219/4
+     P2TR: <sig>
+             64
+             16 = 64/4
 
-(Still, when considering unpublished channels, remember that
-it takes two to tango, and if an unpublished channel is
-closed, then one participant (say, a Lightning service provider)
-uses the remaining funds for a *published* channel, a blockchain
-explorer can guess that the source of the funds has some
-probability of having been an unpublished channel that was
-closed.)
+    Comparsion:
+      38.75 = 54.75 - 16
+      ~70% = 1 - 16/54.75
+-->
 
-In addition, Taproot keypath spends require only *one* 64-byte
-signature to be published onchain.
-This is in contrast with existing Lightning channels, which use
-P2WSH 2-of-2, requiring revelation of *two* 33-byte pubkeys, a few
-bytes of SCRIPT, and *two* DER-encoded 73-byte signatures.
-Thus, closing a Taproot channel is cheaper than closing an
-existing pre-Taproot channel.
-
-We should emphasize, however, that you **cannot upgrade an
+In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
+Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade an
 existing pre-Taproot channel to a Taproot-addressed channel**.
 The existing channel uses the existing P2WSH 2-of-2 scheme, and
 has to be closed in order to switch to a Taproot-addressed channel.
-And the closure of the P2WSH 2-of-2 channel requires a fairly
-large amount of bytes.
 
 This (rather small) privacy boost also helps published channels
 as well.
-Published channels are only gossiped until they are closed.
-Once closed, they are no longer gossiped.
-Thus, somebody trying to look for published channels will not
-be able to connect to any Lightning node and get a list of
-*historical* channels; they have to have been online in the
-past to store those published channels.
-
-This is a substantive difference between onchain transactions
-and published channels.
-
-* You can connect to a random blockchain layer archival fullnode,
-  and get *every* onchain transaction from genesis to today.
-* You can connect to a random Lightning layer node, and get
-  *still-open* published channels currently at the last
-  snapshot that node knows about.
-
+Published channels are only gossiped until they are closed, so
+somebody trying to look for published channels will not
+be able to learn about
+*historical* channels.
 If a surveillor wants to see every published channel, it has
 to store all that data itself, and cannot rely on any kind of
 "archival" node.
-
-Thus, once closed, published channels get slightly more privacy
-if they were Taproot-addressed channels, since once closed, they
-no longer get gossiped, but their onchain footprint is now
-indistinguishable from Taproot 1-of-1 spends.
 
 In conclusion:
 
@@ -498,6 +463,15 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
     Thus, we should just look for a similar previous completed
     feature, and *deliberately ignore* its details, only looking
     at how long the feature took to implement.
+
+[^two-to-tango]:
+    When considering unpublished channels, remember that
+    it takes two to tango, and if an unpublished channel is
+    closed, then one participant (say, a Lightning service provider)
+    uses the remaining funds for a *published* channel, a blockchain
+    explorer can guess that the source of the funds has some
+    probability of having been an unpublished channel that was
+    closed.
 
 {% include references.md %}
 {% include linkers/issues.md issues="254" %}
