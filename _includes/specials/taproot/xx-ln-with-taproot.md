@@ -186,88 +186,6 @@ amount of remote compatibility; otherwise, senders will ignore
 these channels for routing, as they cannot validate that those
 channels *exist*.
 
-### Transitioning To Taproot-requiring Features
-
-It is important to note that I indicated *two* Taproot-requiring
-features rather than just one.
-The major feature is of course PTLCs, which give us the most
-bang (additional enabled features) for the buck (negligible fee
-increase, or even a fee reduction), but the secondary one is
-getting a Taproot-addressed channel.
-
-The second feature, however, is tied to opening channels, so
-existing channels have to be closed, the funds passed through
-some onchain-privacy-enhancing technology (e.g. Wasabi or
-JoinMarket), and then the channel reopened with a hiding
-Taproot address.
-
-Because the second feature requires onchain activity, it is
-more costly to users.
-In general, I expect Taproot-addressed channels will be used only
-for new channels, and existing channels will be updated
-offchain, by upgrading the software on both ends of the channel,
-to support PTLCs over Lightning.
-
-* PTLCs over Lightning require that a non-Taproot address (the
-  funding outpoint of the channel) pay to a Taproot address
-  (the onchain representation of the PTLC).
-  This feature is part of Bitcoin already, thus can in
-  principle be supported --- "just" needs design and
-  implementation.
-  Nodes that want to upgrade do not need to close existing
-  channels and reopen them.
-* Lightning-onchain decorrelated channels require that a
-  Taproot address be used in the channel funding outpoint.
-  Nodes that want to truly transition to this new scheme
-  need to close existing channels, and very likely also
-  pass the funds through a privacy-enhancing technology,
-  then reopen new ones.
-
-Neither feature requires the other, though given the major
-benefits of PTLCs over Lightning, and the relatively low cost
-it has if implemented without requiring Taproot-addressed
-channels, I think Lightning developers would prefer to
-prioritize PTLCS over Lightning.
-
-### Lightning "Consensus"
-
-Unlike the base layer, there is no need for a *global* consensus
-at the Lightning level.
-That is, there is no need for *all* Lightning nodes to follow the
-exact sets of rules; there is some amount of leeway in Lightning
-that is not allowed in the blockchain layer.
-
-Instead, what Lightning requires between nodes are two kinds of
-compatibility:
-
-* Link-level Compatibility.
-* Remote Compatibility.
-
-What do the above kinds of compatibility mean?
-
-These are related to two main forms of communication between
-Lightning Network nodes.
-
-One form of communication is direct, over a TCP link, between peers
-who have (or want to have) a channel between them.
-
-The other form of communication is indirect, where one node wraps the
-information in an onion and sends out a payment with that onion, and
-another node --- not directly channeled with the sender --- opens the
-onion and processes the information.
-
-Link-level compatibility is required for features that need to be
-coordinated by channel counterparties in the direct TCP link.
-Remote compatibility is required for features that need to be
-coordinated over the onion-transmitting payment (examples[^link-vs-remote-examples]).
-
-Now let us consider the Taproot-requiring features:
-
-* PTLCs over Lightning requires *both* link-level *and*
-  remote compatibility.
-* Taproot-addressed channels require just link-level
-  compatibility.
-
 ### Time Frames
 
 Of course, just as the perennial question for Taproot was "when
@@ -375,39 +293,6 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo").
       *some* surveillor node.
       Thus, twisty paths are not necessarily a perfect improvement
       in privacy.
-
-[^link-vs-remote-examples]:
-    Examples of link-level compatibility versus remote compatibility:
-
-    * Turbo channels (i.e. channels that support sending before the
-      channel funding transaction is confirmed, a.k.a. 0-conf channels)
-      require link-level compatibility but not remote compatibility.
-    * Keysend (i.e. sending to a published node public key without an
-      invoice) requires remote compatibility but not link-level
-      compatibility.
-
-    Turbo channels require link-level compatibility because two nodes
-    that want to establish a turbo channel between them need to agree
-    that a particular channel **is** a "turbo" channel.
-    When a sender wants to send before the channel is confirmed, the
-    other side needs to agree to allow the send and not respond with
-    an error message.
-
-    At the same time, turbo channels do not need remote compatibility
-    --- as long as the first forwarding node is willing to forward
-    the outgoing payment from the sender, nobody else cares if that
-    forwarding node got paid via a turbo channel or not.
-
-    On the other hand, keysend does not require link-level
-    compatibility.
-    Keysend is about how the receiver of the payment will be able to
-    somehow get the preimage needed to claim the funds.
-    None of the intervening forwarding nodes need to know about the
-    keysend feature, only the ultimate sender needs to somehow hand
-    over the preimage to the ultimate receiver of the payment.
-
-    Thus, keysend requires remote compatibility but does not require
-    link-level compatibility.
 
 [^planning-details]:
     Yes, details matter, but they also do not: from a high enough
