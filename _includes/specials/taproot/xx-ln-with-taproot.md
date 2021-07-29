@@ -1,83 +1,61 @@
 *By [ZmnSCPxj][]*
 
-Taproot enables the following Lightning features:
+In this post, we'll look at two privacy features that Taproot enables
+for Lightning:
 
 * PTLCs over Lightning.
 * Taproot-addressed Channels.
-
-Both features improve privacy for
-Lightning users.  Let's look at each and then consider how hard it'll be
-to upgrade Lightning to use them.
 
 ### PTLCs Over Lightning
 
 PTLCs enable [many features][suredbits payment points], with a major
 feature for Lighting being [payment decorrelation][p4tr ptlcs] without
-any need randomize routes.[^route randomization] Every node along a
+any need to randomize routes.[^route-randomization] Every node along a
 single-path or multipath route can be given a scalar that is used to
 tweak each forwarded PTLC, enabling *payment decorrelation* where
 individual forwards no longer leak the unique identifier for each
 Lightning payment.
 
 PTLCs are ***not a privacy panacea***.
-If a surveillor node sees a forward with a particular timelock,
-sending a particular value, happening at a particular wall clock
-time, and a second surveillor node sees a forward with a *lower*
-timelock, *slightly lower* value, and happening at a *slightly
-later* all clock time, then *very likely* those forwards belong to
+If a surveillor node sees a forward with a particular timelock and value,
+and a second surveillor node shortly after sees a forward with a *lower*
+timelock and *slightly lower* value,
+then *very likely* those forwards belong to
 the same payment path, even if the surveillor nodes can no longer
-100% reliably correlate them via a unique identifying hash.
+correlate them via a unique identifying hash.  However, we *do* get:
 
-However, what we *do* get are:
-
-* PTLCs increase the uncertainty in the analysis.
+* Increased uncertainty in the analysis.
   The probabilities surveilors
   can work with are now lower and thus their information is
   that much less valuable.
-* Multipath payments get a *lot* more decorrelation between paths.
-  Separate paths within a payment will not have strong timelock
+* A *lot* more decorrelation in multipath payments.
+  Separate paths will not have strong timelock
   and value correlation with each other, and if Lightning succeeds,
   there should be enough payments that timing correlation is not
   reliable either.
-* There is no increase in cost compared to an HTLC (and possibly
+* No increase in cost compared to an HTLC (and possibly
   even a slight cost reduction due to [multisignature efficiency][p4tr
   multisignatures]).
 
----
-
-A pre-Taproot channel *can*,
-in principle be upgraded to support PTLCs *without* expensive
-closing and reopening of the channel.
-Existing channels can host PTLCs by simply using an offchain
+In principle, a pre-Taproot channel be upgraded to support PTLCs without
+closing and reopening the channel.
+Existing channels can host PTLCs by creating an offchain
 transaction that spends the existing non-Taproot funding output
 to a Taproot output containing a PTLC.
-That "only" requires that both peers of the channel agree on
-some protocol to set up PTLCs.
-
 Thus getting support for PTLCs over
-Lightning does not require any cost to users beyond upgrading their
-software.
+Lightning does not require any cost to users beyond each node and its
+channel peers upgrading their software.
 
----
-
-PTLCs over Lightning require link-level compatibility
-because they're sent from one node to another
-over a channel.
-Thus, both nodes participating in a channel need to talk the
-same protocol to establish a new PTLC on a channel.
-
-A major complication is that sending a
-PTLC from a sender to a remote receiver, where the sender is
-not directly channeled with the receiver (i.e. "remote"),
-*every* forwarding node along the way has to support PTLCs,
-as well.
-
-Not all forwarding nodes need to support *the same* link-level
-protocol for PTLCs, there could be multiple link-level
-PTLC protocols.
-However, having to support multiple link-level protocols is
+However, to actually use PTLCs,
+*every* forwarding node from the spender to the receiver must support PTLCs.
+This means PTLC support may remain largely unused until a sufficient
+number of nodes have upgraded.
+They don't all
+necessary need to use the same protocol (there could be multiple 
+PTLC protocols), but they all must support some PTLC protocol.
+Having to support multiple PTLC protocols would be an
 added maintenance burden and I *hope* we do not have too many
-such PTLC link-level protocols (ideally just one).
+such protocols (ideally just one).
 
 ### Taproot-addressed Channels
 
@@ -93,8 +71,8 @@ so any blockchain explorer can see a 2-of-2
 being spent and guess with fairly
 good probability that this is a Lightning channel being closed.
 The funds can then be traced from there, and if it goes to
-another P2WSH then that is likely to be *another* "private"
-Lightning channel.
+another P2WSH output, then that is likely to be *another* unpublished
+channel.
 Thus, even unpublished channels are identifiable onchain once
 they are closed, with some level of false positives.
 
@@ -122,7 +100,7 @@ channels.[^two-to-tango]
 In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
 Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade an
 existing pre-Taproot channel to a Taproot-addressed channel**.
-The existing channel uses the existing P2WSH 2-of-2 scheme, and
+The existing channel uses the existing P2WSH 2-of-2 scheme and
 has to be closed in order to switch to a Taproot-addressed channel.
 
 This (rather small) privacy boost also helps published channels
@@ -132,16 +110,13 @@ somebody trying to look for published channels will not
 be able to learn about
 *historical* channels.
 If a surveillor wants to see every published channel, it has
-to store all that data itself, and cannot rely on any kind of
+to store all that data itself and cannot rely on any kind of
 "archival" node.
 
----
-
-The actual funding transaction outpoint is
+In theory, the actual funding transaction outpoint is
 really a concern of the two nodes that use the channel.
 Other nodes on the network will not care about what secures
 the channel between any two nodes.
-
 However, published channels are shared over the Lightning gossip network.
 When a node receives a gossiped published channel, it consults
 its own trusted blockchain fullnode, checking if the funding
@@ -149,7 +124,6 @@ outpoint exists, and more importantly **has the correct address**.
 Checking the address helps ensure that it is difficult to spam
 the channel gossip mechanism; you need actual funds on the
 blockchain in order to send channel gossip.
-
 Thus, in practice, even Taproot-addressed channels require some
 amount of remote compatibility; otherwise, senders will ignore
 these channels for routing, as they cannot validate that those
@@ -162,24 +136,23 @@ distributed FOSS project is to look at *previous* features and
 how long they took, and use those as the basis for how long
 features will take to actually deploy.[^planning-details]
 
-The most recent new major feature that I believe is most similar to
+The most recent new major feature that I believe is similar in scope to
 PTLCs over Lightning is dual-funding.  Lisa Neigut created an initial
-proposal for a dual-funding protocol in [lightning-rfc PR#524][bolts
-#254], opened on 2018-12-05.  The [first dual-funded channel on
-mainnet][neigut first dual funded].  was [opened][first dual funded tx]
-on 2021-05-04, almost exactly 2 years and 6 months after the PR was
-created.
-
+proposal for a dual-funding protocol in [BOLTs #524][], with the
+[first dual-funded channel on
+mainnet][neigut first dual funded] being [opened][first dual funded tx]
+almost 2 years and 6 months later.
 Dual-funding only
-requires link-level compatibility.
-PTLCs over Lightning require both link-level and
-remote compatibility, and thus I feel justified in giving
+requires compatibility with your direct peers.
+PTLCs over Lightning require compatibilty with all routing nodes on your
+selected paths, including the receiver, so
+I feel justified in giving
 this feature a +50% time modifier due to the added
-complication, for an estimate of 3 years and 9 months from
+complication, for an estimate of 3 years and 9 months starting from
 when a specific PTLC protocol is proposed.
 
 For Taproot-addressed channels, we should note that while
-this is "only" a link-level feature, it also has lower
+this is "only" between two direct peers, it also has lower
 benefits.
 Thus, I expect it will be lower priority.
 Assuming most developers prioritize PTLC-over-Lightning,
@@ -233,7 +206,7 @@ other ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
     closed.
 
 {% include references.md %}
-{% include linkers/issues.md issues="254" %}
+{% include linkers/issues.md issues="524" %}
 [zmnscpxj]: https://zmnscpxj.github.io/about.html
 [suredbits payment points]: https://suredbits.com/payment-points-monotone-access-structures/
 [WIKIPEDIAPLANNINGFALLACY]: https://en.wikipedia.org/wiki/Planning_fallacy
