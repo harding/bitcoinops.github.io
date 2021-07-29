@@ -97,12 +97,6 @@ channels.[^two-to-tango]
       ~70% = 1 - 16/54.75
 -->
 
-In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
-Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade an
-existing pre-Taproot channel to a Taproot-addressed channel**.
-The existing channel uses the existing P2WSH 2-of-2 scheme and
-has to be closed in order to switch to a Taproot-addressed channel.
-
 This (rather small) privacy boost also helps published channels
 as well.
 Published channels are only gossiped until they are closed, so
@@ -112,6 +106,12 @@ be able to learn about
 If a surveillor wants to see every published channel, it has
 to store all that data itself and cannot rely on any kind of
 "archival" node.
+
+In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
+Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade an
+existing pre-Taproot channel to a Taproot-addressed channel**.
+The existing channel uses the existing P2WSH 2-of-2 scheme and
+has to be closed in order to switch to a Taproot-addressed channel.
 
 In theory, the actual funding transaction outpoint is
 really a concern of the two nodes that use the channel.
