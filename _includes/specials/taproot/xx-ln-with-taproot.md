@@ -188,65 +188,26 @@ channels *exist*.
 
 ### Time Frames
 
-Of course, just as the perennial question for Taproot was "when
-Taproot?", I think the perennial question for Taproot-requiring
-features on Lightning is going to be "when Taproot-requiring
-features on Lightning?".
-
 I think the best way to create time frames for features on a
 distributed FOSS project is to look at *previous* features and
 how long they took, and use those as the basis for how long
 features will take to actually deploy.[^planning-details]
 
-The most recent new major feature that I believe is most
-similar to PTLCs over Lightning is dual-funding.
+The most recent new major feature that I believe is most similar to
+PTLCs over Lightning is dual-funding.  Lisa Neigut created an initial
+proposal for a dual-funding protocol in [lightning-rfc PR#524][bolts
+#254], opened on 2018-12-05.  The [first dual-funded channel on
+mainnet][neigut first dual funded].  was [opened][first dual funded tx]
+on 2021-05-04, almost exactly 2 years and 6 months after the PR was
+created.
 
-Lisa Neigut created an initial proposal for a dual-funding
-protocol in [lightning-rfc PR#524][bolts #254].
-
-Looking at the date, this PR was opened on 2018-12-05.
-
-Recently, Lisa wrote an article announcing the [first dual-funded
-channel on mainnet][neigut first dual funded].
-
-That article points to a particular [transaction][first dual funded tx]
-as the first mainnet dual-funded channel.
-
-Looking at the confirmation time of that transaction, this
-channel was fully opened at 2021-05-04, almost exactly 2
-years and 6 months after the PR was created.
-
-However, I would like to point out that dual-funding only
+Dual-funding only
 requires link-level compatibility.
 PTLCs over Lightning require both link-level and
 remote compatibility, and thus I feel justified in giving
 this feature a +50% time modifier due to the added
-complication, for an estimate of 3 years and 9 months.
-
-In addition, as of the time of this writing, there are no
-PRs to propose PTLCs over Lightning yet.
-Thus, the estimate from today to the first mainnet
-PTLC-over-Lightning will take longer.
-
-It is difficult for me to figure out how to estimate
-the time from base layer feature activation to initial
-Lightning layer concrete proposal, since the previous
-base layer feature SegWit enabled the entire Lightning
-network, and the [concrete proposal for Lightning][russell deployable ln]
-happened *before* SegWit activation (the proposal was
-written in 2015, SegWit got activated 2017).
-
-Thus, for now, I cannot estimate how long it would take
-from the time of this writing to someone proposing an
-actual PTLCs-on-Lightning protocol.
-As of this writing I am unaware of any published proposal
-for PTLCs over Lightning (I mean a technically detailed
-one, with messages, message formats, involved mathematics,
-MUST-ard and SHOULD-ard, and so on).
-However, I believe that once such a protocol is proposed,
-it will take between 2 years and 6 months, to 3 years and
-9 months for this feature to reach mainnet in some kind of
-practical form.
+complication, for an estimate of 3 years and 9 months from
+when a specific PTLC protocol is proposed.
 
 For Taproot-addressed channels, we should note that while
 this is "only" a link-level feature, it also has lower
@@ -255,7 +216,7 @@ Thus, I expect it will be lower priority.
 Assuming most developers prioritize PTLC-over-Lightning,
 then I expect Taproot-addressed channels will start getting
 worked on by the time the underlying `SIGHASH_NOINPUT` or
-other ways to implement Decker-Russell-Osuntokun ("Eltoo").
+other ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
 
 ### Conclusion
 
