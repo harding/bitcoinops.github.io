@@ -4,7 +4,7 @@ In this post, we'll look at two privacy features that Taproot enables
 for Lightning:
 
 * PTLCs over Lightning.
-* Taproot-addressed Channels.
+* P2TR Channels.
 
 ### PTLCs Over Lightning
 
@@ -50,7 +50,7 @@ Having to support multiple PTLC protocols would be an added maintenance
 burden and I *hope* we do not have too many such protocols (ideally just
 one).
 
-### Taproot-addressed Channels
+### P2TR Channels
 
 One solution for improving the decorrelation between the base layer and
 the Lightning layer has been unpublished channels---channels whose
@@ -70,7 +70,7 @@ Taproot, by using Schnorr signatures, allows for n-of-n to look exactly
 the same as 1-of-1.  With some work, even k-of-n will also look the same
 as 1-of-1 (and n-of-n).  We can then propose a feature where a Lightning
 channel is backed by a UTXO guarded by a Taproot address, i.e. a
-Taproot-addressed channel, which increases the *onchain* privacy of
+P2TR channel, which increases the *onchain* privacy of
 unpublished channels.[^two-to-tango]
 
 <!-- P2WSH 2-of-2: OP_0 <sig> <sig> <2 <key> <key> 2 OP_CMS>
@@ -94,9 +94,9 @@ kind of "archival" node.
 
 In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
 Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade
-an existing pre-Taproot channel to a Taproot-addressed channel**.  The
+an existing pre-Taproot channel to a P2TR channel**.  The
 existing channel uses the existing P2WSH 2-of-2 scheme and has to be
-closed in order to switch to a Taproot-addressed channel.
+closed in order to switch to a P2TR channel.
 
 In theory, the actual funding transaction outpoint is really a concern
 of the two nodes that use the channel.  Other nodes on the network will
@@ -107,7 +107,7 @@ blockchain fullnode, checking if the funding outpoint exists, and more
 importantly **has the correct address**.  Checking the address helps
 ensure that it is difficult to spam the channel gossip mechanism; you
 need actual funds on the blockchain in order to send channel gossip.
-Thus, in practice, even Taproot-addressed channels require some amount
+Thus, in practice, even P2TR channels require some amount
 of remote compatibility; otherwise, senders will ignore these channels
 for routing, as they cannot validate that those channels *exist*.
 
@@ -130,10 +130,10 @@ this feature a +50% time modifier due to the added complication, for an
 estimate of 3 years and 9 months starting from when a specific PTLC
 protocol is proposed.
 
-For Taproot-addressed channels, we should note that while this is "only"
+For P2TR channels, we should note that while this is "only"
 between two direct peers, it also has lower benefits.  Thus, I expect it
 will be lower priority.  Assuming most developers prioritize
-PTLC-over-Lightning, then I expect Taproot-addressed channels will start
+PTLC-over-Lightning, then I expect P2TR channels will start
 getting worked on by the time the underlying `SIGHASH_NOINPUT` or other
 ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
 
