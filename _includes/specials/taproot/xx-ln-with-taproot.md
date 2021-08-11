@@ -1,20 +1,20 @@
 *By [ZmnSCPxj][]*
 
-In this post, we'll look at two privacy features that [Taproot][topic taproot] enables
-for Lightning:
+In this post, we'll look at two privacy features that [taproot][topic taproot] enables
+for LN:
 
-* [PTLCs][topic ptlc] over Lightning.
+* [PTLCs][topic ptlc] over LN.
 * P2TR Channels.
 
-### PTLCs Over Lightning
+### PTLCs Over LN
 
 PTLCs enable [many features][suredbits payment points], with a major
-feature for Lighting being [payment decorrelation][p4tr ptlcs] without
+feature for LN being [payment decorrelation][p4tr ptlcs] without
 any need to randomize routes.[^route-randomization] Every node along a
 single-path or [multipath][topic multipath payments] route can be given a scalar that is used to
 tweak each forwarded PTLC, enabling *payment decorrelation* where
 individual forwards no longer leak the unique identifier for each
-Lightning payment.
+LN payment.
 
 PTLCs are ***not a privacy panacea***.  If a surveillor node sees a
 forward with a particular timelock and value, and a second surveillor
@@ -28,17 +28,17 @@ via a unique identifying hash.  However, we *do* get:
   less valuable.
 * A *lot* more decorrelation in multipath payments.  Separate paths will
   not have strong timelock and value correlation with each other, and if
-  Lightning succeeds, there should be enough payments that timing
+  LN succeeds, there should be enough payments that timing
   correlation is not reliable either.
 * No increase in cost compared to an [HTLC][topic htlc] (and possibly even a slight
   cost reduction due to [multisignature efficiency][p4tr
   multisignatures]).
 
-In principle, a pre-Taproot channel be upgraded to support PTLCs without
+In principle, a pre-taproot channel be upgraded to support PTLCs without
 closing and reopening the channel.  Existing channels can host PTLCs by
-creating an offchain transaction that spends the existing non-Taproot
-funding output to a Taproot output containing a PTLC.  Thus getting
-support for PTLCs over Lightning does not require any cost to users
+creating an offchain transaction that spends the existing non-taproot
+funding output to a taproot output containing a PTLC.  Thus getting
+support for PTLCs over LN does not require any cost to users
 beyond each node and its channel peers upgrading their software.
 
 However, to actually use PTLCs, *every* forwarding node from the spender
@@ -53,23 +53,23 @@ one).
 ### P2TR Channels
 
 One solution for improving the decorrelation between the base layer and
-the Lightning layer has been [unpublished channels][topic unannounced channels]---channels whose
-existence isn't gossiped on Lightning.
+the LN layer has been [unpublished channels][topic unannounced channels]---channels whose
+existence isn't gossiped on LN.
 
-Unfortunately, every Lightning channel is a 2-of-2, and in the current
-pre-Taproot Bitcoin, every 2-of-2 is *openly* coded.  Lightning is the
+Unfortunately, every LN channel is a 2-of-2, and in the current
+pre-taproot Bitcoin, every 2-of-2 is *openly* coded.  LN is the
 most popular user of 2-of-2 multisignature, so any blockchain explorer
 can see a 2-of-2 being spent and guess with fairly good probability that
-this is a Lightning channel being closed.  The funds can then be traced
+this is a LN channel being closed.  The funds can then be traced
 from there, and if it goes to another P2WSH output, then that is likely
 to be *another* unpublished channel.  Thus, even unpublished channels
 are identifiable onchain once they are closed, with some level of false
 positives.
 
-Taproot, by using [Schnorr signatures][topic schnorr signatures], allows for n-of-n to look exactly
+Taproot, by using [schnorr signatures][topic schnorr signatures], allows for n-of-n to look exactly
 the same as 1-of-1.  With some work, even [k-of-n][topic threshold signature] will also look the same
-as 1-of-1 (and n-of-n).  We can then propose a feature where a Lightning
-channel is backed by a UTXO guarded by a Taproot address, i.e. a
+as 1-of-1 (and n-of-n).  We can then propose a feature where an LN
+channel is backed by a P2TR UTXO, i.e. a
 P2TR channel, which increases the *onchain* privacy of
 unpublished channels.[^two-to-tango]
 
@@ -92,16 +92,16 @@ trying to look for published channels will not be able to learn about
 channel, it has to store all that data itself and cannot rely on any
 kind of "archival" node.
 
-In addition, Taproot keypath spends are 38.5 vbytes (70%) smaller than
-Lightning's existing P2WSH spends.  Unfortunately, you **cannot upgrade
-an existing pre-Taproot channel to a P2TR channel**.  The
+In addition, taproot keypath spends are 38.5 vbytes (70%) smaller than
+LN's existing P2WSH spends.  Unfortunately, you **cannot upgrade
+an existing pre-taproot channel to a P2TR channel**.  The
 existing channel uses the existing P2WSH 2-of-2 scheme and has to be
 closed in order to switch to a P2TR channel.
 
 In theory, the actual funding transaction outpoint is really a concern
 of the two nodes that use the channel.  Other nodes on the network will
 not care about what secures the channel between any two nodes.  However,
-published channels are shared over the Lightning gossip network.  When a
+published channels are shared over the LN gossip network.  When a
 node receives a gossiped published channel, it consults its own trusted
 blockchain fullnode, checking if the funding outpoint exists, and more
 importantly **has the correct address**.  Checking the address helps
@@ -119,12 +119,12 @@ and use those as the basis for how long features will take to actually
 deploy.[^planning-details]
 
 The most recent new major feature that I believe is similar in scope to
-PTLCs over Lightning is [dual-funding][topic dual funding].  Lisa Neigut created an initial
+PTLCs over LN is [dual-funding][topic dual funding].  Lisa Neigut created an initial
 proposal for a dual-funding protocol in [BOLTs #524][], with the [first
 dual-funded channel on mainnet][neigut first dual funded] being
 [opened][first dual funded tx] almost 2 years and 6 months later.
 Dual-funding only requires compatibility with your direct peers.  PTLCs
-over Lightning require compatibilty with all routing nodes on your
+over LN require compatibilty with all routing nodes on your
 selected paths, including the receiver, so I feel justified in giving
 this feature a +50% time modifier due to the added complication, for an
 estimate of 3 years and 9 months starting from when a specific PTLC
@@ -133,7 +133,7 @@ protocol is proposed.
 For P2TR channels, we should note that while this is "only"
 between two direct peers, it also has lower benefits.  Thus, I expect it
 will be lower priority.  Assuming most developers prioritize
-PTLC-over-Lightning, then I expect P2TR channels will start
+PTLC-over-LN, then I expect P2TR channels will start
 getting worked on by the time the underlying [SIGHASH_NOINPUT][topic sighash_noinput] or other
 ways to implement Decker-Russell-Osuntokun ("[Eltoo][topic eltoo]") are available.
 
@@ -161,10 +161,10 @@ ways to implement Decker-Russell-Osuntokun ("[Eltoo][topic eltoo]") are availabl
     Yes, there are more developers now, that also means we need
     to get greater agreement on various details and more
     implementation-specific concerns ("mythical man-month").
-    Yes, we now know more today about how Lightning works, but
-    what we know is how Lightning works pre-Taproot, and we
+    Yes, we now know more today about how LN works, but
+    what we know is how LN works pre-taproot, and we
     might actually have to unlearn some of those lessons in a
-    post-Taproot world.
+    post-taproot world.
     If we want to make **accurate** estimates as opposed to
     **feel-good** estimates, we should use methods that avoid
     the [planning fallacy][WIKIPEDIAPLANNINGFALLACY].
@@ -176,7 +176,7 @@ ways to implement Decker-Russell-Osuntokun ("[Eltoo][topic eltoo]") are availabl
 [^two-to-tango]:
     When considering unpublished channels, remember that
     it takes two to tango, and if an unpublished channel is
-    closed, then one participant (say, a Lightning service provider)
+    closed, then one participant (say, an LN service provider)
     uses the remaining funds for a *published* channel, a blockchain
     explorer can guess that the source of the funds has some
     probability of having been an unpublished channel that was
