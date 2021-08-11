@@ -1,9 +1,9 @@
 *By [ZmnSCPxj][]*
 
-In this post, we'll look at two privacy features that Taproot enables
+In this post, we'll look at two privacy features that [Taproot][topic taproot] enables
 for Lightning:
 
-* PTLCs over Lightning.
+* [PTLCs][topic ptlc] over Lightning.
 * P2TR Channels.
 
 ### PTLCs Over Lightning
@@ -11,7 +11,7 @@ for Lightning:
 PTLCs enable [many features][suredbits payment points], with a major
 feature for Lighting being [payment decorrelation][p4tr ptlcs] without
 any need to randomize routes.[^route-randomization] Every node along a
-single-path or multipath route can be given a scalar that is used to
+single-path or [multipath][topic multipath payments] route can be given a scalar that is used to
 tweak each forwarded PTLC, enabling *payment decorrelation* where
 individual forwards no longer leak the unique identifier for each
 Lightning payment.
@@ -30,7 +30,7 @@ via a unique identifying hash.  However, we *do* get:
   not have strong timelock and value correlation with each other, and if
   Lightning succeeds, there should be enough payments that timing
   correlation is not reliable either.
-* No increase in cost compared to an HTLC (and possibly even a slight
+* No increase in cost compared to an [HTLC][topic htlc] (and possibly even a slight
   cost reduction due to [multisignature efficiency][p4tr
   multisignatures]).
 
@@ -53,7 +53,7 @@ one).
 ### P2TR Channels
 
 One solution for improving the decorrelation between the base layer and
-the Lightning layer has been unpublished channels---channels whose
+the Lightning layer has been [unpublished channels][topic unannounced channels]---channels whose
 existence isn't gossiped on Lightning.
 
 Unfortunately, every Lightning channel is a 2-of-2, and in the current
@@ -66,8 +66,8 @@ to be *another* unpublished channel.  Thus, even unpublished channels
 are identifiable onchain once they are closed, with some level of false
 positives.
 
-Taproot, by using Schnorr signatures, allows for n-of-n to look exactly
-the same as 1-of-1.  With some work, even k-of-n will also look the same
+Taproot, by using [Schnorr signatures][topic schnorr signatures], allows for n-of-n to look exactly
+the same as 1-of-1.  With some work, even [k-of-n][topic threshold signature] will also look the same
 as 1-of-1 (and n-of-n).  We can then propose a feature where a Lightning
 channel is backed by a UTXO guarded by a Taproot address, i.e. a
 P2TR channel, which increases the *onchain* privacy of
@@ -119,7 +119,7 @@ and use those as the basis for how long features will take to actually
 deploy.[^planning-details]
 
 The most recent new major feature that I believe is similar in scope to
-PTLCs over Lightning is dual-funding.  Lisa Neigut created an initial
+PTLCs over Lightning is [dual-funding][topic dual funding].  Lisa Neigut created an initial
 proposal for a dual-funding protocol in [BOLTs #524][], with the [first
 dual-funded channel on mainnet][neigut first dual funded] being
 [opened][first dual funded tx] almost 2 years and 6 months later.
@@ -134,8 +134,8 @@ For P2TR channels, we should note that while this is "only"
 between two direct peers, it also has lower benefits.  Thus, I expect it
 will be lower priority.  Assuming most developers prioritize
 PTLC-over-Lightning, then I expect P2TR channels will start
-getting worked on by the time the underlying `SIGHASH_NOINPUT` or other
-ways to implement Decker-Russell-Osuntokun ("Eltoo") are available.
+getting worked on by the time the underlying [SIGHASH_NOINPUT][topic sighash_noinput] or other
+ways to implement Decker-Russell-Osuntokun ("[Eltoo][topic eltoo]") are available.
 
 [^route-randomization]:
     A payer can choose a very twisty path (i.e. route randomization) to
