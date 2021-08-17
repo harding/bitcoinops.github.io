@@ -34,7 +34,7 @@ via a unique identifying hash.  However, we *do* get:
   cost reduction due to [multisignature efficiency][p4tr
   multisignatures]).
 
-In principle, a pre-taproot channel be upgraded to support PTLCs without
+In principle, a pre-taproot channel can be upgraded to support PTLCs without
 closing and reopening the channel.  Existing channels can host PTLCs by
 creating an offchain transaction that spends the existing non-taproot
 funding output to a taproot output containing a PTLC.  Thus getting
