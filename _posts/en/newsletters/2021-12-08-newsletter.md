@@ -105,7 +105,16 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
 
 - [Bitcoin Core #23155][] rpc: various fixups for dumptxoutset FIXME:jnewbery
 
-- [Bitcoin Core #22513][] rpc: Allow walletprocesspsbt to sign without finalizing FIXME:adamjonas
+- [Bitcoin Core #22513][] allows `walletprocesspsbt` to sign without
+  finalizing the [PSBT][topic psbt] workflow. This is useful for
+  complex scripts, for example, in a [tapscript][topic tapscript]
+  where a fallback script path requires only signer Alice along with
+  a normal path with multiple signers, including Alice. When Alice
+  signs, it is best to wait to finalize the PSBT with the fallback
+  script path and instead construct a PSBT containing all of Alice’s
+  signatures and then pass the PSBT to the other signers and wait for
+  them to sign. In this scenario, the ultimate path is determined after
+  all signatures are produced.
 
 - [C-Lightning #4921][] updates the implementation of [onion
   messages][topic onion messages] to match the latest updates to the
