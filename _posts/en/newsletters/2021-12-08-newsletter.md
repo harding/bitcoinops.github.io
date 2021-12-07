@@ -103,7 +103,10 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
 [BDK][bdk repo], [Bitcoin Improvement Proposals (BIPs)][bips repo], and
 [Lightning BOLTs][bolts repo].*
 
-- [Bitcoin Core #23155][] rpc: various fixups for dumptxoutset FIXME:jnewbery
+- [Bitcoin Core #23155][] adds additional output to the `dumptxoutset` RPC as
+  part of the [AssumeUTXO][topic assumeutxo] project: `txoutset_hash` (the UTXO set hash),
+  `nchaintx` (a count of transactions in the chain), and the path of the
+  serialized UTXO set on disk.
 
 - [Bitcoin Core #22513][] allows `walletprocesspsbt` to sign without
   finalizing the [PSBT][topic psbt] workflow. This is useful for
