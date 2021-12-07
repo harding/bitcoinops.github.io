@@ -37,8 +37,8 @@ and notable changes to popular infrastructure projects.
 meeting, highlighting some of the important questions and answers.  Click on a
 question below to see a summary of the answer from the meeting.*
 
-[Treat Taproot as always active][review club #23512] is a PR by Marco Falke to
-make transactions spending taproot outputs standard, regardless of taproot
+[Treat taproot as always active][review club #23512] is a PR by Marco Falke to
+make transactions spending [taproot][topic taproot] outputs standard, regardless of taproot
 deployment status.
 
 {% include functions/details-list.md
@@ -63,9 +63,9 @@ deployment status.
 
   q2="Are there any theoretical issues with the change? For wallet users, is
   it possible to lose money?"
-  a2="With this change, the wallet allows importing taproot descriptors at any
+  a2="With this change, the wallet allows importing taproot [descriptors][topic descriptors] at any
   time, i.e., even when taproot is not active and v1 segwit outputs can be spent
-  by anyone). This means it's possible to receive bitcoin at a taproot address
+  by anyone. This means it's possible to receive bitcoin to a taproot output
   without taproot being active yet; if the chain also reorgs to a block prior to
   709,632, miners (or someone who can get a nonstandard transaction confirmed) can
   steal those UTXOs."
