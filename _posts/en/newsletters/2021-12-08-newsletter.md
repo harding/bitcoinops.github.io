@@ -9,13 +9,13 @@ lang: en
 ---
 This week's newsletter describes a post about fee-bumping research and
 contains our regular sections with the summary of a Bitcoin Core PR
-Review Club meeting, the latest releases and RCs of Bitcoin software,
+Review Club meeting, the latest releases and release candidates for Bitcoin software,
 and notable changes to popular infrastructure projects.
 
 ## News
 
 - **Fee bumping research:** Antoine Poinsot [posted][darosior bump] to
-  the Bitcoin-Dev mailing list a detailed description several concerns
+  the Bitcoin-Dev mailing list a detailed description of several concerns
   developers need to consider when choosing how to fee-bump presigned
   transactions used in [vaults][topic vaults] and contract protocols
   such as LN.  In particular, Poinsot looked at schemes for multiparty
@@ -26,7 +26,7 @@ and notable changes to popular infrastructure projects.
   transaction pinning].  Also included in his post is the result of
   [research][revault research] into some of the ideas described earlier.
 
-    Ensuring that fee bumping works reliability is a requirement for the
+    Ensuring that fee bumping works reliably is a requirement for the
     safety of most contract protocols, and it remains a problem without any
     comprehensive solution yet.  It is encouraging to see continuing
     research into the problem.
@@ -103,10 +103,12 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
 [BDK][bdk repo], [Bitcoin Improvement Proposals (BIPs)][bips repo], and
 [Lightning BOLTs][bolts repo].*
 
-- [Bitcoin Core #23155][] adds additional output to the `dumptxoutset` RPC as
-  part of the [AssumeUTXO][topic assumeutxo] project: `txoutset_hash` (the UTXO set hash),
-  `nchaintx` (a count of transactions in the chain), and the path of the
-  serialized UTXO set on disk.
+- [Bitcoin Core #23155][] extends the `dumptxoutset` RPC with the hash
+  of the chainstate snapshot (UTXO set) along with the number of
+  transactions in the entire chain up until that point.  This
+  information can be published alongside the chainstate so that others
+  can verify it using the `gettxoutsetinfo` RPC, allowing it to be used
+  with the proposed [assumeUTXO][topic assumeutxo] node bootstrapping.
 
 - [Bitcoin Core #22513][] allows `walletprocesspsbt` to sign without
   finalizing the [PSBT][topic psbt] workflow. This is useful for
@@ -151,7 +153,6 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
   channel.  Since only the remote node is taking any risk, there's no
   problem allowing the local node to accept such channels.
 
-<!-- FIXME: harding to add topics, update rcs/release -->
 {% include references.md %}
 {% include linkers/issues.md issues="23155,22513,4921,4829,2061,2073,906,1163,765,759,911,23512" %}
 [bdk 0.14.0]: https://github.com/bitcoindevkit/bdk/releases/tag/v0.14.0

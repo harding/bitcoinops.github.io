@@ -32,6 +32,12 @@ optech_mentions:
   - title: "Eclair #1957 adds basic support for onion messages"
     url: /en/newsletters/2021/11/17/#eclair-1957
 
+  - title: "C-Lightning #4921 updates the implementation of onion messages"
+    url: /en/newsletters/2021/12/08/#c-lightning-4921
+
+  - title: "Eclair #2061 adds initial support for onion messages"
+    url: /en/newsletters/2021/12/08/#eclair-2061
+
 ## Optional.  Same format as "primary_sources" above
 # see_also:
 #   - title:
