@@ -112,12 +112,12 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
 
 - [Bitcoin Core #22513][] allows `walletprocesspsbt` to sign without
   finalizing the [PSBT][topic psbt] workflow. This is useful for
-  complex scripts, for example, in a [tapscript][topic tapscript]
-  where a fallback script path requires only signer Alice along with
-  a normal path with multiple signers, including Alice. When Alice
-  signs, it is best to wait to finalize the PSBT with the fallback
-  script path and instead construct a PSBT containing all of Alice’s
-  signatures and then pass the PSBT to the other signers and wait for
+  complex scripts, for example, in a [tapscript][topic tapscript] with
+  two paths: a fallback script path that requires only signer Alice,
+  plus a normal path with multiple signers including Alice. When Alice
+  signs, it is best to delay finalizing the PSBT with the fallback
+  script path and instead construct a PSBT containing both of Alice’s
+  signatures, pass the PSBT to the other signers, and wait for
   them to sign. In this scenario, the ultimate path is determined after
   all signatures are produced.
 
