@@ -153,6 +153,10 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
   channel.  Since only the remote node is taking any risk, there's no
   problem allowing the local node to accept such channels.
 
+- [Lightning BOLTs #940][] deprecates the announcement and parsing of TOR
+  v2 onions in `node_announcements`. [Rust-Lightning #1204][] has already 
+  updated this.
+
 {% include references.md %}
 {% include linkers/issues.md issues="23155,22513,4921,4829,2061,2073,906,1163,765,759,911,23512" %}
 [bdk 0.14.0]: https://github.com/bitcoindevkit/bdk/releases/tag/v0.14.0
