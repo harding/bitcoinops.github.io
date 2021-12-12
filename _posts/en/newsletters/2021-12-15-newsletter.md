@@ -97,6 +97,14 @@ repo], [Hardware Wallet Interface (HWI)][hwi repo],
   merged this week, updates that implementation to follow this updated
   specification.
 
+- [BOLTs #918][] removes the rate limiting of ping messages. `ping` messages
+  are mainly used to check if the peer connection is still alive. Prior to
+  this merge `ping` messages were supposed to be sent at most once every 30
+  seconds. For many nodes it is useful to send heart beat messages via `ping`
+  more frequently to assure a high quality of service. As other  Lightning 
+  messages are not rate limited the 30 seconds rate limit for `ping` messages
+  was also dropped.
+
 - [BOLTs #906][] introduce feature bit to gate new channel_type feature FIXME:dongcarl
 
 ## Holiday publication schedule
