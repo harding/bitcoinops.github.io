@@ -94,7 +94,7 @@ Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
   composed of a single output type. This addresses scenarios in which
   mixed-type input sets reveal the change output of preceding
   transactions. This follows a related privacy improvement to [always
-  match the change type][Bitcoin Core #23789] to a recipient output (see
+  match the change type][#23789] to a recipient output (see
   [Newsletter #181][news181 change matching]).
 
 - [Core Lightning #5071][] adds a book keeping plugin that provides an
@@ -122,3 +122,4 @@ Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
 [harding min]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-July/020808.html
 [todd min2]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-August/020815.html
 [news3 min]: /en/newsletters/2018/07/10/#discussion-min-fee-discussion-about-minimum-relay-fee
+[#23789]: https://github.com/bitcoin/bitcoin/issues/23789
