@@ -90,7 +90,7 @@ Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
   transactions and the GUI not having functionality to disable RBF---all
   of which have since been addressed.
 
-- [Bitcoin Core #24584][] amends coin selection to prefer input sets
+- [Bitcoin Core #24584][] amends [coin selection][topic coin selection] to prefer input sets
   composed of a single output type. This addresses scenarios in which
   mixed-type input sets reveal the change output of preceding
   transactions. This follows a related privacy improvement to [always
