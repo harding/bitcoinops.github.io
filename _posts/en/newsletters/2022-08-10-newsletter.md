@@ -54,12 +54,68 @@ infrastructure projects.
 meeting, highlighting some of the important questions and answers.  Click on a
 question below to see a summary of the answer from the meeting.*
 
-FIXME:LarryRuane
+[Decouple validation cache initialization from ArgsManager][review club 25527]
+is a PR by Carl Dong that separates node configuration logic from the
+initialization of signature and script caches.
+It is part of the [libbitcoinkernel project][].
+
 
 {% include functions/details-list.md
-  q0="FIXME"
-  a0="FIXME"
-  a0link="https://bitcoincore.reviews/12345#l-123"
+  q0="In your own words, what does the `ArgsManager` do?
+Why or why not should `ArgsManager` belong in `src/kernel` versus `src/node`?"
+  a0="It's a global data structure for handling configuration options
+(`.bitcoin/bitcoin.conf` and command line arguments).
+It lets users customise the configuration of their nodes.
+It's undesirable for the consensus engine (`src/kernel`) to access `ArgsManager` for
+any reason, because it could, in principle, allow per-node configuration options
+to modify the behavior of the consensus engine. This could lead to
+a loss of consensus between nodes. Also, when the [libbitcoinkernel project][] is
+complete, it will be possible to build a simple node that's barely more than
+the consensus engine, and might not even have this global data structure.
+Reducing dependency on globals is always an improvement."
+  a0link="https://bitcoincore.reviews/25527#l-35"
+
+  q1="In your own words, what are the validation caches? Why would they belong in
+`src/kernel` versus `src/node`?"
+  a1="When a new block arrives, the most computationally expensive part of validating
+it is validating its transactions; this is part of the consensus engine.
+Since most of a block's transactions have already
+been seen and validated (when added to the mempool), block validation can
+be sped up by caching the (successful) script and signature verifications
+that were done earlier. These caches must be part of the
+consensus engine, because consensus code refers to them.
+If the caching code has a bug, consensus may be
+lost if different nodes have diffrent cache sizes.
+Consensus code doesn't actually live in `src/kernel` yet; most of it
+is in `validation.cpp`.
+We refer to _consensus_ as consensus rules themselves, e.g. signature verification.
+And we're referring to signature caching as _consensus-critical_ functionality because,
+if we have an invalid signature cached, our node is no longer enforcing consensus rules."
+  a1link="https://bitcoincore.reviews/25527#l-45"
+
+  q2="What tools do you use for “code archeology” to understand the background of why
+a value exists?"
+  a2="`git blame filename`; `git log -p filename`; enter
+`commit:<commit-hash>` into the
+[pulls](https://github.com/bitcoin/bitcoin/pulls) page;
+use GitHub `Blame` button when viewing a file.
+You can also search for project symbols in the GitHub search bar."
+  a2link="https://bitcoincore.reviews/25527#l-132"
+
+  q3="This PR changes the type of `signature_cache_bytes` and
+`script_execution_cache_bytes` from `int64_t` to `size_t`.
+What is the difference between `int64_t`, `uint64_t`, and `size_t`,
+and why should a `size_t` hold these values?"
+  a3="The `int64_t` and `uint64_t` types are 64-bits (signed and unsigned,
+respectively) across all platforms and compilers. The `size_t` type
+is an unsigned integer that's
+guaranteed to be able to hold the length (in bytes) of any object
+in memory, including an array.
+The `size_t` type can be either 32 bits on a 32-bit memory system or
+64 bits on a 64-bit memory system. A `size_t` can also hold an array index,
+which is one of its most common uses.
+It also matches the size of a memory pointer."
+  a3link="https://bitcoincore.reviews/25527#l-163"
 %}
 
 ## Releases and release candidates
@@ -123,3 +179,6 @@ Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
 [todd min2]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2022-August/020815.html
 [news3 min]: /en/newsletters/2018/07/10/#discussion-min-fee-discussion-about-minimum-relay-fee
 [#23789]: https://github.com/bitcoin/bitcoin/issues/23789
+[review club 25527]: https://bitcoincore.reviews/25527
+[libbitcoinkernel project]: https://github.com/bitcoin/bitcoin/issues/24303
+[`ArgsManager`]: https://github.com/bitcoin/bitcoin/blob/5871b5b5ab57a0caf9b7514eb162c491c83281d5/src/util/system.h#L172
