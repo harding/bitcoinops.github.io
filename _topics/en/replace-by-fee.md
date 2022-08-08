@@ -107,7 +107,7 @@ optech_mentions:
   - title: "Bitcoin Core fullrbf setting where the node always allows transaction replacement"
     url: /en/newsletters/2022/07/13/#bitcoin-core-25353
 
-  - title: "Bitcoin Core opt in the RPCs and -walletrbf to RBF by default"
+  - title: "Bitcoin Core #25610 opts-in the RPCs and `-walletrbf` to RBF by default"
     url: /en/newsletters/2022/08/10/#bitcoin-core-25610
 
 ## Optional.  Same format as "primary_sources" above

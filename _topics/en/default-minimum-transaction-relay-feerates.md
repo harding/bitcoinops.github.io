@@ -38,6 +38,9 @@ optech_mentions:
   - title: "Bitcoin Core #13987 adds info about peers' minimum feerates to `getpeerinfo`"
     url: /en/newsletters/2018/09/04/#bitcoin-core-13987
 
+  - title: Discussion about lowering the default minimum transaction relay feerate
+    url: /en/newsletters/2022/08/10/#lowering-the-default-minimum-transaction-relay-feerate
+
 ## Optional.  Same format as "primary_sources" above
 see_also:
   - title: Package relay

@@ -42,7 +42,7 @@ infrastructure projects.
     - *Alternative relay criteria:* it was [suggested][todd min2] that
       transactions violating certain default criteria (such as the
       default minimum feerate) could instead fulfill some separate
-      criteria made DoS attacks costly---for example, if a modest amount
+      criteria that make DoS attacks costly---for example, if a modest amount
       of hashcash-style proof of work committed to the transaction to
       relay.
 
@@ -97,12 +97,12 @@ Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
   match the change type][#23789] to a recipient output (see
   [Newsletter #181][news181 change matching]).
 
-- [Core Lightning #5071][] adds a book keeping plugin that provides an
+- [Core Lightning #5071][] adds a bookkeeper plugin that provides an
   accounting record of movements of bitcoins by the node running the
   plugin, including the ability to track the amount spent on fees.  The
-  merged PR includes a variety of new RPC commands and results.
+  merged PR includes several new RPC commands.
 
-- [BDK #645][] adds a way to specify which taproot spend paths to sign
+- [BDK #645][] adds a way to specify which [taproot][topic taproot] spend paths to sign
   for.  Previously, BDK would sign for the keypath spend if it was able,
   plus sign for any scriptpath leaves it had the keys for.
 
