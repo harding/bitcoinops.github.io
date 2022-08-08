@@ -80,15 +80,15 @@ Interface (HWI)][hwi repo], [Rust Bitcoin][rust bitcoin repo], [BTCPay
 Server][btcpay server repo], [BDK][bdk repo], [Bitcoin Improvement
 Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
 
-- [Bitcoin Core #25610][] opts-in the RPCs and `-walletrbf` to RBF
+- [Bitcoin Core #25610][] opts-in the RPCs and `-walletrbf` to [RBF][topic rbf]
   by default. This follows the update mentioned in
   [Newsletter #208][news208 core RBF], enabling node operators to
   switch their node's transaction replacement behavior from the
   default opt-in RBF (BIP125) to full RBF. RPC opt-in by default was
   proposed in 2017 in [Bitcoin Core #9527][] when the primary
   objections were the novelty at the time, the inability to bump
-  transactions and the GUI not having functionality to disable RBF --
-  all of which have since been addressed.
+  transactions and the GUI not having functionality to disable RBF---all
+  of which have since been addressed.
 
 - [Bitcoin Core #24584][] amends coin selection to prefer input sets
   composed of a single output type. This addresses scenarios in which
