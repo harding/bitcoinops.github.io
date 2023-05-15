@@ -181,7 +181,7 @@ Server][btcpay server repo], [BDK][bdk repo], [Bitcoin Improvement
 Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 [Bitcoin Inquisition][bitcoin inquisition repo].*
 
-- [Bitcoin Core #26076][] RPC methods that show derivation paths for
+- [Bitcoin Core #26076][] updates RPC methods that show derivation paths for
   public keys now use `h` instead of a single-quote `'` to indicate a
   hardened derivation step. Note that this changes the descriptor
   checksum. When handling descriptors with private keys, the same symbol
