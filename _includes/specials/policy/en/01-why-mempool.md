@@ -21,7 +21,7 @@ store them in their mempools. With [compact block relay][topic compact
 block relay], these nodes just download a block header along with shortids,
 and then reconstruct the block using transactions in their mempools.
 The amount of data used to relay compact blocks is tiny compared to
-the size of the block (fixme: stats?). Validating the transactions is
+the size of the block. Validating the transactions is
 also much faster: the node has already verified (and cached)
 signatures and scripts, calculated the timelock requirements, and
 loaded relevant UTXOs from disk if necessary. The node can also
@@ -55,11 +55,16 @@ somebody connected to a miner. This method helps obfuscate which node
 a transaction originates from as well as which node may be responsible
 for confirming it. Someone wishing to censor particular entities may
 target miners, popular exchanges, or other centralized submission
-services, but it would be difficult to block anything completely. The
-general availability of unconfirmed transactions also helps minimize the
-entrance cost of becoming a block producer - someone who is
+services, but it would be difficult to block anything completely.
+
+The
+general availability of unconfirmed transactions also helps minimize
+the entrance cost of becoming a block producer - someone who is
 dissatisfied with the transactions being selected (or excluded)
 may start mining immediately.
+Treating each node as an equal candidate for transaction broadcast
+avoids giving any miner privileged access to transactions and their
+fees.
 
 In summary, a mempool is an extremely useful cache that allows nodes
 to distribute the costs of block download and validation over time,
@@ -67,13 +72,7 @@ and gives users access to better fee estimation. At a network level,
 mempools support a distributed transaction and block relay network.
 All of these benefits are most pronounced when everybody sees all
 transactions before miners include them in blocks - just like any
-cache, it is most useful when it's "hot" and must be limited in size
-to fit in memory. This leads us to our first example of mempool
-policy: the concept of transaction feerate. Feerate helps nodes guess
-which transactions are most likely to be confirmed, and helps prevent
-denial of service attacks by ensuring that users incur some cost in
-order to use transaction relay.
-
-Next week's section will dive further into mempool policy including
-other methods of protecting network resources, assisting in safer soft
-forks, avoiding denial of service attacks, and more.
+cache, a mempool is most useful when it is "hot" and must be limited in size
+to fit in memory.
+Next week's section will explore the use of incentive compatibility as
+a metric for keeping the most useful transactions in their mempools.
