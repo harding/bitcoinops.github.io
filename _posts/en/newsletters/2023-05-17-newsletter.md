@@ -7,7 +7,16 @@ type: newsletter
 layout: newsletter
 lang: en
 ---
-This week's newsletter FIXME:harding
+This week's newsletter describes a proposal to begin testing HTLC
+endorsement, relays a request for feedback about proposed specifications
+for Lightning Service Providers (LSPs), discusses challenges with
+opening zero-conf channels when using dual funding, looks at a
+suggestion for advanced applications of payjoin transactions, and links
+to summaries of a recent in-person meeting of Bitcoin Core developers.
+Also included in this week's newsletter is the first part of a new
+series about policies for transaction relay and mempool inclusion, plus
+our regular sections announcing new releases and release candidates and
+describing notable changes to popular Bitcoin infrastructure software.
 
 ## News
 
@@ -156,6 +165,9 @@ release candidates.*
 - [Bitcoin Core 24.1rc2][] is a release candidate for a maintenance
   release of the current version of Bitcoin Core.
 
+- [Bitcoin Core 23.2rc1][] is a release candidate for a maintenance
+  release of the previous major version of Bitcoin Core.
+
 - [Bitcoin Core 25.0rc1][] is a release candidate for the next major
   version of Bitcoin Core.
 
@@ -177,25 +189,37 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
   wallets the `hdkeypath` field in `getaddressinfo` and the
   serialization format of wallet dumps remain unchanged.
 
-- [Bitcoin Core #27608][] p2p: Avoid prematurely clearing download state for other peers FIXME:harding
+- [Bitcoin Core #27608][] will continue trying to download a block from
+  a peer even if another peer provided the block.  Bitcoin Core will
+  continue trying to download the block from peers that claim to have it
+  until one of the received blocks has been written to disk.
 
-- [LDK #2286][] Create and Sign PSBTs for spendable outputs FIXME:harding
+- [LDK #2286][] allows creating and signing [PSBTs][topic psbt] for
+  outputs controlled by the local wallet.
 
-- [LDK #1794][] dunxen/2022-10-dualfunding-act-1 FIXME:harding
+- [LDK #1794][] begins adding support for [dual funding][topic dual
+  funding], starting with methods needed for the interactive funding
+  protocol that is used for dual funding.
 
-- [Libsecp256k1 #1066][] Abstract out and merge all the magnitude/normalized logic FIXME:harding
+- [Rust Bitcoin #1844][] makes the schema in a [BIP21][] URI lowercase,
+  i.e. `bitcoin:`.  Although the specification for URI schema (RFC3986)
+  says the schema is case insensitive, testing shows that some platforms
+  are not opening the application assigned to handle `bitcoin:` URIs
+  when an uppercase `BITCOIN:` is passed.  It would be preferable if
+  uppercase was handled correctly, as it allows creating more efficient
+  QR codes (see [Newsletter #46][news46 qr].
 
-- [Libsecp256k1 #1299][] Infinity handling: ecmult_const(infinity) works, and group verification FIXME:harding
+- [Rust Bitcoin #1837][] adds a function for generating a new private
+  key, simplifying what previously required more code to accomplish.
 
-- [Rust Bitcoin #1844][] make bip21 schema lowercase FIXME:harding
-
-- [Rust Bitcoin #1837][] feat: generate PrivateKey FIXME:harding
-
-- [BOLTs #1075][] t-bast/remove-disconnect-warning FIXME:harding
+- [BOLTs #1075][] updates the specification so that nodes should no
+  longer disconnect from a peer after receiving a warning message from
+  it.
 
 {% include references.md %}
-{% include linkers/issues.md v=2 issues="26076,27608,2286,1794,1066,1299,1844,1837,1075,1071" %}
+{% include linkers/issues.md v=2 issues="26076,27608,2286,1794,1844,1837,1075,1071" %}
 [Core Lightning 23.05rc2]: https://github.com/ElementsProject/lightning/releases/tag/v23.05rc2
+[bitcoin core 23.2rc1]: https://bitcoincore.org/bin/bitcoin-core-23.2/
 [bitcoin core 24.1rc2]: https://bitcoincore.org/bin/bitcoin-core-24.1/
 [bitcoin core 25.0rc1]: https://bitcoincore.org/bin/bitcoin-core-25.0/
 [news239 endorsement]: /en/newsletters/2023/02/22/#feedback-requested-on-ln-good-neighbor-scoring
@@ -215,3 +239,4 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 [teinturier 0conf]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-May/003920.html
 [gould payjoin]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-May/021653.html
 [transaction cut-through]: https://bitcointalk.org/index.php?topic=281848.0
+[news46 qr]: /en/newsletters/2019/05/14/#bech32-sending-support
