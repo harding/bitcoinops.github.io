@@ -34,7 +34,7 @@ market for block space is a fee-based auction, and keeping a mempool
 allows users to have a better sense of what others are bidding and
 what bids have been successful in the past.
 
-However, there is no such thing as "the mempool" - each node may
+However, there is no such thing as "the mempool"---each node may
 receive different transactions. Submitting a transaction to one node
 does not necessarily mean that it has made its way to miners. Some
 users find this uncertainty frustrating, and wonder, "why don't we
@@ -59,7 +59,7 @@ services, but it would be difficult to block anything completely.
 
 The
 general availability of unconfirmed transactions also helps minimize
-the entrance cost of becoming a block producer - someone who is
+the entrance cost of becoming a block producer---someone who is
 dissatisfied with the transactions being selected (or excluded)
 may start mining immediately.
 Treating each node as an equal candidate for transaction broadcast
