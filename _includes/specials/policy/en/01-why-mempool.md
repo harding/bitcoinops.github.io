@@ -17,8 +17,8 @@ Every ~10 minutes when a block is found, nodes without a mempool
 experience a bandwidth spike, followed by a computation-intensive
 period validating each transaction.  On the other hand, nodes with a
 mempool have typically already seen all of the block transactions and
-store them in their mempools. With compact block relay (fixme: 152
-link), these nodes just download a block header along with shortids,
+store them in their mempools. With [compact block relay][topic compact
+block relay], these nodes just download a block header along with shortids,
 and then reconstruct the block using transactions in their mempools.
 The amount of data used to relay compact blocks is tiny compared to
 the size of the block (fixme: stats?). Validating the transactions is
@@ -58,7 +58,7 @@ target miners, popular exchanges, or other centralized submission
 services, but it would be difficult to block anything completely. The
 general availability of unconfirmed transactions also helps minimize the
 entrance cost of becoming a block producer - someone who is
-dissatisfied with the transactions being selected (or excluded) may
+dissatisfied with the transactions being selected (or excluded)
 may start mining immediately.
 
 In summary, a mempool is an extremely useful cache that allows nodes
