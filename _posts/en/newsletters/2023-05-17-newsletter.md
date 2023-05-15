@@ -12,17 +12,17 @@ This week's newsletter FIXME:harding
 ## News
 
 - **Testing HTLC endorsement:** several weeks ago, Carla Kirk-Cohen and
-  Clara Shikhelman [posted][] to the Lightning-Dev mailing list about
-  the next steps she and others planned to take to test the idea of
+  Clara Shikhelman [posted][kcs endorsement] to the Lightning-Dev mailing list about
+  the next steps they and others planned to take to test the idea of
   [HTLC][topic htlc] endorsement (see [Newsletter #239][news239
   endorsement]) as part of a mitigation for [channel jamming
   attacks][topic channel jamming attacks].  Most notably, they provided a
   short [proposed specification][bolts #1071] that could be deployed
-  using an experimental flag, preventing it from having any effect on
+  using an experimental flag, preventing deployments of it from having any effect on
   interactions with non-participating nodes.
 
     Once deployed by experimenters, it should become easier to answer
-    one of the [constructive criticisms][] of this idea, which is how
+    one of the [constructive criticisms][decker endorsement] of this idea, which is how
     many payments originate from spenders who frequently use the same
     peers and roughly the same routes.  If the core users of LN are
     frequently sending payments to each other over many of the same
@@ -36,7 +36,7 @@ This week's newsletter FIXME:harding
     or even allowing reputation to be abused).
 
 - **Request for feedback on proposed specifications for LSPs:** Severin
-  Bühler [posted][] to the Lightning-Dev mailing list a request for
+  Bühler [posted][buhler lsp] to the Lightning-Dev mailing list a request for
   feedback on two specifications for interoperability between Lightning
   Service Providers (LSPs) and their clients (usually non-forwarding LN
   nodes).  The first specification describes an API for allowing a
@@ -47,15 +47,15 @@ This week's newsletter FIXME:harding
   transaction that will anchor the channel onchain when it is confirmed
   (making it into a regular channel).
 
-    In a [reply][], developer ZmnSCPxj wrote in favor of open specifications
+    In a [reply][zmnscpxj lsp], developer ZmnSCPxj wrote in favor of open specifications
     for LSPs.  He noted that they make it easy for a client to connect
     to multiple LSPs, which will prevent vendor lock-in and improve
     privacy.
 
 - **Challenges with zero-conf channels when dual funding:** Bastien
-  Teinturier [posted][] to the Lightning-Dev mailing list about the
-  challenges of allowing [zero-conf channels][] when using the
-  [dual-funding protocol][].   Zero-conf channels can be used even the
+  Teinturier [posted][teinturier 0conf] to the Lightning-Dev mailing list about the
+  challenges of allowing [zero-conf channels][topic zero-conf channels] when using the
+  [dual-funding protocol][topic dual funding].   Zero-conf channels can be used even the
   channel open transaction is confirmed; this is trustless in some
   cases.  Dual-funded channels are channels that were created using the
   dual-funding protocol, which may include channels where the open
@@ -76,7 +76,7 @@ This week's newsletter FIXME:harding
     were discussed, although none seemed satisfying to participants as
     of this writing.
 
-- **Advanced payjoin applications:** Dan Gould [posted][] to the
+- **Advanced payjoin applications:** Dan Gould [posted][gould payjoin] to the
   Bitcoin-Dev mailing list several suggestions for using the
   [payjoin][topic payjoin] protocol to do more than just send or receive
   a simple payment.  Two of the suggestions we found most interesting
@@ -89,7 +89,7 @@ This week's newsletter FIXME:harding
 
     - *Batched payment forwarding:* rather than Alice paying Bob, Alice
       instead pays several people Bob owes money (or wants to establish
-      a credit with).  Gould example considers an exchange which has a
+      a credit with).  Gould's example considers an exchange which has a
       steady stream of deposits and withdrawals; payjoin allows withdrawals
       to be paid for by new deposits when possible.
 
@@ -97,8 +97,8 @@ This week's newsletter FIXME:harding
     transactions into a single transaction, saving a considerable amount
     of block space.  When [batching][topic payment batching] is used,
     the space savings may be even larger.  Even better from the
-    perspective of the original receiver (e.g. Bob), he may be able to
-    get the original spender (e.g. Alice) to pay all or some of the
+    perspective of the original receiver (e.g. Bob),
+    the original spender (e.g. Alice) may pay all or some of the
     fees.  Beyond the space and fee savings, removing transactions from
     the block chain and combining operations like receiving and spending
     makes it significantly more difficult for block chain surveillance
@@ -110,7 +110,7 @@ This week's newsletter FIXME:harding
 - **Summaries of Bitcoin Core developers in-person meeting:** several
   developers working on Bitcoin Core recently met to discuss aspects of
   the project.  Notes from several discussions during that meeting have
-  been [published][].  Topics discussed included [fuzz testing][], an
+  been published.  Topics discussed included [fuzz testing][],
   [assumeUTXO][], [ASMap][], [silent payments][], [libbitcoinkernel][],
   [refactoring (or not)][], and [package relay][].  Also discussed were
   two other topics we think deserve special attention:
@@ -122,7 +122,7 @@ This week's newsletter FIXME:harding
       with the current design, provide an overview of the new design,
       and suggest some of the challenges and tradeoffs involved.  The
       summary mentions slides or other material which is not available,
-      and there's no written summary that we're available of, so we're
+      and there's no written description of which we're aware, so we're
       unable to provide a more detailed description at this time, but
       anyone interested in the topic may want to read the summary.
 
@@ -133,12 +133,12 @@ This week's newsletter FIXME:harding
       management, such as a more project-focused approach for the next
       major release after version 25.
 
-## FIXME:title_for_limited_series #1: why do we have a mempool?
+## Waiting for confirmation #1: why do we have a mempool?
 
-_The first segment in a ten-part weekly series about transaction relay,
+_The first segment in a limited weekly series about transaction relay,
 mempool inclusion, and mining transaction selection---including why
 Bitcoin Core has a more restrictive policy than allowed by consensus and
-wallets can most effectively use that policy._
+how wallets can use that policy most effectively._
 
 {% include specials/policy/en/01-why-mempool.md %}
 
@@ -194,7 +194,7 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 - [BOLTs #1075][] t-bast/remove-disconnect-warning FIXME:harding
 
 {% include references.md %}
-{% include linkers/issues.md v=2 issues="26076,27608,2286,1794,1066,1299,1844,1837,1075" %}
+{% include linkers/issues.md v=2 issues="26076,27608,2286,1794,1066,1299,1844,1837,1075,1071" %}
 [Core Lightning 23.05rc2]: https://github.com/ElementsProject/lightning/releases/tag/v23.05rc2
 [bitcoin core 24.1rc2]: https://bitcoincore.org/bin/bitcoin-core-24.1/
 [bitcoin core 25.0rc1]: https://bitcoincore.org/bin/bitcoin-core-25.0/
@@ -208,3 +208,10 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 [package relay]: https://btctranscripts.com/bitcoin-core-dev-tech/2023-04-25-package-relay-primer/
 [mempool clustering]: https://btctranscripts.com/bitcoin-core-dev-tech/2023-04-25-mempool-clustering/
 [project meta discussion]: https://btctranscripts.com/bitcoin-core-dev-tech/2023-04-26-meta-discussion/
+[kcs endorsement]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-April/003918.html
+[decker endorsement]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-May/003944.html
+[buhler lsp]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-May/003926.html
+[zmnscpxj lsp]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-May/003944.html
+[teinturier 0conf]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-May/003920.html
+[gould payjoin]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-May/021653.html
+[transaction cut-through]: https://bitcointalk.org/index.php?topic=281848.0
