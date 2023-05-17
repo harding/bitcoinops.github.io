@@ -8,7 +8,7 @@
 -->
 
 Many nodes on the Bitcoin network store unconfirmed transactions in an
-in-memory pool, or "mempool." This cache is an important resource
+in-memory pool, or _mempool_. This cache is an important resource
 for each node and enables the peer-to-peer transaction relay network.
 
 Nodes that participate in transaction relay
@@ -75,4 +75,4 @@ transactions before miners include them in blocks - just like any
 cache, a mempool is most useful when it is "hot" and must be limited in size
 to fit in memory.
 Next week's section will explore the use of incentive compatibility as
-a metric for keeping the most useful transactions in their mempools.
+a metric for keeping the most useful transactions in mempools.
