@@ -15,7 +15,8 @@ suggestion for advanced applications of payjoin transactions, and links
 to summaries of a recent in-person meeting of Bitcoin Core developers.
 Also included in this week's newsletter is the first part of a new
 series about policies for transaction relay and mempool inclusion, plus
-our regular sections announcing new releases and release candidates and
+our regular sections announcing new releases and release candidates (including
+a security release of libsecp256k1) and
 describing notable changes to popular Bitcoin infrastructure software.
 
 ## News
@@ -32,8 +33,8 @@ describing notable changes to popular Bitcoin infrastructure software.
 
     Once deployed by experimenters, it should become easier to answer
     one of the [constructive criticisms][decker endorsement] of this idea, which is how
-    many payments originate from spenders who frequently use the same
-    peers and roughly the same routes.  If the core users of LN are
+    many forwarded payments would actually receive a boost from the
+    scheme.  If the core users of LN are
     frequently sending payments to each other over many of the same
     routes, and if the reputation system works as planned, then that
     core network will be more likely to keep functioning during a
@@ -64,7 +65,7 @@ describing notable changes to popular Bitcoin infrastructure software.
 - **Challenges with zero-conf channels when dual funding:** Bastien
   Teinturier [posted][teinturier 0conf] to the Lightning-Dev mailing list about the
   challenges of allowing [zero-conf channels][topic zero-conf channels] when using the
-  [dual-funding protocol][topic dual funding].   Zero-conf channels can be used even the
+  [dual-funding protocol][topic dual funding].   Zero-conf channels can be used even before the
   channel open transaction is confirmed; this is trustless in some
   cases.  Dual-funded channels are channels that were created using the
   dual-funding protocol, which may include channels where the open
@@ -93,12 +94,12 @@ describing notable changes to popular Bitcoin infrastructure software.
   improving privacy, improving scalability, and reducing fee costs:
 
     - *Payment forwarding:* rather than Alice paying Bob, Alice instead
-      pays Bob's vendor Carol, reducing a debt he owes her (or
+      pays Bob's vendor (Carol), reducing a debt he owes her (or
       pre-paying for an expected future bill).
 
     - *Batched payment forwarding:* rather than Alice paying Bob, Alice
       instead pays several people Bob owes money (or wants to establish
-      a credit with).  Gould's example considers an exchange which has a
+      a credit with).  Gould's example considers an exchange that has a
       steady stream of deposits and withdrawals; payjoin allows withdrawals
       to be paid for by new deposits when possible.
 
@@ -124,19 +125,16 @@ describing notable changes to popular Bitcoin infrastructure software.
   [refactoring (or not)][], and [package relay][].  Also discussed were
   two other topics we think deserve special attention:
 
-
     - [Mempool clustering][] summarizes a suggestion for a significant
       redesign of how transactions and their metadata are stored in
       Bitcoin Core's mempool.  The notes describe a number of problems
       with the current design, provide an overview of the new design,
-      and suggest some of the challenges and tradeoffs involved.  The
-      summary mentions slides or other material which is not available,
-      and there's no written description of which we're aware, so we're
-      unable to provide a more detailed description at this time, but
-      anyone interested in the topic may want to read the summary.
+      and suggest some of the challenges and tradeoffs involved.  A
+      [description][bitcoin core #27677] of the design and a copy of the
+      [slides][mempool slides] from the presentation were later published.
 
     - [Project meta discussion][] summarizes a varied discussion about
-      the projects goals and how to achieve them despite many
+      the project's goals and how to achieve them despite many
       challenges, both internal and external.  Some of the discussion
       has already led to experimental changes in the project's
       management, such as a more project-focused approach for the next
@@ -157,18 +155,26 @@ how wallets can use that policy most effectively._
 projects.  Please consider upgrading to new releases or helping to test
 release candidates.*
 
-<!-- FIXME:harding to update Tuesday -->
+- [Libsecp256k1 0.3.2][] is a security release for applications that use
+  libsecp for [ECDH][] and that may be compiled with GCC version 13 or
+  higher.  As [described by the authors][secp ml], new versions of GCC
+  attempt to optimize libsecp code that was designed to run in a fixed
+  amount of time, making it possible to execute a [side-channel
+  attack][topic side channels] under certain circumstances.  It's worth
+  noting that Bitcoin Core does not use ECDH and is not affected.  There
+  is ongoing work to try to detect when future changes to compilers
+  might cause similar problems, allowing changes to be made in advance.
 
 - [Core Lightning 23.05rc2][] is a release candidate for the next
   version of this LN implementation.
 
-- [Bitcoin Core 24.1rc2][] is a release candidate for a maintenance
-  release of the current version of Bitcoin Core.
-
 - [Bitcoin Core 23.2rc1][] is a release candidate for a maintenance
   release of the previous major version of Bitcoin Core.
 
-- [Bitcoin Core 25.0rc1][] is a release candidate for the next major
+- [Bitcoin Core 24.1rc3][] is a release candidate for a maintenance
+  release of the current version of Bitcoin Core.
+
+- [Bitcoin Core 25.0rc2][] is a release candidate for the next major
   version of Bitcoin Core.
 
 ## Notable code and documentation changes
@@ -206,8 +212,8 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
   says the schema is case insensitive, testing shows that some platforms
   are not opening the application assigned to handle `bitcoin:` URIs
   when an uppercase `BITCOIN:` is passed.  It would be preferable if
-  uppercase was handled correctly, as it allows creating more efficient
-  QR codes (see [Newsletter #46][news46 qr].
+  uppercase was handled correctly, as it allows the creation of more efficient
+  QR codes (see [Newsletter #46][news46 qr]).
 
 - [Rust Bitcoin #1837][] adds a function for generating a new private
   key, simplifying what previously required more code to accomplish.
@@ -217,11 +223,11 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
   it.
 
 {% include references.md %}
-{% include linkers/issues.md v=2 issues="26076,27608,2286,1794,1844,1837,1075,1071" %}
+{% include linkers/issues.md v=2 issues="26076,27608,2286,1794,1844,1837,1075,1071,27677" %}
 [Core Lightning 23.05rc2]: https://github.com/ElementsProject/lightning/releases/tag/v23.05rc2
 [bitcoin core 23.2rc1]: https://bitcoincore.org/bin/bitcoin-core-23.2/
-[bitcoin core 24.1rc2]: https://bitcoincore.org/bin/bitcoin-core-24.1/
-[bitcoin core 25.0rc1]: https://bitcoincore.org/bin/bitcoin-core-25.0/
+[bitcoin core 24.1rc3]: https://bitcoincore.org/bin/bitcoin-core-24.1/
+[bitcoin core 25.0rc2]: https://bitcoincore.org/bin/bitcoin-core-25.0/
 [news239 endorsement]: /en/newsletters/2023/02/22/#feedback-requested-on-ln-good-neighbor-scoring
 [fuzz testing]: https://btctranscripts.com/bitcoin-core-dev-tech/2023-04-27-fuzzing/
 [assumeutxo]: https://btctranscripts.com/bitcoin-core-dev-tech/2023-04-27-assumeutxo/
@@ -240,3 +246,7 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 [gould payjoin]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-May/021653.html
 [transaction cut-through]: https://bitcointalk.org/index.php?topic=281848.0
 [news46 qr]: /en/newsletters/2019/05/14/#bech32-sending-support
+[mempool slides]: https://github.com/bitcoin/bitcoin/files/11490409/Reinventing.the.Mempool.pdf
+[secp ml]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-May/021683.html
+[libsecp256k1 0.3.2]: https://github.com/bitcoin-core/secp256k1/releases/tag/v0.3.2
+[ecdh]: https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman
