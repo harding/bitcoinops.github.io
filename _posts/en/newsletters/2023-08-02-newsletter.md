@@ -7,7 +7,11 @@ type: newsletter
 layout: newsletter
 lang: en
 ---
-This week's newsletter FIXME:harding
+This week's newsletter links to transcripts of recent LN specification
+meetings and summarizes a thread about the safety of blind MuSig2
+signing.  Also included are our regular sections with descriptions
+of new releases, release candidates, and notable code changes to popular
+Bitcoin infrastructure software.
 
 ## News
 
@@ -31,11 +35,11 @@ This week's newsletter FIXME:harding
   report how many signatures it had created with a particular key.
 
     Discussion on the list examined pitfalls of various constructions
-    related to the specific problem and to [even more generalized blind
+    related to the specific problem and of [even more generalized blind
     schnorr signing][generalized blind schnorr].  Also mentioned was a
     year-old [gist][somsen gist] by Ruben Somsen about a 1996 protocol
-    for blind Diffie-Helman (DH) key exchange, which can be used for
-    blinded ecash.  [Lucre][] and [Minicash][] are a previous
+    for blind [Diffie-Hellman (DH) key exchange][dhke], which can be used for
+    blinded ecash.  [Lucre][] and [Minicash][] are previous
     implementations of this scheme unrelated to Bitcoin, and [Cashu][]
     is an implementation related to Minicash that also integrates
     support for Bitcoin and LN.  Anyone interested in cryptography may
@@ -45,9 +49,13 @@ This week's newsletter FIXME:harding
 ## Releases and release candidates
 
 *New releases and release candidates for popular Bitcoin infrastructure
-projects.  Please consider upgrading to new releases or helping to test release candidates.*
+projects.  Please consider upgrading to new releases or helping to test
+release candidates.*
 
-<!-- FIXME:harding to update Tuesday -->
+- [BTCPay Server 1.11.1][] is the latest release of this self-hosted
+  payment processor.  The 1.11.x release series includes improvements to
+  invoice reporting, additional upgrades to the checkout process, and
+  new features for the point of service terminal.
 
 ## Notable code and documentation changes
 
@@ -74,9 +82,9 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
   Subsequently, the channel between Bob and Carol is forced closed
   onchain.
 
-    After the 10 block expiry, there arises a situation that should not
+    After the 10-block expiry, there arises a situation that should not
     be common: Bob's node either spends using the refund condition but
-    the transaction doesn't confirm, or he decides the cost of fees to
+    the transaction doesn't confirm, or he determines that the cost of fees to
     claim the refund are higher than the value and doesn't create a
     spend.  Prior to this PR, Bob's node wouldn't create an offchain
     cancellation of the HTLC he received from Alice because that could
@@ -84,21 +92,21 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
     claim the money Bob forwarded to her, costing Bob the amount of the
     HTLC.
 
-    However, after 20 block expiry of the HTLC Alice offered him, she
-    can force close the channel to attempt to receive a refund of the
+    However, after the 20-block expiry of the HTLC Alice offered him, she
+    can force-close the channel to attempt to receive a refund of the
     amount she forwarded to Bob, and her software may automatically do
     this to prevent Alice from potentially losing the money to a node
-    upstream of her.  But, if she force closes the channel, she
+    upstream of her.  But, if she force-closes the channel, she
     might end up in the same position as Bob: she's either unable to
     claim the refund or doesn't attempt it because it's not economical.
     That means a useful channel between Alice and Bob was closed for no
-    gain to either one of them.  This problem could be repeated over and
-    over again for any hops upstream of Alice, resulting in a cascade of
+    gain to either one of them.  This problem could be repeated multiple
+    times for any hops upstream of Alice, resulting in a cascade of
     unwanted channel closures.
 
     The solution implemented in this PR is for Bob to wait as long as
-    reasonable to claim a refund and, if it's not going to happen, he
-    creates an offchain cancellation of the HTLC he received from Alice,
+    is reasonable to claim a refund and, if it's not going to happen,
+    create an offchain cancellation of the HTLC he received from Alice,
     allowing their channel to continue operating even if it means he
     might lose the amount of the HTLC.
 
@@ -108,7 +116,7 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
   discussed in a recent [mailing list thread][fiatjaf custodial].
 
 - [Core Lightning #6389][] adds an optional CLNRest service, "a
-  lightweight Python-based core lightning plugin that transforms RPC
+  lightweight Python-based Core Lightning plugin that transforms RPC
   calls into a REST service. By generating REST API endpoints, it
   enables the execution of Core Lightning's RPC methods behind the
   scenes and provides responses in JSON format."  See its
@@ -117,7 +125,7 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 - [Core Lightning #6403][] and [#6437][core lightning #6437] move the
   runes authorization and authentication mechanism out of CLN's commando
   plugin (see [Newsletter #210][news210 commando]) and into its core
-  functionality, allowing other plugins to use them.  A number of
+  functionality, allowing other plugins to use them.  Several
   commands related to creating, destroying, and renaming runes are also
   updated.
 
@@ -138,9 +146,17 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 
 - [Eclair #2680][] adds support for the quiescence negotiation protocol
   that is required by the [splicing protocol][topic splicing] proposed
-  in [BOLTs #863][].  Eclair already supports splicing, but this change
-  brings it closer to supporting the same splicing protocol that other
-  node software will likely use.
+  in [BOLTs #863][].  The quiescence protocol prevents the two nodes
+  sharing a channel from sending each other any new [HTLCs][topic htlc]
+  until a certain operation has completed, such as agreeing on the
+  parameters of a splice and cooperatively signing the onchain splice-in
+  or splice-out transaction.  An HTLC received during splice negotiation
+  and signing may invalidate previous negotiations and signatures, so
+  it's simpler to simply pause HTLC relay for the few network round
+  trips required to get the splice transaction mutually signed.  Eclair
+  already supports splicing, but this change brings it closer to
+  supporting the same splicing protocol that other node software will
+  likely use.
 
 - [LND #7820][] adds to the `BatchOpenChannel` RPC all the fields
   available to the non-batched `OpenChannel` RPC except for
@@ -171,3 +187,5 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 [cashu]: https://github.com/cashubtc/cashu
 [fiatjaf custodial]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-July/004008.html
 [news210 commando]: /en/newsletters/2022/07/27/#core-lightning-5370
+[dhke]: https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+[btcpay server 1.11.1]: https://github.com/btcpayserver/btcpayserver/releases/tag/v1.11.1
