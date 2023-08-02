@@ -69,7 +69,7 @@ Proposals (BIPs)][bips repo], [Lightning BOLTs][bolts repo], and
 
 - [Bitcoin Core #26467][] allows the user to specify which output of a
   transaction is change in `bumpfee`. The wallet deducts value from
-  this output to add fees when creating the replacement transaction. By
+  this output to add fees when creating the [replacement transaction][topic rbf]. By
   default, the wallet attempts to detect a change output automatically
   and creates a new one if it fails to do so.
 
