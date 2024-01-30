@@ -138,7 +138,9 @@ nswer -->{% endcomment %}
 
 - [Sigop count and its influence on transaction selection?]({{bse}}121355)
   User Cosmik Debris asks how the limit on signature check operations, "sigops", impact miners'
-  block template construction and mempool-based [fee estimation][topic fee estimation].
+  block template construction and mempool-based [fee estimation][topic fee
+  estimation]. User mononaut outlines the infrequency of sigops being the
+  limiting factor in block template construction and discusses the `-bytespersigop` option.
 
 ## Releases and release candidates
 
