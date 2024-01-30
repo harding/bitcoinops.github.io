@@ -115,12 +115,12 @@ nswer -->{% endcomment %}
   block chain data structures and goes on to explain the header synchronization, block
   synchronization, and block activation processes that act upon them.
 
-- [How does headers-first prevent fill-disk attack?]({{bse}}76018)
-  Pieter Wuille follows up to an old question to explain the more recent IBD
+- [How does headers-first prevent disk-fill attack?]({{bse}}76018)
+  Pieter Wuille follows up on an old question to explain the more recent IBD
   "Headers Presync" (see [Newsletter #216][news216 headers presync]) header spam
   mitigations added to Bitcoin Core in 24.0.
 
-- [BIP324 v2transport is redundant on tor + i2p connections?]({{bse}}121360)
+- [Is BIP324 v2transport redundant on Tor and I2P connections?]({{bse}}121360)
   Pieter Wuille concedes a lack of [v2 transport][topic v2 p2p transport]
   encryption benefits when using [anonymity networks][topic anonymity networks]
   but notes potential computational improvements over v1 unencrypted transport.
@@ -137,7 +137,7 @@ nswer -->{% endcomment %}
   rules can only depend on information that is committed to by block hashes".
 
 - [Sigop count and its influence on transaction selection?]({{bse}}121355)
-  User Cosmik Debris asks how the limit on signature check operations, "sigops", impact miner's
+  User Cosmik Debris asks how the limit on signature check operations, "sigops", impact miners'
   block template construction and mempool-based [fee estimation][topic fee estimation].
 
 ## Releases and release candidates
