@@ -32,6 +32,9 @@ optech_mentions:
   - title: "Zeus v0.8.0 released with support for simple taproot channels"
     url: /en/newsletters/2023/12/13/#zeus-v0-8-0-released
 
+  - title: "LND #7733 updates its watchtower support for simple taproot channels"
+    url: /en/newsletters/2024/01/31/#lnd-7733
+
 ## Optional.  Same format as "primary_sources" above
 see_also:
   - title: Taproot

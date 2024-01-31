@@ -7,7 +7,13 @@ type: newsletter
 layout: newsletter
 lang: en
 ---
-This week's newsletter FIXME
+This week's newsletter describes a proposal to allow replacement of v3
+transactions using RBF rules to ease the transaction to cluster mempool
+and summarizes an argument against `OP_CHECKTEMPLATEVERIFY` based on it
+commonly requiring exogenous fees.  Also included are our regular
+sections summarizing top questions and answers from the Bitcoin
+Stack Exchange, announcing new releases and release candidates, and
+describing notable changes to popular Bitcoin infrastructure projects.
 
 ## News
 
@@ -16,16 +22,16 @@ This week's newsletter FIXME
   transaction in the mempool even if there's no conflict between the two
   transactions.  Two transactions are considered to be _conflicting_
   when they cannot both exist in the same valid block chain, usually
-  because they both try to spend the same input---violating the rule
-  that an input can only be spent once within a particular block chain.
+  because they both try to spend the same UTXO---violating the rule
+  against double spending.
   The rules for [RBF][topic rbf] compare a transaction in the
   mempool against a newly received transaction that conflicts with it.
   Zhao suggests an idealized way to think about a conflicts policy: if
-  you have two transactions but you can only accept one, you should not
-  choose the one that arrives first---you should choose the one that
-  best suits your goals (such as maximizing miner revenue without
+  a relay node has two transactions but can only accept one, it should not
+  choose the one that arrives first---it should choose the one that
+  best suits the node operator's goals (such as maximizing miner revenue without
   allowing effectively free relay).  The RBF rules attempt to do that
-  for conflicts, Zhao in her post extends the idea to related
+  for conflicts; Zhao, in her post, extends the idea to related
   transactions rather than just conflicts.
 
   Bitcoin Core places _policy_ limits on the number and size of related
@@ -38,12 +44,14 @@ This week's newsletter FIXME
 
   The proposed rules for [v3 transaction relay][topic v3 transaction
   relay] only allow an unconfirmed v3 parent to have a single child
-  transaction in the mempool.  Applying the existing RBF rules to
-  replacements of that child is easy and Zhao has [implemented it][zhao
+  transaction in the mempool.  Because neither transaction can have any
+  either ancestors or dependents in the mempool, applying the
+  existing RBF rules to replacements of a v3 child is easy and Zhao
+  has [implemented it][zhao
   kindredimpl].  If, as described in [last week's newsletter][news286
-  imbued], existing LN commitment transactions using [anchors
+  imbued], existing LN commitment transactions using [anchor
   outputs][topic anchor outputs] are automatically enrolled in the v3
-  policy, this ensures either party can always fee bump the commitment
+  policy, this would ensure that either party can always fee bump the commitment
   transaction:
 
   - Alice can send the commitment transaction with a child transaction
@@ -62,7 +70,7 @@ This week's newsletter FIXME
   will allow the [CPFP carve-out rule][topic cpfp carve out] to be
   removed, which is necessary for [cluster mempool][topic cluster
   mempool] to be implemented, which should allow making replacements
-  of all kinds more incentive compatible in the future.
+  of all kinds more incentive-compatible in the future.
 
   As of this writing, there were no objections to the idea on the forum.
   One notable question was about whether this eliminated the need for
@@ -71,7 +79,7 @@ This week's newsletter FIXME
   ephemeral anchor work.  Zero-satoshi outputs have a number of
   important use cases outside of LN."
 
-- **Opposition to CTV on basis of commonly requiring exogenous fees:**
+- **Opposition to CTV based on commonly requiring exogenous fees:**
   Peter Todd [posted][pt ctv] to the Bitcoin-Dev mailing list an
   adaptation of his argument against [exogenous fees][topic fee
   sourcing] (see [Newsletter #284][news284 ptexogenous]) applied to the
@@ -95,7 +103,7 @@ This week's newsletter FIXME
     John Law replied that fee-dependent timelocks (see [Newsletter
     #283][news283 fdt]) could make CTV safe to use with endogenous fees
     in cases where particular versions of a transaction needed to be
-    confirmed by a deadline, although fee dependent timelocks might
+    confirmed by a deadline, although fee-dependent timelocks might
     delay some contract settlements by an indefinite amount of time.
 
 ## Selected Q&A from Bitcoin Stack Exchange
@@ -148,11 +156,10 @@ nswer -->{% endcomment %}
 projects.  Please consider upgrading to new releases or helping to test
 release candidates.*
 
-- [HWI 2.4.0-rc1][] is a release candidate for the next version of this
+- [HWI 2.4.0][] is a release of the next version of this
   package providing a common interface to multiple different hardware
-  signing devices.
-
-<!-- FIXME:harding to update Tuesday -->
+  signing devices.  The new release adds support for Trezor Safe 3 and
+  contains several minor improvements.
 
 ## Notable code and documentation changes
 
@@ -172,13 +179,13 @@ repo]._
   mentioned in [last week's newsletter][news286 bip68ver].
 
 - [Eclair #2811][], [#2813][eclair #2813], and [#2814][eclair #2814]
-  adds the ability for a [trampoline payment][topic trampoline payments]
+  add the ability for a [trampoline payment][topic trampoline payments]
   to use a [blinded path][topic rv routing] for the ultimate receiver.
   Trampoline routing itself continues to use regular onion-encrypted
   node IDs, i.e. each trampoline node learns the ID for the next
   trampoline node.  However, if a blinded path is used, the final
-  trampoline node will now only learn the node ID for the first
-  forwarding node in the blinded path; it will not learn the ID for
+  trampoline node will now only learn the node ID for the introduction
+  node in the blinded path; it will not learn the ID for
   the ultimate receiver.
 
     Previously, strong trampoline privacy depended on using multiple
@@ -207,7 +214,7 @@ repo]._
   universally-deployed features as specified in [BOLTs #1092][] (see
   [Newsletter #259][news259 lncleanup]).
 
-- [Rust Bitcoin #2366][] depreciates the `.txid` property on
+- [Rust Bitcoin #2366][] deprecates the `.txid` property on
   `Transaction` objects and begins providing a replacement property
   named `.compute_txid`.  Each time the `.txid` property is called, the
   txid for the transaction is calculated, which consumes enough
@@ -218,20 +225,20 @@ repo]._
   based on [BIP141][] and [BIP140][]) are similarly renamed to
   `.compute_wtxid` and `.compute_ntxid`.
 
-- [HWI #716][] adds support for the [Trezor Safe 3][] hardware signing
+- [HWI #716][] adds support for the Trezor Safe 3 hardware signing
   device.
 
 - [BDK #1172][] adds a block-by-block API for the wallet.  A user with
-  access to a sequence of blocks that they believe may contain
-  transactions affecting the wallet can iterate over those blocks to
+  access to a sequence of blocks
+  can iterate over those blocks to
   update the wallet based on any transactions in those blocks.  This can
-  be simply used to iterate over every block on a chain.  Alternatively,
+  be simply used to iterate over every block in a chain.  Alternatively,
   software can use some sort of filtering method (e.g. [compact block
   filtering][topic compact block filters]) to find only blocks that are
   likely to have wallet-affecting transactions and iterate over that
   subset of blocks.
 
-- [BINANAs #3][] adds [BIN24-4][] with a list of specification
+- [BINANAs #3][] adds [BIN24-5][] with a list of specification
   repositories related to Bitcoin, such as BIPs, BOLTs, BLIPs, SLIPs,
   LNPBPs, and DLC specifications.  Some specification repositories for
   other related projects are also listed.
@@ -240,7 +247,7 @@ repo]._
 {% include snippets/recap-ad.md when=day_after_posting %}
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="29291,2811,2813,2814,8167,7733,8275,1092,2366,716,1172,3" %}
-[hwi 2.4.0-rc1]: https://github.com/bitcoin-core/HWI/releases/tag/2.4.0-rc.1
+[hwi 2.4.0]: https://github.com/bitcoin-core/HWI/releases/tag/2.4.0-
 [news286 bip68ver]: /en/newsletters/2024/01/24/#disclosure-of-fixed-consensus-failure-in-btcd
 [trezor safe 3]: https://trezor.io/trezor-safe-3
 [news283 fdt]: /en/newsletters/2024/01/03/#fee-dependent-timelocks

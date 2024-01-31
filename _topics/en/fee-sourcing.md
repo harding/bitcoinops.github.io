@@ -35,6 +35,9 @@ optech_mentions:
   - title: "An alternative to exogenous anchor outputs: endogenous fees with presigned incremental RBF bumps"
     url: /en/newsletters/2024/01/10/#an-alternative-use-endogenous-fees-with-presigned-incremental-rbf-bumps
 
+  - title: Opposition to CTV based on commonly requiring exogenous fee
+    url: /en/newsletters/2024/01/31/#opposition-to-ctv-based-on-commonly-requiring-exogenous-fees
+
 ## Optional.  Same format as "primary_sources" above
 # see_also:
 #   - title:
@@ -48,7 +51,7 @@ optech_mentions:
 ## Required.  Use Markdown formatting.  Only one paragraph.  No links allowed.
 ## Should be less than 500 characters
 excerpt: >
-  **Fee sourcing** is the decisions made by designers of committed
+  **Fee sourcing** refers to the decisions made by designers of committed
   transactions (such as presigned transactions) about what sources of
   funds they'll use for paying transaction fees.  **Endogenous fees**
   are a fundamental part of a transaction or set of transactions.
@@ -80,7 +83,7 @@ Some examples:
 The nature of committing to a transaction now and potentially
 broadcasting it much later precludes the signer from knowing what
 feerate it should use to get confirmed within a desired number of
-blocks.  The advantage of exogenous fees in this case are that they're
+blocks.  The advantage of exogenous fees in this case is that they're
 relatively easy to design for.  The Bitcoin protocol provides several
 features, such as sighash flags and a [DAG][] transaction topology, that
 allow an independent UTXO to pay fees for another transaction.
