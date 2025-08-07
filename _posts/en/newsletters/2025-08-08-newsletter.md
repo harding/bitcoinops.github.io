@@ -177,8 +177,8 @@ repo], and [BINANAs][binana repo]._
 
 In [last week's newsletter][news365 p2qrh], we incorrectly described the
 updated version of [BIP360][], _pay to quantum-resistant hash_, as
-"making exactly the change" that Tim Ruffing showed was secure in his
-recent paper.  What BIP360 actually does is replaces the elliptical
+"making exactly the change" that [Tim Ruffing showed was secure in his
+recent paper][ruffing paper].  What BIP360 actually does is replaces the elliptical
 curve commitment to a SHA256-based merkle root (plus a keypath
 alternative) with the merkle root directly.  Ruffing's paper showed that
 taproot, as currently used, is secure if a quantum-resistant signature
@@ -203,4 +203,5 @@ our mistake.
 [towns tempshare poc]: https://github.com/ajtowns/bitcoin/commit/ee12518a4a5e8932175ee57c8f1ad116f675d089
 [news299 weak blocks]: /en/newsletters/2024/04/24/#weak-blocks-proof-of-concept-implementation
 [review club 32489]: https://bitcoincore.reviews/32489
+[ruffing paper]: https://eprint.iacr.org/2025/1307
 [gh achow101]: https://github.com/achow101
