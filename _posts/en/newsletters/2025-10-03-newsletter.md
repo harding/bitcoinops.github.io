@@ -28,14 +28,14 @@ Bitcoin's consensus rules._
 
   - _Varops Budget For Script Runtime Constraint:_ The [first BIP][rr1] is
     fairly complete and proposes assigning a cost metric to nearly all Script
-    operations similar to the SegWit sigops budget. For most operations in
+    operations, similar to the SegWit sigops budget. For most operations in
     Script the cost is based on the number of bytes written to the node's RAM
     during execution of the opcode by a naive implementation. Unlike the sigops
     budget, the cost for each opcode depends on the size of its inputs - hence
-    the name "varops". With this unified cost model many limits currently used
+    the name "varops". With this unified cost model, many limits currently used
     to protect nodes from excessive Script validation cost can be raised to the
     point that they are impossible or nearly impossible to hit in practical
-    scripts. necessary.
+    scripts.
 
   - _Restoration of Disabled Script Functionality (tapscript v2):_ The [second BIP][rr2]
     is also fairly complete (aside from reference implementation) and
@@ -47,8 +47,8 @@ Bitcoin's consensus rules._
 
   - _OP_TX:_ The [third BIP][rr3] is a proposal for a new general
     introspection opcode. `OP_TX` allows the caller to get nearly any item or
-    items from the transaction into the script stack. By providing access to the
-    spending transaction directly, this opcode enables any covenant
+    items from the transaction into the script stack. By providing direct access to the
+    spending transaction, this opcode enables any covenant
     functionality possible with opcodes such as `OP_TEMPLATEHASH` or
     [`OP_CHECKTEMPLATEVERIFY`][topic op_checktemplateverify].
 
@@ -71,8 +71,8 @@ Bitcoin's consensus rules._
   `OP_SEGMENT` (if present) modifies the behavior of `OP_SUCCESS` such that
   instead of the whole script succeeding if an `OP_SUCCESS` is present, only the
   segment succeeds (bounded by script start, `OP_SEGMENT`, ..., and script end).
-  This enables the possibility of scripts with a required prefix including
-  `OP_SEGMENT` and an untrusted suffix.
+  This enables the possibility of scripts with a required prefix, including
+  `OP_SEGMENT`, and an untrusted suffix.
 
 ## Releases and release candidates
 
