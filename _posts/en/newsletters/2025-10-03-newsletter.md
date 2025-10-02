@@ -92,7 +92,7 @@ release candidates._
 - [LND v0.20.0-beta.rc1][] is a release candidate for a new version of this
   popular LN node implementation that introduces multiple bug fixes, persistence
   of node announcement settings across restarts, a new `noopAdd` [HTLC][topic
-  htlc] type, support for [P2TR][taproot] fallback addresses on [BOLT11][]
+  htlc] type, support for [P2TR][topic taproot] fallback addresses on [BOLT11][]
   invoices, and an experimental `XFindBaseLocalChanAlias` endpoint, among many
   other changes.
 
@@ -114,7 +114,7 @@ repo], and [BINANAs][binana repo]._
   integration of Bitcoin Core with an external [Stratum v2][topic pooled mining]
   mining service that creates, manages and submits block templates.
 
-- [Bitcoin Core ##33446][] fixes a bug introduced when the `target` field was
+- [Bitcoin Core #33446][] fixes a bug introduced when the `target` field was
   added to the responses of the `getblock` and `getblockheader` commands (see
   [Newsletter #339][news339 target]). Instead of always incorrectly returning
   the chain tip’s target, it now returns the requested block’s target.
