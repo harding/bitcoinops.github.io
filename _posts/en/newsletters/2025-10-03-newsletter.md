@@ -18,15 +18,15 @@ FIXME:harding
 _A monthly section summarizing proposals and discussion about changing
 Bitcoin's consensus rules._
 
-- **Draft BIPs for Script Restoration:** Rusty Russell posted a [summary][rr0]
+- **Draft BIPs for Script Restoration:** Rusty Russell posted to the Bitcoin-Dev mailing list a [summary][rr0]
   and four BIPs ([1][rr1], [2][rr2], [3][rr3], [4][rr4]) in various stages of
   draft relating to a proposal to restore Script's capabilities in a new
   [tapscript][topic tapscript] version. Russell has previously [spoken][rr atx] and [written][rr
-  blog] about these ideas. Briefly, this proposal aims to bring programmability
-  (including [covenant][topic covenants] functionality) back to Bitcoin while avoiding making some
+  blog] about these ideas. Briefly, this proposal aims to restore enhanced programmability
+  (including [covenant][topic covenants] functionality) to Bitcoin while avoiding some
   of the trade-offs required in more narrowly scoped proposals.
 
-  - _Varops Budget For Script Runtime Constraint:_ The [first BIP][rr1] is
+  - _Varops budget for script runtime constraint:_ The [first BIP][rr1] is
     fairly complete and proposes assigning a cost metric to nearly all Script
     operations, similar to the SegWit sigops budget. For most operations in
     Script the cost is based on the number of bytes written to the node's RAM
@@ -37,10 +37,10 @@ Bitcoin's consensus rules._
     point that they are impossible or nearly impossible to hit in practical
     scripts.
 
-  - _Restoration of Disabled Script Functionality (tapscript v2):_ The [second BIP][rr2]
-    is also fairly complete (aside from reference implementation) and
+  - _Restoration of disabled script functionality (tapscript v2):_ The [second BIP][rr2]
+    is also fairly complete (aside from a reference implementation) and
     details the restoration of opcodes [removed][misc changes] from Script back
-    in 2010, as required to protect the bitcoin network from excessive Script
+    in 2010, as required to protect the Bitcoin network from excessive Script
     validation cost. With the varops budget in place, all of these opcodes (or
     updated versions of them) can be restored, limits can be raised, and numbers
     can be made arbitrary length.
@@ -52,13 +52,13 @@ Bitcoin's consensus rules._
     functionality possible with opcodes such as `OP_TEMPLATEHASH` or
     [`OP_CHECKTEMPLATEVERIFY`][topic op_checktemplateverify].
 
-  - _OP_New Opcodes for tapscript v2:_ The [final BIP][rr4] proposes new
+  - _New opcodes for tapscript v2:_ The [final BIP][rr4] proposes new
     opcodes which round out the functionality that was either missing or not
-    needed when bitcoin was first launched. For example, adding the ability to
-    manipulate Taptrees and Taproot outputs was not necessary at Bitcoin's
+    needed when Bitcoin was first launched. For example, adding the ability to
+    manipulate taptrees and taproot outputs was not necessary at Bitcoin's
     introduction, but in a world with restored Script it makes sense to have
     these capabilities as well. Brandon Black [noted][bb1] an omission in the
-    specified opcodes needed to fully construct Taproot outputs. Two of the
+    specified opcodes needed to fully construct taproot outputs. Two of the
     proposed opcodes seem likely to require their own full BIPs: `OP_MULTI` and
     `OP_SEGMENT`.
 
