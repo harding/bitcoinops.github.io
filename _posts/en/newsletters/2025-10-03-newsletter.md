@@ -135,7 +135,7 @@ repo], and [BINANAs][binana repo]._
 - [LDK #4106][] fixes a race condition in which an [HTLC][topic htlc] held by an
   LSP on behalf of an [async payment][topic async payments] recipient would fail
   to be released because the LSP could not locate it. This occurred when the LSP
-  received the `release_held_htlc` [onion message][topic onion message] (see
+  received the `release_held_htlc` [onion message][topic onion messages] (see
   Newsletters [#372][news373 async] and [#373][news373 async]) before the HTLC
   was moved from the pre-decode map to the `pending_intercepted_htlcs` map. LDK
   now checks both maps, rather than just the latter one, to ensure the HTLC is
