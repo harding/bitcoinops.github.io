@@ -168,7 +168,7 @@ repo], and [BINANAs][binana repo]._
 
 {% include snippets/recap-ad.md when="2025-10-07 16:30" %}
 {% include references.md %}
-{% include linkers/issues.md v=2 issues="33229,33446,3838,4098,4106,4096,10133,2029.1911,1289" %}
+{% include linkers/issues.md v=2 issues="33229,33446,3838,4098,4106,4096,10133,2029,1911,1289" %}
 [rr0]: https://gnusha.org/pi/bitcoindev/877bxknwk6.fsf@rustcorp.com.au/
 [rr1]: https://gnusha.org/pi/bitcoindev/874isonniq.fsf@rustcorp.com.au/
 [rr2]: https://gnusha.org/pi/bitcoindev/871pnsnnhh.fsf@rustcorp.com.au/
