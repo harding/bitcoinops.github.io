@@ -80,11 +80,21 @@ _New releases and release candidates for popular Bitcoin infrastructure
 projects.  Please consider upgrading to new releases or helping to test
 release candidates._
 
-- [Bitcoin Core 30.0rc2][] is a release candidate for the next major version of this full verification node software. Please see the [version 30 release candidate testing guide][bcc30 testing].
+- [Bitcoin Core 30.0rc2][] is a release candidate for the next major version of
+  this full verification node software. Please see the [version 30 release
+  candidate testing guide][bcc30 testing].
 
-- [bdk-wallet 2.2.0][] is a minor release of this library used for building wallet applications that introduces a new feature that returns events upon applying an update, new test facilities for test persistence, and documentation improvements.
+- [bdk-wallet 2.2.0][] is a minor release of this library used for building
+  wallet applications that introduces a new feature that returns events upon
+  applying an update, new test facilities for test persistence, and
+  documentation improvements.
 
-- [LND v0.20.0-beta.rc1][] is a release candidate for a new version of this popular LN node implementation that introduces multiple bug fixes, persistence of node announcement settings across restarts, a new `noopAdd` [HTLC][topic htlc] type, support for [P2TR][taproot] fallback addresses on [BOLT11][] invoices, and an experimental `XFindBaseLocalChanAlias` endpoint, among many other changes.
+- [LND v0.20.0-beta.rc1][] is a release candidate for a new version of this
+  popular LN node implementation that introduces multiple bug fixes, persistence
+  of node announcement settings across restarts, a new `noopAdd` [HTLC][topic
+  htlc] type, support for [P2TR][taproot] fallback addresses on [BOLT11][]
+  invoices, and an experimental `XFindBaseLocalChanAlias` endpoint, among many
+  other changes.
 
 ## Notable code and documentation changes
 
