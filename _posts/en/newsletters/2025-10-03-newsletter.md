@@ -82,17 +82,17 @@ Bitcoin's consensus rules._
     proposed opcodes seem likely to require their own full BIPs: `OP_MULTI` and
     `OP_SEGMENT`.
 
-  `OP_MULTI` modifies the subsequent opcode to operate on more than its standard
-  number of stack items, enabling (for example) a script to add up a variable
-  number of items. This avoids the need for a looping construct in Script or for
-  an `OP_VAULT` style deferred check while enabling value flow control and
-  similar logic.
+    `OP_MULTI` modifies the subsequent opcode to operate on more than its standard
+    number of stack items, enabling (for example) a script to add up a variable
+    number of items. This avoids the need for a looping construct in Script or for
+    an `OP_VAULT` style deferred check while enabling value flow control and
+    similar logic.
 
-  `OP_SEGMENT` (if present) modifies the behavior of `OP_SUCCESS` such that
-  instead of the whole script succeeding if an `OP_SUCCESS` is present, only the
-  segment succeeds (bounded by script start, `OP_SEGMENT`, ..., and script end).
-  This enables the possibility of scripts with a required prefix, including
-  `OP_SEGMENT`, and an untrusted suffix.
+    `OP_SEGMENT` (if present) modifies the behavior of `OP_SUCCESS` such that
+    instead of the whole script succeeding if an `OP_SUCCESS` is present, only the
+    segment succeeds (bounded by script start, `OP_SEGMENT`, ..., and script end).
+    This enables the possibility of scripts with a required prefix, including
+    `OP_SEGMENT`, and an untrusted suffix.
 
 ## Releases and release candidates
 
