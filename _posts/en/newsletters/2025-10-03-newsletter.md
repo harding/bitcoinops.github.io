@@ -11,7 +11,27 @@ FIXME:schmidty
 
 ## News
 
-FIXME:harding
+- **Flattening certain nested threshold signatures:** ZmnSCPxj
+  [posted][zmnscpxj flat] to Delving Bitcoin to describe how to avoid
+  using nested [schnorr signatures][topic schnorr signatures] in some
+  cases which have not been proved safe.  For example, Alice may want to
+  enter a contract with a group consisting of Bob, Carol, and Dan.  Any
+  transactions must be approved by Alice and at least two of Bob, Carol,
+  and Dan.  In theory, this could be done with a [multisignature][topic
+  multisignature] (e.g. [MuSig][topic musig]) where Alice provides one
+  partial signature and a [threshold signature][topic threshold
+  signature] (e.g.  FROST) is used to generate the partial signature
+  from Bob, Carol, and Dan.  However, ZmnSCPxj writes that "currently,
+  we have no proof that FROST-in-MuSig is safe".  Instead, ZmnSCPxj
+  notes that this example can be satisfied using threshold signatures
+  alone: Alice is given multiple shares--enough that she can prevent a
+  quorum but not enough that she can sign unilaterally; the other
+  signers are each given one share.
+
+  Described uses of this include multi-operator statechains, users of LN
+  who want to use multiple signing devices, and ZmnSCPxj's LSP-enhanced
+  [redundant overpayments][topic redundant overpayments] proposal (see
+  [Newsletter #372][news372 lspover]).
 
 ## Changing consensus
 
@@ -192,3 +212,5 @@ repo], and [BINANAs][binana repo]._
 [news335 txgraph]: /en/newsletters/2025/01/03/#bdk-1670
 [news346 txgraph]: /en/newsletters/2025/03/21/#bdk-1839
 [news352 bip321]: /en/newsletters/2025/05/02/#bips-1555
+[zmnspcxj flat]: https://delvingbitcoin.org/t/flattening-nested-2-of-2-of-a-1-of-1-and-a-k-of-n/2018
+[news372 lspover]: /en/newsletters/2025/09/19/#lsp-funded-redundant-overpayments
